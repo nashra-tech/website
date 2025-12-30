@@ -9,6 +9,7 @@ import {
   Dialog,
   DialogContent,
   DialogHeader,
+  DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { SubscribeForm } from './subscribe-form';
@@ -85,21 +86,24 @@ export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
                     showCloseButton={!showSuccess}
                     dir={tenantDirection}
                   >
+                    <DialogHeader className="">
+                      <DialogTitle className="sr-only">
+                        {showSuccess ? 'Subscription successful' : 'Subscribe to newsletter'}
+                      </DialogTitle>
+                    </DialogHeader>
+
                     {!showSuccess && (
-                      <>
-                        <DialogHeader className=""></DialogHeader>
-                        <div>
-                          {/* Start Form Section */}
-                          <div className="mb-3">
-                            <h2 className="text-md text-primary font-medium text-gray-900 dark:text-white">
-                              Get the latest articles
-                            </h2>
-                            <p className="text-md font-medium text-neutral-500 dark:text-gray-300">
-                              Delivered to your inbox
-                            </p>
-                          </div>
+                      <div>
+                        {/* Start Form Section */}
+                        <div className="mb-3">
+                          <h2 className="text-md text-primary font-medium text-gray-900 dark:text-white">
+                            Get the latest articles
+                          </h2>
+                          <p className="text-md font-medium text-neutral-500 dark:text-gray-300">
+                            Delivered to your inbox
+                          </p>
                         </div>
-                      </>
+                      </div>
                     )}
 
                     <div className="mb-3">
