@@ -15,7 +15,7 @@ import { Tenant } from '@/types';
 export const TENANTS_DB: Tenant[] = [
   {
     uuid: '550e8400-e29b-41d4-a716-446655440001',
-    slug: 'tech-insights',
+    slug: 'sloom',
     name: 'Tech Insights',
     title: 'Tech Insights Blog',
     subtitle: 'Exploring the future of technology',
