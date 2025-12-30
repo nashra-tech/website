@@ -19,6 +19,9 @@ import { Tenant, Post, PaginatedPosts } from '@/types';
 import { TENANTS_DB } from './tenants';
 import { POSTS_DB } from './posts';
 
+// Magic Link exports
+export { getMagicLinkFormByIdentifier, subscribeMagicLink } from './magic-links';
+
 // ============================================================================
 // TENANT DATA ACCESS
 // ============================================================================
