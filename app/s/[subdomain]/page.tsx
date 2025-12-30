@@ -12,6 +12,9 @@ import { WebsiteFooter } from '@/components/blog/website-footer';
 import { BlogPostItem } from '@/components/blog/blog-post-item';
 import { Pagination } from '@/components/blog/pagination';
 import { Separator } from '@/components/ui/separator';
+import { Empty } from '@/components/ui/empty';
+import { Icons } from '@/components/ui/icons';
+import { H2, Subtitle } from '@/components/system-ui/typography';
 
 interface PageProps {
   params: Promise<{
@@ -51,14 +54,12 @@ export default async function TenantHomePage({ params, searchParams }: PageProps
     >
       <WebsiteLayout tenant={tenant}>
         <div className="max-w-[560px] mx-auto p-3 sm:p-0">
-          {/* Header Section */}
+          {/* Header Section - Responsive */}
           <div className="sm:mt-20 sm:mb-16 mt-16 mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-2 text-gray-900 dark:text-white">
-              {tenant.name}
-            </h2>
-            <p className="text-lg font-normal text-base-500 dark:text-base-400">
+            <H2 className="mb-2">{tenant.name || ''}</H2>
+            <Subtitle fontWeight={'font-normal'} textColor={'text-base-500'} textSize={'text-lg'}>
               {tenant.description}
-            </p>
+            </Subtitle>
           </div>
 
           <Separator />
@@ -77,10 +78,13 @@ export default async function TenantHomePage({ params, searchParams }: PageProps
                   />
                 ))
               ) : (
-                <div className="px-2 py-8 text-center">
-                  <p className="text-gray-500 dark:text-gray-400">
-                    No articles published yet. Check back soon!
-                  </p>
+                <div className="px-2 py-3 sm:px-2 sm:py-3">
+                  <Empty
+                    title="We're just getting started. Sign up for updates!"
+                    description={undefined}
+                    icons={[Icons.annotation, Icons.email]}
+                  />
+                  <Separator />
                 </div>
               )}
             </div>

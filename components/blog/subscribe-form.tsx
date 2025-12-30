@@ -1,89 +1,124 @@
-/**
- * SubscribeForm Component
- *
- * Simple email subscription form for the footer.
- * In production, connect to your newsletter service (e.g., ConvertKit, Mailchimp).
- */
-
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Icons } from '@/components/ui/icons';
+import { H3 } from "@/components/system-ui/typography";
 import { Tenant } from '@/types';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 
 interface SubscribeFormProps {
-  tenant: Tenant;
+    isPopup?: boolean;
+    tenant: Tenant;
+    className?: string;
+    onSubscribeSuccess?: () => void;
+    onSubscribe?: () => void;
 }
 
-export function SubscribeForm({ tenant }: SubscribeFormProps) {
-  const [email, setEmail] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubscribed, setIsSubscribed] = useState(false);
-  const [error, setError] = useState('');
+export function SubscribeForm({
+    isPopup = false,
+    tenant,
+    onSubscribeSuccess,
+    onSubscribe
+}: SubscribeFormProps) {
+    const [subscribed, setSubscribed] = useState(false);
+    const [email, setEmail] = useState('');
+    const [processing, setProcessing] = useState(false);
+    const [error, setError] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
+    // Get tenant direction settings
+    const tenantDirection = tenant.website_direction || 'ltr';
+    const isTenantRTL = tenantDirection === 'rtl';
 
-    // Basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setError('Please enter a valid email address');
-      return;
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (!email) {
+            setError('Email is required');
+            return;
+        }
+
+        setProcessing(true);
+        setError('');
+
+        try {
+            // TODO: Replace with actual API call
+            // const response = await fetch(`/api/subscribe`, {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify({ email, tenant_id: tenant.uuid })
+            // });
+
+            // Simulate API call
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
+            setEmail('');
+            setSubscribed(true);
+            onSubscribe?.();
+        } catch (err) {
+            setError('Failed to subscribe. Please try again.');
+        } finally {
+            setProcessing(false);
+        }
+    };
+
+    // Show success message for popup
+    if (subscribed && isPopup) {
+        return (
+            <div className="flex flex-col items-center justify-center text-center p-3">
+                <div className="mb-4 flex h-6 w-6 items-center justify-center rounded-full bg-green-600">
+                    <Icons.check className="h-4 w-4 text-white" />
+                </div>
+                <H3 className="text-lg font-medium mb-2">
+                    You&apos;re subscribed! 🎉
+                </H3>
+            </div>
+        );
     }
 
-    setIsSubmitting(true);
-
-    try {
-      // TODO: In production, call your newsletter API
-      // Example: await fetch('/api/subscribe', { method: 'POST', body: JSON.stringify({ email }) })
-
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      setIsSubscribed(true);
-      setEmail('');
-    } catch (err) {
-      setError('Something went wrong. Please try again.');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  if (isSubscribed) {
     return (
-      <div className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
-        <p className="text-sm text-green-800 dark:text-green-200">
-          ✓ Thanks for subscribing! Check your email to confirm.
-        </p>
-      </div>
-    );
-  }
+        <form onSubmit={handleSubmit} dir={tenantDirection}>
+            <div className="relative max-w-sm rounded-lg bg-base-50 dark:bg-base-800 dark:text-base-400">
+                <Input
+                    type="email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    className={`${error ? 'border-destructive' : ''} ${isTenantRTL ? 'text-right' : 'text-left'} h-10 rounded-lg border-gray-300 dark:border-base-800 dark:bg-base-800 dark:text-base-400`}
+                    placeholder="Enter your email address"
+                    required
+                    dir={tenantDirection}
+                />
+                <Button
+                    type="submit"
+                    disabled={processing}
+                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                        if (subscribed) {
+                            e.preventDefault();
+                            return;
+                        }
+                        handleSubmit(e);
+                    }}
+                    size="sm"
+                    className={`absolute top-1/2 -translate-y-1/2 ${isTenantRTL ? 'left-1' : 'right-1'} h-8 px-4 font-normal text-xs ${
+                        subscribed
+                            ? 'bg-green-600 hover:bg-green-600 text-white'
+                            : 'bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200'
+                    }`}
+                >
+                    {processing ? (
+                        <Icons.spinner className="h-4 w-4 animate-spin" />
+                    ) : subscribed ? (
+                        <>
+                            <Icons.check className="h-4 w-4 mr-1" />
+                            Subscribed
+                        </>
+                    ) : (
+                        'Subscribe'
+                    )}
+                </Button>
+            </div>
 
-  return (
-    <form onSubmit={handleSubmit} className="space-y-3">
-      <div>
-        <Input
-          type="email"
-          placeholder="Your email"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-            setError('');
-          }}
-          className="w-full"
-          disabled={isSubmitting}
-        />
-        {error && <p className="text-sm text-red-600 dark:text-red-400 mt-1">{error}</p>}
-      </div>
-      <Button
-        type="submit"
-        disabled={isSubmitting || !email}
-        className="w-full bg-gray-900 text-white hover:bg-black dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100"
-      >
-        {isSubmitting ? 'Subscribing...' : 'Subscribe'}
-      </Button>
-    </form>
-  );
+            {error && <p className="text-destructive text-sm mt-2 text-center">{error}</p>}
+        </form>
+    );
 }

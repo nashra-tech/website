@@ -9,6 +9,7 @@
 
 import { Tenant } from '@/types';
 import { SubscribeForm } from './subscribe-form';
+import { PoweredByNashra } from './powered-by-nashra';
 
 interface WebsiteFooterProps {
   tenant: Tenant;
@@ -21,19 +22,15 @@ export function WebsiteFooter({ tenant }: WebsiteFooterProps) {
   return (
     <footer className="p-3 sm:p-0">
       <section className="py-0 mb-0 sm:py-6 sm:mb-3 bg-white relative font-sans dark:bg-neutral-900 border-t border-gray-100 dark:border-base-800">
-        {/* Powered by badge - only show if no paid subscription */}
+        {/* Fixed Badge at Bottom Right */}
         {!tenant.has_paid_subscription && (
-          <div
-            className={`fixed bottom-4 z-50 ${isTenantRTL ? 'left-4' : 'right-4'}`}
-          >
-            <a
-              href="https://nashra.tech"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="opacity-80 hover:opacity-100 transition-opacity text-xs text-gray-500 dark:text-gray-400"
-            >
-              Powered by Nashra
-            </a>
+          <div className={`fixed bottom-4 z-50 ${isTenantRTL ? 'left-4' : 'right-4'}`}>
+            <PoweredByNashra
+              isRtl={isTenantRTL}
+              translations={{ made_with: 'Powered by' }}
+              clickable={true}
+              className="opacity-80 hover:opacity-100 transition-opacity"
+            />
           </div>
         )}
 
