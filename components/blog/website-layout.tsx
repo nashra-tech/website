@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { Tenant } from '@/types';
 import { Button } from '@/components/ui/button';
@@ -12,11 +12,31 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { SubscribeForm } from './subscribe-form';
-import { ThemeProvider } from '@/contexts/theme-context';
+import { ThemeProvider, useTheme } from '@/contexts/theme-context';
+import { Icons } from '@/components/ui/icons';
 
 interface WebsiteLayoutProps {
   children: React.ReactNode;
   tenant: Tenant;
+}
+
+// Theme Toggle Dropdown Component
+function ThemeToggleDropdown() {
+  const { theme, setTheme } = useTheme();
+
+  return (
+    <Button
+      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+      variant="outline"
+      className="flex items-center !p-2 size-8 rounded-md hover:bg-gray-100 dark:hover:bg-base-800 transition-colors border-gray-300 dark:border-gray-600 bg-white dark:bg-base-900"
+    >
+      {theme === 'dark' ? (
+        <Icons.moon className="w-4 h-4 text-gray-600 dark:text-gray-300" />
+      ) : (
+        <Icons.sun className="w-4 h-4 text-gray-600 dark:text-gray-300" />
+      )}
+    </Button>
+  );
 }
 
 export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
@@ -49,6 +69,7 @@ export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
               </Link>
 
               <div className="flex items-center gap-2 sm:gap-3">
+                <ThemeToggleDropdown />
                 <Dialog open={open} onOpenChange={setOpen}>
                   <DialogTrigger asChild>
                     <Button
