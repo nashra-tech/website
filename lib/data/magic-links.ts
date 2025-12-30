@@ -15,7 +15,7 @@ export const MAGIC_LINK_FORMS: MagicLinkForm[] = [
     title: 'Subscribe to our newsletter',
     subtitle: 'Get the latest updates and exclusive content delivered to your inbox.',
     image_url: null,
-    tenant_slug: 'tech-insights',
+    tenant_slug: 'sloom',
     requires_confirmation: false,
   },
   {
