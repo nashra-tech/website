@@ -41,7 +41,7 @@ function extractSubdomain(request: NextRequest): string | null {
 }
 
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  const { pathname, search } = request.nextUrl;
   const subdomain = extractSubdomain(request);
 
   if (subdomain) {
@@ -52,8 +52,18 @@ export async function middleware(request: NextRequest) {
 
     // For the root path on a subdomain, rewrite to the subdomain page
     if (pathname === '/') {
-      return NextResponse.rewrite(new URL(`/s/${subdomain}`, request.url));
+      return NextResponse.rewrite(new URL(`/s/${subdomain}${search}`, request.url));
     }
+
+    // For post detail pages on subdomain
+    if (pathname.startsWith('/posts/')) {
+      const slug = pathname.replace('/posts/', '');
+      return NextResponse.rewrite(new URL(`/s/${subdomain}/posts/${slug}${search}`, request.url));
+    }
+
+    // For any other paths on subdomain, rewrite to subdomain route
+    // This handles pagination and other query params
+    return NextResponse.rewrite(new URL(`/s/${subdomain}${pathname}${search}`, request.url));
   }
 
   // On the root domain, allow normal access
@@ -66,8 +76,9 @@ export const config = {
      * Match all paths except for:
      * 1. /api routes
      * 2. /_next (Next.js internals)
-     * 3. all root files inside /public (e.g. /favicon.ico)
+     * 3. /images (static assets)
+     * 4. all root files inside /public (e.g. /favicon.ico)
      */
-    '/((?!api|_next|[\\w-]+\\.\\w+).*)'
+    '/((?!api|_next|images|[\\w-]+\\.\\w+).*)'
   ]
 };
