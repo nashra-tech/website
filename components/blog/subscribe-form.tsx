@@ -10,15 +10,12 @@ import { Tenant } from '@/types';
 interface SubscribeFormProps {
     isPopup?: boolean;
     tenant: Tenant;
-    className?: string;
-    onSubscribeSuccess?: () => void;
     onSubscribe?: () => void;
 }
 
 export function SubscribeForm({
     isPopup = false,
     tenant,
-    onSubscribeSuccess,
     onSubscribe
 }: SubscribeFormProps) {
     const [subscribed, setSubscribed] = useState(false);

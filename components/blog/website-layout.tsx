@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { Tenant } from '@/types';
 import { Button } from '@/components/ui/button';
@@ -53,7 +53,7 @@ export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
       >
         {/* Header */}
         <header className="py-2 sm:py-3 border-b border-gray-100 dark:border-base-800">
-          <div className={`container mx-auto px-3 sm:px-0 max-w-[560px] mx-auto`}>
+          <div className="container mx-auto px-3 sm:px-0 max-w-[560px]">
             <div className="flex items-center justify-between">
               <Link href={'/'}>
                 <div className="flex items-center gap-2 sm:gap-3">
@@ -110,13 +110,7 @@ export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
                       <SubscribeForm
                         isPopup={true}
                         tenant={tenant}
-                        onSubscribeSuccess={() => {
-                          // Just close the dialog when "Back to Blog" is clicked
-                          setOpen(false);
-                          setShowSuccess(false);
-                        }}
                         onSubscribe={() => {
-                          // Hide header when subscribed
                           setShowSuccess(true);
                         }}
                       />
