@@ -22,15 +22,15 @@ interface WebsiteLayoutProps {
 
 // Theme Toggle Dropdown Component
 function ThemeToggleDropdown() {
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
 
   return (
     <Button
-      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+      onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
       variant="outline"
       className="flex items-center !p-2 size-8 rounded-md hover:bg-gray-100 dark:hover:bg-base-800 transition-colors border-gray-300 dark:border-gray-600 bg-white dark:bg-base-900"
     >
-      {theme === 'dark' ? (
+      {resolvedTheme === 'dark' ? (
         <Icons.moon className="w-4 h-4 text-gray-600 dark:text-gray-300" />
       ) : (
         <Icons.sun className="w-4 h-4 text-gray-600 dark:text-gray-300" />
