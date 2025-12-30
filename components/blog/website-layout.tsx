@@ -8,48 +8,19 @@
 
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { Tenant } from '@/types';
 import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
+import { AppAvatar } from '@/components/ui/app-avatar';
 
 interface WebsiteLayoutProps {
   children: React.ReactNode;
   tenant: Tenant;
 }
 
-// Simple avatar component
-function TenantAvatar({ name, logo }: { name: string; logo?: string }) {
-  if (logo) {
-    return (
-      <img
-        src={logo}
-        alt={name}
-        className="size-8 rounded-full object-cover"
-      />
-    );
-  }
-
-  // Fallback to initials
-  const initials = name
-    .split(' ')
-    .map((n) => n[0])
-    .join('')
-    .toUpperCase()
-    .substring(0, 2);
-
-  return (
-    <div className="size-8 rounded-full bg-gray-900 dark:bg-gray-100 flex items-center justify-center text-white dark:text-gray-900 text-sm font-medium">
-      {initials}
-    </div>
-  );
-}
-
 export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
-  const [subscribeDialogOpen, setSubscribeDialogOpen] = useState(false);
   const tenantDirection = tenant.website_direction || 'ltr';
-  const isRTL = tenantDirection === 'rtl';
 
   return (
     <div
@@ -62,7 +33,7 @@ export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
         <div className="container mx-auto px-3 sm:px-0 max-w-[560px]">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2 sm:gap-3">
-              <TenantAvatar name={tenant.name} logo={tenant.logo} />
+              <AppAvatar name={tenant.name} src={tenant.logo} className="size-8" />
               <span className="text-sm sm:text-base text-primary font-medium dark:text-gray-100 hidden sm:block">
                 {tenant.name}
               </span>
