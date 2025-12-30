@@ -17,7 +17,7 @@ export const POSTS_DB: Post[] = [
   {
     uuid: '750e8400-e29b-41d4-a716-446655440001',
     slug: 'getting-started-with-nextjs-14',
-    tenant_slug: 'tech-insights',
+    tenant_slug: 'sloom',
     title: 'Getting Started with Next.js 14',
     subtitle: 'A comprehensive guide to the latest features in Next.js 14',
     website_content: `

@@ -68,7 +68,7 @@ export function WebsiteFooter({ tenant }: WebsiteFooterProps) {
                       title={link.name}
                     >
                       <img
-                        src={`/images/social-links/${link.name.toLowerCase()}.png`}
+                        src={`/images/socials/${link.name.toLowerCase()}.png`}
                         alt={link.name}
                         className="w-5 h-5"
                       />
@@ -92,7 +92,7 @@ export function WebsiteFooter({ tenant }: WebsiteFooterProps) {
                         title={link.name}
                       >
                         <img
-                          src={`/images/social-links/${link.name.toLowerCase()}.png`}
+                          src={`/images/socials/${link.name.toLowerCase()}.png`}
                           alt={link.name}
                           className="w-5 h-5"
                         />

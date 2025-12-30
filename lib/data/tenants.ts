@@ -24,9 +24,9 @@ export const TENANTS_DB: Tenant[] = [
     footer_data: {
       physical_address: '123 Tech Street, San Francisco, CA 94105',
       social_links: [
-        { name: 'Twitter', url: 'https://twitter.com/techinsights' },
-        { name: 'GitHub', url: 'https://github.com/techinsights' },
-        { name: 'LinkedIn', url: 'https://linkedin.com/company/techinsights' },
+        { name: 'x', url: '/images/socials/x.png' },
+        { name: 'github', url: '/images/socials/github.png' },
+        { name: 'linkedin', url: '/images/socials/linkedin.png' },
       ],
       footer_text: 'Building the future, one post at a time.',
     },
@@ -35,7 +35,7 @@ export const TENANTS_DB: Tenant[] = [
   },
   {
     uuid: '550e8400-e29b-41d4-a716-446655440002',
-    slug: 'design-matters',
+    slug: 'saleem',
     name: 'Design Matters',
     title: 'Design Matters',
     subtitle: 'Where creativity meets functionality',
@@ -44,9 +44,9 @@ export const TENANTS_DB: Tenant[] = [
     footer_data: {
       physical_address: '456 Design Ave, New York, NY 10001',
       social_links: [
-        { name: 'Dribbble', url: 'https://dribbble.com/designmatters' },
-        { name: 'Instagram', url: 'https://instagram.com/designmatters' },
-        { name: 'Behance', url: 'https://behance.net/designmatters' },
+        { name: 'dribbble', url: '/images/socials/dribbble.png' },
+        { name: 'instagram', url: '/images/socials/instagram.png' },
+        { name: 'behance', url: '/images/socials/behance.png' },
       ],
       footer_text: 'Crafting beautiful experiences.',
     },
@@ -64,8 +64,8 @@ export const TENANTS_DB: Tenant[] = [
     footer_data: {
       physical_address: '789 Startup Blvd, Austin, TX 78701',
       social_links: [
-        { name: 'Twitter', url: 'https://twitter.com/startupjourney' },
-        { name: 'LinkedIn', url: 'https://linkedin.com/company/startupjourney' },
+        { name: 'x', url: '/images/socials/x.png' },
+        { name: 'linkedin', url: '/images/socials/linkedin.png' },
       ],
       footer_text: 'Every startup has a story.',
     },

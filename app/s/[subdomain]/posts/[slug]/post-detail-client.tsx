@@ -128,7 +128,7 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
                       title={link.name}
                     >
                       <img
-                        src={`/images/social-links/${link.name.toLowerCase()}.png`}
+                        src={`/images/socials/${link.name.toLowerCase()}.png`}
                         alt={link.name}
                         className="w-4 h-4 sm:w-5 sm:h-5"
                       />
