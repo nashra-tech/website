@@ -37,7 +37,7 @@ export {
  */
 export async function getTenantBySlug(slug: string): Promise<Tenant | null> {
   const apiTenant = await apiGetTenantBySlug(slug);
-  console.log(apiTenant);
+
   if (!apiTenant) {
     return null;
   }

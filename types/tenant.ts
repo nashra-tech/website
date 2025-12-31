@@ -31,6 +31,7 @@ export interface Tenant {
 
   // Configuration
   website_direction?: 'ltr' | 'rtl';
+  website_language?: string;
 
   // Subscription settings
   has_paid_subscription?: boolean;
