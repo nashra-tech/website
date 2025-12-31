@@ -127,6 +127,6 @@ export async function generateMetadata({ params }: PageProps) {
 
   return {
     title: tenant.title,
-    description: tenant.description,
+    description: tenant.subtitle,
   };
 }
