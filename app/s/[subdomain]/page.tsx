@@ -15,6 +15,7 @@ import { Separator } from '@/components/ui/separator';
 import { Empty } from '@/components/ui/empty';
 import { Icons } from '@/components/ui/icons';
 import { H2, Subtitle } from '@/components/system-ui/typography';
+import { getTranslations } from '@/lib/i18n';
 
 interface PageProps {
   params: Promise<{
@@ -45,6 +46,8 @@ export default async function TenantHomePage({ params, searchParams }: PageProps
   });
 
   const tenantDirection = tenant.website_direction || 'ltr';
+  const tenantLanguage = tenant.website_language || 'en';
+  const translations = getTranslations(tenantLanguage);
 
   return (
     <div
@@ -58,7 +61,7 @@ export default async function TenantHomePage({ params, searchParams }: PageProps
           <div className="sm:mt-20 sm:mb-16 mt-16 mb-16">
             <H2 className="mb-2">{tenant.name || ''}</H2>
             <Subtitle fontWeight={'font-normal'} textColor={'text-base-500'} textSize={'text-lg'}>
-              {tenant.description}
+              {tenant.subtitle}
             </Subtitle>
           </div>
 
@@ -80,7 +83,7 @@ export default async function TenantHomePage({ params, searchParams }: PageProps
               ) : (
                 <div className="px-2 py-3 sm:px-2 sm:py-3">
                   <Empty
-                    title="We're just getting started. Sign up for updates!"
+                    title={translations.home.empty_title}
                     description={undefined}
                     icons={[Icons.annotation, Icons.email]}
                   />
@@ -99,6 +102,7 @@ export default async function TenantHomePage({ params, searchParams }: PageProps
                 from={posts.from}
                 to={posts.to}
                 tenantDirection={tenantDirection}
+                language={tenantLanguage}
               />
             )}
           </div>
@@ -123,6 +127,6 @@ export async function generateMetadata({ params }: PageProps) {
 
   return {
     title: tenant.title,
-    description: tenant.description,
+    description: tenant.subtitle,
   };
 }

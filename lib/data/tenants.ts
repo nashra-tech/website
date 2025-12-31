@@ -19,7 +19,6 @@ export const TENANTS_DB: Tenant[] = [
     name: 'Tech Insights',
     title: 'Tech Insights Blog',
     subtitle: 'Exploring the future of technology',
-    description: 'A blog dedicated to exploring emerging technologies, software development best practices, and digital innovation.',
     logo: undefined,
     footer_data: {
       physical_address: '123 Tech Street, San Francisco, CA 94105',
@@ -39,7 +38,6 @@ export const TENANTS_DB: Tenant[] = [
     name: 'Design Matters',
     title: 'Design Matters',
     subtitle: 'Where creativity meets functionality',
-    description: 'Exploring UI/UX design, creative processes, and design thinking principles.',
     logo: undefined,
     footer_data: {
       physical_address: '456 Design Ave, New York, NY 10001',
@@ -59,7 +57,6 @@ export const TENANTS_DB: Tenant[] = [
     name: 'Startup Journey',
     title: 'The Startup Journey',
     subtitle: 'From zero to launch',
-    description: 'Real stories from founders building products, raising capital, and scaling startups.',
     logo: undefined,
     footer_data: {
       physical_address: '789 Startup Blvd, Austin, TX 78701',

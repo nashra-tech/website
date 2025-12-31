@@ -19,8 +19,7 @@ export interface Tenant {
   // Display information
   name: string;
   title: string;
-  subtitle: string;
-  description: string;
+  subtitle: string | null;
   logo?: string;
 
   // Footer data
@@ -32,6 +31,7 @@ export interface Tenant {
 
   // Configuration
   website_direction?: 'ltr' | 'rtl';
+  website_language?: string; // ISO language code (e.g., 'en', 'ar', 'es')
 
   // Subscription settings
   has_paid_subscription?: boolean;
