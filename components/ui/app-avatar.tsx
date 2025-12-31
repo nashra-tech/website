@@ -42,7 +42,7 @@ export function AppAvatar({
       {src && <AvatarImage src={src} alt={alt || name || 'Avatar'} />}
       <AvatarFallback
         className={cn(
-          'rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white font-medium',
+          'rounded-full bg-foreground text-white dark:text-accent text-xs',
           fallbackClassName
         )}
       >
