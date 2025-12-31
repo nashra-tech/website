@@ -58,7 +58,7 @@ export default async function TenantHomePage({ params, searchParams }: PageProps
           <div className="sm:mt-20 sm:mb-16 mt-16 mb-16">
             <H2 className="mb-2">{tenant.name || ''}</H2>
             <Subtitle fontWeight={'font-normal'} textColor={'text-base-500'} textSize={'text-lg'}>
-              {tenant.description}
+              {tenant.subtitle}
             </Subtitle>
           </div>
 

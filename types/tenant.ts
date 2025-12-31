@@ -19,8 +19,7 @@ export interface Tenant {
   // Display information
   name: string;
   title: string;
-  subtitle: string;
-  description: string;
+  subtitle: string | null;
   logo?: string;
 
   // Footer data

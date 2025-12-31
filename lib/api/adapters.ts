@@ -20,13 +20,12 @@ export function adaptTenant(apiTenant: ApiTenant): Tenant {
     slug: apiTenant.slug,
     name: apiTenant.name,
     title: apiTenant.name, // Use name as title
-    subtitle: '', // Not provided by API
-    description: apiTenant.newsletter.name || apiTenant.name,
+    subtitle: apiTenant.description, // Not provided by API
     logo: apiTenant.logo || undefined,
     footer_data: {
-      physical_address: undefined,
-      social_links: [],
-      footer_text: undefined,
+      physical_address: apiTenant.physical_address || undefined,
+      social_links: apiTenant.social_links || [],
+      footer_text: apiTenant.footer_text || undefined,
     },
     website_direction: apiTenant.website_direction,
     has_paid_subscription: apiTenant.has_active_subscription,

@@ -66,10 +66,10 @@ export interface ApiTenant {
   website_direction: 'ltr' | 'rtl';
   is_rtl: boolean;
   has_active_subscription: boolean;
-  newsletter: {
-    name: string;
-    requires_confirmation: boolean;
-  };
+  social_links: ApiTenantSocialLink[];
+  description: string | null;
+  footer_text: string | null;
+  physical_address: string | null;
 }
 
 // ============================================================================
@@ -127,4 +127,8 @@ export interface ApiSubscriptionResponse {
 export interface ApiMagicLinkSubscriptionHeaders {
   alreadySubscribed: boolean;
   hasPublishedPosts: boolean;
+}
+export interface ApiTenantSocialLink {
+  name: string;
+  url: string;
 }

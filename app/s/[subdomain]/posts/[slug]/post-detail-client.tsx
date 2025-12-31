@@ -113,7 +113,13 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
           </article>
 
           {/* Footer Section */}
-          <footer className="mt-16">
+          <footer className="mt-16 space-y-4">
+                       {/* Footer Text */}
+                        {tenant.footer_data.footer_text && (
+                            <div className="text-center text-base text-gray-600 dark:text-base-400">
+                                {tenant.footer_data.footer_text}
+                            </div>
+                        )}
             {/* Social Links */}
             {tenant.footer_data.social_links &&
               tenant.footer_data.social_links.length > 0 && (
