@@ -47,21 +47,17 @@ export function BlogPostItem({
     >
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-4">
         <h3
-          className={`${
-            isFirst ? 'text-base-900' : 'text-base-500'
-          } dark:text-base-400 text-base font-medium leading-relaxed transition-colors ${
+          className={`text-base font-medium leading-relaxed transition-colors ${
             isRTL ? 'text-right' : 'text-left'
-          } flex-1 max-w-[415px]`}
+          } flex-1 max-w-[415px] text-muted-foreground`}
         >
           {truncateTitle(post.title, 80)}
         </h3>
 
         <p
-          className={`${
-            isFirst ? 'text-base-900' : 'text-base-500'
-          } font-medium dark:text-base-400 text-md ${
+          className={`font-medium text-md ${
             isRTL ? 'text-right' : 'text-left'
-          } flex-shrink-0`}
+          } flex-shrink-0  text-muted-foreground`}
         >
           {formattedDate}
         </p>

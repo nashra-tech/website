@@ -30,9 +30,9 @@ function ThemeToggleDropdown() {
     <Button
       onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
       variant="outline"
-      className="flex items-center !p-2 size-8 rounded-md hover:bg-gray-100 dark:hover:bg-base-800 transition-colors border-gray-300 dark:border-gray-600 bg-white dark:bg-base-900"
+      className="flex items-center !p-2 size-8 rounded-md hover:bg-gray-100 dark:hover:bg-base-800 transition-colors"
     >
-      {resolvedTheme === 'dark' ? (
+      {resolvedTheme === 'light' ? (
         <Icons.moon className="w-4 h-4 text-gray-600 dark:text-gray-300" />
       ) : (
         <Icons.sun className="w-4 h-4 text-gray-600 dark:text-gray-300" />
@@ -51,11 +51,11 @@ export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
   return (
     <ThemeProvider>
       <div
-        className="min-h-[600px] flex flex-col bg-white dark:bg-neutral-900 transition-colors font-sans"
+        className="min-h-[600px] flex flex-col bg-background transition-colors font-sans"
         dir={tenantDirection}
       >
         {/* Header */}
-        <header className="py-2 sm:py-3 border-b border-gray-100 dark:border-base-800">
+        <header className="py-2 sm:py-3 border-b ">
           <div className="container mx-auto px-3 sm:px-0 max-w-[560px]">
             <div className="flex items-center justify-between">
               <Link href={'/'}>
@@ -66,7 +66,7 @@ export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
                     alt={tenant.name}
                     className="size-8"
                   />
-                  <span className="text-sm sm:text-base text-primary font-medium dark:text-gray-100 hidden sm:block">
+                  <span className="text-sm sm:text-base font-medium  hidden sm:block">
                     {tenant.name}
                   </span>
                 </div>
@@ -85,7 +85,7 @@ export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
                     </Button>
                   </DialogTrigger>
                   <DialogContent
-                    className="sm:max-w-[390px] p-0 sm:p-0 px-3 sm:px-3 border dark:border-base-800"
+                    className="sm:max-w-[390px] p-0 sm:p-0 px-3 sm:px-3 border"
                     showCloseButton={!showSuccess}
                     dir={tenantDirection}
                   >

@@ -24,7 +24,7 @@ export function WebsiteFooter({ tenant }: WebsiteFooterProps) {
 
   return (
     <footer className="p-3 sm:p-0">
-      <section className="py-0 mb-0 sm:py-6 sm:mb-3 bg-white relative font-sans dark:bg-neutral-900 border-t border-gray-100 dark:border-base-800">
+      <section className="py-0 mb-0 sm:py-6 sm:mb-3 bg-white relative font-sans dark:bg-neutral-900 border-t">
         {/* Fixed Badge at Bottom Right */}
         {!tenant.has_paid_subscription && (
           <div className={`fixed bottom-4 z-50 ${isTenantRTL ? 'left-4' : 'right-4'}`}>

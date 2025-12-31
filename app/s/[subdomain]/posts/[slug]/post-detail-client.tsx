@@ -67,7 +67,7 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
   return (
     <div
       dir={tenantDirection}
-      className="bg-white dark:bg-base-900 min-h-screen transition-colors"
+      className="min-h-screen transition-colors"
       style={{ fontFamily: 'sans-serif' }}
     >
       <WebsiteLayout tenant={tenant}>
@@ -116,7 +116,7 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
           <footer className="mt-16 space-y-4">
                        {/* Footer Text */}
                         {tenant.footer_data.footer_text && (
-                            <div className="text-center text-base text-gray-600 dark:text-base-400">
+                            <div className="text-center text-base">
                                 {tenant.footer_data.footer_text}
                             </div>
                         )}

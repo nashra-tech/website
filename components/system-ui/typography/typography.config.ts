@@ -18,35 +18,35 @@
 export const typographyStyles = {
   h1: {
     base: 'scroll-m-20 text-4xl font-semibold tracking-tight leading-tight',
-    default: 'text-neutral-900 dark:text-base-50',
+    default: '',
   },
   h2: {
     base: 'scroll-m-20 text-3xl font-semibold tracking-tight leading-tight',
-    default: 'text-neutral-900 dark:text-base-50',
+    default: '',
   },
   h3: {
     base: 'scroll-m-20 text-2xl font-semibold tracking-tight leading-tight',
-    default: 'text-neutral-900 dark:text-base-50',
+    default: '',
   },
   h4: {
     base: 'scroll-m-20 text-xl font-semibold tracking-tight leading-tight',
-    default: 'text-neutral-900 dark:text-base-50',
+    default: '',
   },
   title: {
     base: 'text-[18px] font-semibold leading-snug',
-    default: 'text-neutral-900 dark:text-base-50',
+    default: '',
   },
   subtitle: {
     base: 'text-[16px] font-medium leading-relaxed',
-    default: 'text-base-500 dark:text-neutral-400',
+    default: '',
   },
   body: {
     base: 'text-[14px] font-normal leading-relaxed',
-    default: 'text-neutral-900 dark:text-base-50',
+    default: '',
   },
   small: {
     base: 'text-[14px] font-normal leading-relaxed',
-    default: 'text-base-500 dark:text-neutral-400',
+    default: '',
   },
 } as const;
 

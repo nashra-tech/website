@@ -83,7 +83,7 @@ export function SubscribeForm({
                     type="email"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
-                    className={`${error ? 'border-destructive' : ''} ${isTenantRTL ? 'text-right' : 'text-left'} h-10 rounded-lg border-gray-300 dark:border-base-800 dark:bg-base-800 dark:text-base-400`}
+                    className={`${error ? 'border-destructive' : ''} ${isTenantRTL ? 'text-right' : 'text-left'} h-10 rounded-lg dark:bg-base-800 dark:text-base-400`}
                     placeholder={t('common.email_placeholder')}
                     required
                     dir={tenantDirection}

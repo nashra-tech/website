@@ -16,7 +16,7 @@ import {
 const tableVariants = cva("", {
   variants: {
     variant: {
-      bordered: "border border-base-200 dark:border-neutral-800",
+      bordered: "border",
       borderless: "border-0"
     }
   },
@@ -45,7 +45,7 @@ const tableCellVariants = cva(
   {
     variants: {
       variant: {
-        bordered: "border-t border-base-200 dark:border-neutral-800 [&:not(:first-child)]:border-l border-base-200 dark:[&:not(:first-child)]:border-neutral-800",
+        bordered: "border-t  [&:not(:first-child)]:border-l border-base-200 dark:[&:not(:first-child)]:border-neutral-800",
         borderless: ""
       }
     },
@@ -115,7 +115,7 @@ export function TableContentWrapper({ className, ...props }: React.HTMLAttribute
   return (
     <div
       className={cn(
-        'flex flex-row justify-between items-center p-[0px_1px] border border-base-200 dark:border-neutral-800  w-[377px] h-[160px] box-border',
+        'flex flex-row justify-between items-center p-[0px_1px] border  w-[377px] h-[160px] box-border',
         className
       )}
       {...props}
@@ -144,7 +144,7 @@ export function TableItem({
   return (
     <div
       className={cn(
-        'flex flex-row items-center px-4 py-2 gap-2 border-t border-base-200 dark:border-neutral-800 box-border w-[187.5px] h-[40px]',
+        'flex flex-row items-center px-4 py-2 gap-2 border-t box-border w-[187.5px] h-[40px]',
         bold ? 'font-bold dark:text-base-50' : 'font-normal dark:text-base-50',
         background ? 'bg-base-100 dark:bg-neutral-800' : '',
         className

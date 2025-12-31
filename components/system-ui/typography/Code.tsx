@@ -13,7 +13,7 @@ const Code = React.forwardRef<HTMLPreElement, CodeProps>(
         className={cn(
           'flex flex-col justify-center items-center p-4',
           'bg-zinc-900 dark:bg-zinc-950',
-          'border border-base-200 dark:border-base-700 rounded-m',
+          'border border-base-200  rounded-m',
           'font-mono font-normal text-base leading-normal',
           'text-white/47',
           'overflow-x-auto',

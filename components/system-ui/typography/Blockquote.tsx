@@ -11,7 +11,7 @@ const Blockquote = React.forwardRef<HTMLQuoteElement, BlockquoteProps>(
       <blockquote
         ref={ref}
         className={cn(
-          'flex flex-row items-center gap-2 pl-6 border-l-2 border-base-200 dark:border-base-700',
+          'flex flex-row items-center gap-2 pl-6 border-l-2 ',
           'font-normal text-base leading-normal',
           'text-base-900 dark:text-base-0',
           className

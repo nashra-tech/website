@@ -51,7 +51,7 @@ export default async function TenantHomePage({ params, searchParams }: PageProps
 
   return (
     <div
-      className="min-h-screen bg-white dark:bg-gray-900 transition-colors flex justify-between flex-col"
+      className="min-h-screen  transition-colors flex justify-between flex-col"
       dir={tenantDirection}
       style={{ fontFamily: 'Cairo, system-ui, sans-serif' }}
     >
@@ -60,7 +60,7 @@ export default async function TenantHomePage({ params, searchParams }: PageProps
           {/* Header Section - Responsive */}
           <div className="sm:mt-20 sm:mb-16 mt-16 mb-16">
             <H2 className="mb-2">{tenant.name || ''}</H2>
-            <Subtitle fontWeight={'font-normal'} textColor={'text-base-500'} textSize={'text-lg'}>
+            <Subtitle fontWeight={'font-normal'} textSize={'text-lg'}>
               {tenant.subtitle}
             </Subtitle>
           </div>
