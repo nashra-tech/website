@@ -49,7 +49,7 @@ export const Empty = ({
             </>
           ) : icons.length === 2 ? (
             <>
-              <div className="bg-custom-background size-12 grid place-items-center rounded-lg relative left-2 top-1 -rotate-6 shadow-lg ring-1 ring-border group-hover:-translate-x-3 group-hover:-rotate-12 group-hover:-translate-y-0.5 transition duration-500 group-hover:duration-200">
+              <div className="bg-custom-background  size-12 grid place-items-center rounded-lg relative left-2 top-1 -rotate-6 shadow-lg ring-1 ring-border group-hover:-translate-x-3 group-hover:-rotate-12 group-hover:-translate-y-0.5 transition duration-500 group-hover:duration-200">
                 {React.createElement(icons[0], {
                   className: "w-6 h-6 text-muted-foreground"
                 })}
@@ -67,7 +67,7 @@ export const Empty = ({
               })}
             </div>
           ) : (
-            <div className="bg-custom-background size-12 grid place-items-center rounded-lg shadow-lg ring-1 ring-border group-hover:-translate-y-0.5 transition duration-500 group-hover:duration-200">
+            <div className="bg-custom-background  size-12 grid place-items-center rounded-lg shadow-lg ring-1 ring-border group-hover:-translate-y-0.5 transition duration-500 group-hover:duration-200">
               <Icons.empty className="w-6 h-6 text-muted-foreground" />
             </div>
           )}

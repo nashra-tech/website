@@ -22,10 +22,10 @@ export function PoweredByNashra({
 
     const content = (
         <div
-            className={`font-medium inline-flex items-center gap-1.5 px-3 py-2 border bg-primary-foreground border-gray-200 rounded-lg shadow-xl text-xs text-gray-600 ${flexDirection} ${className}`}
+            className={`font-medium inline-flex items-center gap-1.5 px-3 py-2 border bg-primary-foreground rounded-lg shadow-xl text-xs text-gray-600 ${flexDirection} ${className}`}
         >
-            <span>{poweredByText}</span>
-            <span className="font-semibold text-gray-900">Nashra</span>
+            <span className='text-foreground'>{poweredByText}</span>
+            <span className="font-semibold text-foreground">Nashra</span>
         </div>
     );
 
