@@ -288,6 +288,11 @@ try {
 # .env.local
 NEXT_PUBLIC_API_URL=http://localhost:8000
 NEXT_PUBLIC_API_VERSION=v1
+
+# Cache Control (optional)
+# Set to 'false' to disable caching for testing/development
+# Set to 'true' or omit to enable caching (recommended for production)
+NEXT_PUBLIC_ENABLE_API_CACHE=false
 ```
 
 ### Production Setup
@@ -296,7 +301,30 @@ NEXT_PUBLIC_API_VERSION=v1
 # .env.production
 NEXT_PUBLIC_API_URL=https://api.yourapp.com
 NEXT_PUBLIC_API_VERSION=v1
+NEXT_PUBLIC_ENABLE_API_CACHE=true
 ```
+
+### Cache Control
+
+The API layer supports dynamic cache control via the `NEXT_PUBLIC_ENABLE_API_CACHE` environment variable:
+
+**Disable Caching (Development/Testing)**
+```bash
+NEXT_PUBLIC_ENABLE_API_CACHE=false
+```
+- Every request hits the API (no stale data)
+- Useful for testing API integration
+- Easier to debug issues
+
+**Enable Caching (Production)**
+```bash
+NEXT_PUBLIC_ENABLE_API_CACHE=true
+```
+- Optimized performance with revalidation times
+- Reduced API load
+- Better user experience
+
+See [CACHE_CONTROL.md](./CACHE_CONTROL.md) for detailed documentation.
 
 ## Migration Checklist
 

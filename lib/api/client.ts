@@ -52,7 +52,10 @@ export async function apiGet<T>(
   };
 
   // Apply Next.js caching strategy
-  if (revalidate !== undefined) {
+  // Caching can be globally disabled via NEXT_PUBLIC_ENABLE_API_CACHE=false
+  if (!API_CONFIG.enableCache) {
+    requestOptions.cache = 'no-store';
+  } else if (revalidate !== undefined) {
     if (revalidate === false || revalidate === 0) {
       requestOptions.cache = 'no-store';
     } else {
