@@ -2,69 +2,47 @@
  * Data Access Layer
  *
  * This module provides clean, reusable functions for accessing tenant and post data.
- * Currently uses static data, but designed for easy migration to API calls.
+ * Migrated to use API calls instead of static data.
  *
- * Migration Example:
- * Before:
- *   const tenant = TENANTS_DB.find(t => t.slug === slug);
- *
- * After:
- *   const response = await fetch(`/api/tenants/${slug}`);
- *   const tenant = await response.json();
- *
- * All consuming code remains unchanged!
+ * All consuming code remains unchanged - only the implementation has changed!
  */
 
 import { Tenant, Post, PaginatedPosts } from '@/types';
-import { TENANTS_DB } from './tenants';
-import { POSTS_DB } from './posts';
+import {
+  getTenantBySlug as apiGetTenantBySlug,
+  getPosts as apiGetPosts,
+  getPostBySlug as apiGetPostBySlug,
+  getMorePosts as apiGetMorePosts,
+} from '@/lib/api';
+import {
+  adaptTenant,
+  adaptPostDetail,
+  adaptPaginatedPosts,
+} from '@/lib/api/adapters';
 
-// Magic Link exports
-export { getMagicLinkFormByIdentifier, subscribeMagicLink } from './magic-links';
+// Magic Link exports - updated to use API
+export {
+  getMagicLinkFormByIdentifier,
+  subscribeMagicLink,
+} from './magic-links';
 
 // ============================================================================
 // TENANT DATA ACCESS
 // ============================================================================
 
 /**
- * Get all tenants
- *
- * Migration path: Replace with API call
- * Example: await fetch('/api/tenants')
- */
-export async function getTenants(): Promise<Tenant[]> {
-  // Simulate async behavior (remove in production)
-  await new Promise((resolve) => setTimeout(resolve, 0));
-
-  return TENANTS_DB;
-}
-
-/**
  * Get tenant by slug
  *
- * Migration path: Replace with API call
- * Example: await fetch(`/api/tenants/${slug}`)
+ * Now uses API: GET /api/v1/tenants/{slug}
  */
 export async function getTenantBySlug(slug: string): Promise<Tenant | null> {
-  // Simulate async behavior (remove in production)
-  await new Promise((resolve) => setTimeout(resolve, 0));
+  const apiTenant = await apiGetTenantBySlug(slug);
 
-  const tenant = TENANTS_DB.find((t) => t.slug === slug);
-  return tenant || null;
-}
+  if (!apiTenant) {
+    return null;
+  }
 
-/**
- * Get tenant by UUID
- *
- * Migration path: Replace with API call
- * Example: await fetch(`/api/tenants/uuid/${uuid}`)
- */
-export async function getTenantByUuid(uuid: string): Promise<Tenant | null> {
-  // Simulate async behavior (remove in production)
-  await new Promise((resolve) => setTimeout(resolve, 0));
-
-  const tenant = TENANTS_DB.find((t) => t.uuid === uuid);
-  return tenant || null;
+  return adaptTenant(apiTenant);
 }
 
 // ============================================================================
@@ -74,132 +52,66 @@ export async function getTenantByUuid(uuid: string): Promise<Tenant | null> {
 /**
  * Get all posts for a tenant (with optional pagination)
  *
- * Migration path: Replace with API call
- * Example: await fetch(`/api/tenants/${tenantSlug}/posts?page=${page}&per_page=${perPage}`)
+ * Now uses API: GET /api/v1/tenants/{slug}/posts
  */
 export async function getPosts(
   tenantSlug: string,
   options: {
     page?: number;
     perPage?: number;
-    published?: boolean;
+    published?: boolean; // Note: API only returns published posts
   } = {}
 ): Promise<PaginatedPosts> {
-  const { page = 1, perPage = 10, published = true } = options;
+  const { page = 1, perPage = 10 } = options;
 
-  // Simulate async behavior (remove in production)
-  await new Promise((resolve) => setTimeout(resolve, 0));
+  const apiResponse = await apiGetPosts(tenantSlug, { page, perPage });
 
-  // Filter posts by tenant and published status
-  let filteredPosts = POSTS_DB.filter((post) => post.tenant_slug === tenantSlug);
-
-  if (published) {
-    filteredPosts = filteredPosts.filter((post) => post.published);
-  }
-
-  // Sort by publish date (newest first)
-  filteredPosts.sort((a, b) => {
-    return new Date(b.publish_date).getTime() - new Date(a.publish_date).getTime();
-  });
-
-  // Calculate pagination
-  const total = filteredPosts.length;
-  const lastPage = Math.ceil(total / perPage);
-  const from = (page - 1) * perPage + 1;
-  const to = Math.min(page * perPage, total);
-
-  // Slice for current page
-  const data = filteredPosts.slice((page - 1) * perPage, page * perPage);
-
-  return {
-    data,
-    current_page: page,
-    last_page: lastPage,
-    per_page: perPage,
-    total,
-    from: total > 0 ? from : 0,
-    to: total > 0 ? to : 0,
-  };
+  return adaptPaginatedPosts(apiResponse, tenantSlug);
 }
 
 /**
  * Get a single post by slug
  *
- * Migration path: Replace with API call
- * Example: await fetch(`/api/tenants/${tenantSlug}/posts/${postSlug}`)
+ * Now uses API: GET /api/v1/tenants/{slug}/posts/{post}
  */
 export async function getPostBySlug(
   tenantSlug: string,
   postSlug: string
 ): Promise<Post | null> {
-  // Simulate async behavior (remove in production)
-  await new Promise((resolve) => setTimeout(resolve, 0));
+  const apiPost = await apiGetPostBySlug(tenantSlug, postSlug);
 
-  const post = POSTS_DB.find(
-    (p) => p.tenant_slug === tenantSlug && p.slug === postSlug && p.published
-  );
+  if (!apiPost) {
+    return null;
+  }
 
-  return post || null;
+  return adaptPostDetail(apiPost, tenantSlug);
 }
 
 /**
  * Get more posts for "Related Articles" section
  * Excludes the current post
  *
- * Migration path: Replace with API call
- * Example: await fetch(`/api/tenants/${tenantSlug}/posts?exclude=${currentPostUuid}&limit=${limit}`)
+ * Now uses API: GET /api/v1/tenants/{slug}/posts (with client-side filtering)
  */
 export async function getMorePosts(
   tenantSlug: string,
   currentPostUuid: string,
   limit: number = 3
 ): Promise<Post[]> {
-  // Simulate async behavior (remove in production)
-  await new Promise((resolve) => setTimeout(resolve, 0));
+  const apiPosts = await apiGetMorePosts(tenantSlug, currentPostUuid, limit);
 
-  const posts = POSTS_DB.filter(
-    (p) => p.tenant_slug === tenantSlug && p.uuid !== currentPostUuid && p.published
-  )
-    .sort((a, b) => new Date(b.publish_date).getTime() - new Date(a.publish_date).getTime())
-    .slice(0, limit);
-
-  return posts;
-}
-
-/**
- * Search posts by title or subtitle
- *
- * Migration path: Replace with API call
- * Example: await fetch(`/api/tenants/${tenantSlug}/posts/search?q=${query}`)
- */
-export async function searchPosts(
-  tenantSlug: string,
-  query: string
-): Promise<Post[]> {
-  // Simulate async behavior (remove in production)
-  await new Promise((resolve) => setTimeout(resolve, 0));
-
-  const lowerQuery = query.toLowerCase();
-  const posts = POSTS_DB.filter(
-    (p) =>
-      p.tenant_slug === tenantSlug &&
-      p.published &&
-      (p.title.toLowerCase().includes(lowerQuery) ||
-        p.subtitle?.toLowerCase().includes(lowerQuery))
-  ).sort((a, b) => new Date(b.publish_date).getTime() - new Date(a.publish_date).getTime());
-
-  return posts;
-}
-
-/**
- * Get post count for a tenant
- *
- * Migration path: Replace with API call
- * Example: await fetch(`/api/tenants/${tenantSlug}/posts/count`)
- */
-export async function getPostCount(tenantSlug: string): Promise<number> {
-  // Simulate async behavior (remove in production)
-  await new Promise((resolve) => setTimeout(resolve, 0));
-
-  return POSTS_DB.filter((p) => p.tenant_slug === tenantSlug && p.published).length;
+  return apiPosts.map((post) => ({
+    uuid: post.uuid,
+    slug: post.slug,
+    tenant_slug: tenantSlug,
+    title: post.title,
+    subtitle: post.subtitle || undefined,
+    website_content: '',
+    main_image_url: post.main_image_url || undefined,
+    main_image_thumb_url: post.main_image_thumb_url || undefined,
+    publish_date: post.publish_date,
+    created_at: post.created_at,
+    updated_at: post.created_at,
+    published: true,
+  }));
 }

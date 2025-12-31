@@ -39,21 +39,21 @@ export function SubscribeForm({
         setError('');
 
         try {
-            // TODO: Replace with actual API call
-            // const response = await fetch(`/api/subscribe`, {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify({ email, tenant_id: tenant.uuid })
-            // });
+            // Import the API service dynamically to avoid bundling in server components
+            const { subscribeToNewsletter } = await import('@/lib/api');
 
-            // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await subscribeToNewsletter(tenant.slug, email);
 
             setEmail('');
             setSubscribed(true);
             onSubscribe?.();
-        } catch (err) {
-            setError('Failed to subscribe. Please try again.');
+        } catch (err: any) {
+            // Handle specific API errors
+            if (err?.getUserMessage) {
+                setError(err.getUserMessage());
+            } else {
+                setError('Failed to subscribe. Please try again.');
+            }
         } finally {
             setProcessing(false);
         }

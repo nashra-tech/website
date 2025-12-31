@@ -62,6 +62,13 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
         if (result.already_subscribed) {
           setAlreadySubscribed(true);
         }
+        // Update hasPublishedPosts from API response
+        if (result.has_published_posts !== undefined) {
+          setHasPublishedPosts(result.has_published_posts);
+        }
+      } else {
+        // Handle API error
+        setEmailError(result.error || 'Failed to subscribe. Please try again.');
       }
     } catch (error) {
       setEmailError('Failed to subscribe. Please try again.');
@@ -74,8 +81,8 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
     window.location.href = window.location.origin;
   };
 
-  // Check if tenant has published posts
-  const hasPublishedPosts = true; // TODO: Get this from tenant data
+  // Track if tenant has published posts (from API response)
+  const [hasPublishedPosts, setHasPublishedPosts] = useState(true);
 
   return (
     <div className="relative min-h-screen w-full flex items-center justify-center p-0 bg-gray-50 overflow-hidden">

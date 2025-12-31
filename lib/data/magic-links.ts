@@ -1,65 +1,74 @@
 /**
  * Magic Link Forms Data
  *
- * Static data for magic link subscription forms.
- * In production, replace with API calls to your backend.
+ * Now uses API calls to the backend.
  */
 
 import { MagicLinkForm } from '@/types/magic-link';
+import {
+  getMagicLinkFormByIdentifier as apiGetMagicLinkForm,
+  subscribeMagicLink as apiSubscribeMagicLink,
+} from '@/lib/api';
+import { adaptMagicLinkForm } from '@/lib/api/adapters';
+import { ApiError } from '@/lib/api/errors';
 
-export const MAGIC_LINK_FORMS: MagicLinkForm[] = [
-  {
-    id: '1',
-    uuid: 'form-uuid-1',
-    identifier: 'rV0Q1PSrZjdkHi5Im7iLynFd',
-    title: 'Subscribe to our newsletter',
-    subtitle: 'Get the latest updates and exclusive content delivered to your inbox.',
-    image_url: null,
-    tenant_slug: 'sloom',
-    requires_confirmation: false,
-  },
-  {
-    id: '2',
-    uuid: 'form-uuid-2',
-    identifier: 'abc123XYZ456',
-    title: 'Join our design community',
-    subtitle: 'Stay updated with the latest design trends and inspiration.',
-    image_url: null,
-    tenant_slug: 'design-matters',
-    requires_confirmation: true,
-  },
-];
-
-// Helper functions
+/**
+ * Get magic link form by identifier
+ *
+ * Now uses API: GET /api/v1/tenants/{slug}/magic-links/{identifier}
+ */
 export async function getMagicLinkFormByIdentifier(
   tenantSlug: string,
   identifier: string
 ): Promise<MagicLinkForm | null> {
-  // Simulate API delay
-  await new Promise((resolve) => setTimeout(resolve, 100));
+  const apiForm = await apiGetMagicLinkForm(tenantSlug, identifier);
 
-  const form = MAGIC_LINK_FORMS.find(
-    (f) => f.identifier === identifier && f.tenant_slug === tenantSlug
-  );
+  if (!apiForm) {
+    return null;
+  }
 
-  return form || null;
+  // Note: API doesn't provide requires_confirmation, defaulting to false
+  return adaptMagicLinkForm(apiForm, tenantSlug, false);
 }
 
+/**
+ * Subscribe via magic link
+ *
+ * Now uses API: POST /api/v1/tenants/{slug}/magic-links/{identifier}
+ */
 export async function subscribeMagicLink(
   formIdentifier: string,
   email: string,
   tenantSlug: string
-): Promise<{ success: boolean; already_subscribed?: boolean }> {
-  // Simulate API delay
-  await new Promise((resolve) => setTimeout(resolve, 500));
+): Promise<{
+  success: boolean;
+  already_subscribed?: boolean;
+  has_published_posts?: boolean;
+  error?: string;
+}> {
+  try {
+    const response = await apiSubscribeMagicLink(
+      tenantSlug,
+      formIdentifier,
+      email
+    );
 
-  // In production, this would make an API call to save the subscription
-  // For now, we'll just return success
-  // Randomly return already_subscribed for demo purposes
-  const alreadySubscribed = Math.random() > 0.7;
+    return {
+      success: true,
+      already_subscribed: response.headers.alreadySubscribed,
+      has_published_posts: response.headers.hasPublishedPosts,
+    };
+  } catch (error) {
+    if (error instanceof ApiError) {
+      return {
+        success: false,
+        error: error.getUserMessage(),
+      };
+    }
 
-  return {
-    success: true,
-    already_subscribed: alreadySubscribed,
-  };
+    return {
+      success: false,
+      error: 'An unexpected error occurred. Please try again.',
+    };
+  }
 }
