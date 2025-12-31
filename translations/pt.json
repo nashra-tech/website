@@ -18,6 +18,15 @@
     "previous": "Anterior",
     "next": "Próximo"
   },
+  "newsletter": {
+    "title": "Receba os últimos artigos",
+    "subtitle": "Entregue na sua caixa de entrada"
+  },
+  "dialog": {
+    "subscribe_title": "Inscrever-se no boletim informativo",
+    "subscription_success_title": "Inscrição bem-sucedida",
+    "close": "Fechar"
+  },
   "magic_link": {
     "subscribe": "Inscrever-se",
     "subscribing": "Inscrevendo...",

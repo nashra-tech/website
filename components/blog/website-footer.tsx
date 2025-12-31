@@ -10,6 +10,7 @@
 import { Tenant } from '@/types';
 import { SubscribeForm } from './subscribe-form';
 import { PoweredByNashra } from './powered-by-nashra';
+import { useTranslations } from '@/lib/i18n';
 
 interface WebsiteFooterProps {
   tenant: Tenant;
@@ -18,6 +19,8 @@ interface WebsiteFooterProps {
 export function WebsiteFooter({ tenant }: WebsiteFooterProps) {
   const tenantDirection = tenant.website_direction || 'ltr';
   const isTenantRTL = tenantDirection === 'rtl';
+  const tenantLanguage = tenant.website_language || 'en';
+  const { t } = useTranslations(tenantLanguage);
 
   return (
     <footer className="p-3 sm:p-0">
@@ -37,12 +40,12 @@ export function WebsiteFooter({ tenant }: WebsiteFooterProps) {
         <div className="max-w-[560px] mx-auto">
           <div>
             {/* Subscription Form Section */}
-            <div className="mb-4 sm:mt-0 mt-4">
+            <div className="mb-4 sm:mt-0 mt-4" dir={tenantDirection}>
               <h2 className="text-md text-primary font-medium text-gray-900 dark:text-white">
-                Get the latest articles
+                {t('newsletter.title')}
               </h2>
               <p className="text-md font-medium text-neutral-500 dark:text-base-400">
-                Delivered to your inbox
+                {t('newsletter.subtitle')}
               </p>
             </div>
 

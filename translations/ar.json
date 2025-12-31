@@ -18,6 +18,15 @@
     "previous": "السابق",
     "next": "التالي"
   },
+  "newsletter": {
+    "title": "احصل على أحدث المقالات",
+    "subtitle": "يصل إلى بريدك الإلكتروني"
+  },
+  "dialog": {
+    "subscribe_title": "الاشتراك في النشرة الإخبارية",
+    "subscription_success_title": "تم الاشتراك بنجاح",
+    "close": "إغلاق"
+  },
   "magic_link": {
     "subscribe": "اشترك",
     "subscribing": "جاري الاشتراك...",

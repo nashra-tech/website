@@ -18,6 +18,15 @@
     "previous": "पिछला",
     "next": "अगला"
   },
+  "newsletter": {
+    "title": "नवीनतम लेख प्राप्त करें",
+    "subtitle": "आपके इनबॉक्स में पहुंचाया गया"
+  },
+  "dialog": {
+    "subscribe_title": "न्यूज़लेटर की सदस्यता लें",
+    "subscription_success_title": "सदस्यता सफल",
+    "close": "बंद करें"
+  },
   "magic_link": {
     "subscribe": "सदस्यता लें",
     "subscribing": "सदस्यता ली जा रही है...",

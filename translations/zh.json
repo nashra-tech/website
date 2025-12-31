@@ -18,6 +18,15 @@
     "previous": "上一页",
     "next": "下一页"
   },
+  "newsletter": {
+    "title": "获取最新文章",
+    "subtitle": "发送到您的收件箱"
+  },
+  "dialog": {
+    "subscribe_title": "订阅新闻通讯",
+    "subscription_success_title": "订阅成功",
+    "close": "关闭"
+  },
   "magic_link": {
     "subscribe": "订阅",
     "subscribing": "订阅中...",

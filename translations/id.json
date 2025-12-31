@@ -18,6 +18,15 @@
     "previous": "Sebelumnya",
     "next": "Berikutnya"
   },
+  "newsletter": {
+    "title": "Dapatkan artikel terbaru",
+    "subtitle": "Dikirim ke kotak masuk Anda"
+  },
+  "dialog": {
+    "subscribe_title": "Berlangganan newsletter",
+    "subscription_success_title": "Berlangganan berhasil",
+    "close": "Tutup"
+  },
   "magic_link": {
     "subscribe": "Berlangganan",
     "subscribing": "Berlangganan...",

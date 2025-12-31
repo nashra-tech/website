@@ -18,6 +18,15 @@
     "previous": "Zurück",
     "next": "Weiter"
   },
+  "newsletter": {
+    "title": "Erhalten Sie die neuesten Artikel",
+    "subtitle": "Direkt in Ihren Posteingang geliefert"
+  },
+  "dialog": {
+    "subscribe_title": "Newsletter abonnieren",
+    "subscription_success_title": "Abonnement erfolgreich",
+    "close": "Schließen"
+  },
   "magic_link": {
     "subscribe": "Abonnieren",
     "subscribing": "Wird abonniert...",

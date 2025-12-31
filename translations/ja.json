@@ -18,6 +18,15 @@
     "previous": "前へ",
     "next": "次へ"
   },
+  "newsletter": {
+    "title": "最新記事を受け取る",
+    "subtitle": "受信トレイに配信"
+  },
+  "dialog": {
+    "subscribe_title": "ニュースレターを購読する",
+    "subscription_success_title": "購読成功",
+    "close": "閉じる"
+  },
   "magic_link": {
     "subscribe": "購読する",
     "subscribing": "購読中...",

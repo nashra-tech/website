@@ -15,6 +15,7 @@ import {
 import { SubscribeForm } from './subscribe-form';
 import { ThemeProvider, useTheme } from '@/contexts/theme-context';
 import { Icons } from '@/components/ui/icons';
+import { useTranslations } from '@/lib/i18n';
 
 interface WebsiteLayoutProps {
   children: React.ReactNode;
@@ -44,6 +45,8 @@ export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
   const [open, setOpen] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const tenantDirection = tenant.website_direction || 'ltr';
+  const tenantLanguage = tenant.website_language || 'en';
+  const { t } = useTranslations(tenantLanguage);
 
   return (
     <ThemeProvider>
@@ -78,7 +81,7 @@ export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
                       size="sm"
                       variant="default"
                     >
-                      Subscribe
+                      {t('common.subscribe')}
                     </Button>
                   </DialogTrigger>
                   <DialogContent
@@ -88,19 +91,19 @@ export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
                   >
                     <DialogHeader className="">
                       <DialogTitle className="sr-only">
-                        {showSuccess ? 'Subscription successful' : 'Subscribe to newsletter'}
+                        {showSuccess ? t('dialog.subscription_success_title') : t('dialog.subscribe_title')}
                       </DialogTitle>
                     </DialogHeader>
 
                     {!showSuccess && (
                       <div>
                         {/* Start Form Section */}
-                        <div className="mb-3">
+                        <div className="mb-3" dir={tenantDirection}>
                           <h2 className="text-md text-primary font-medium text-gray-900 dark:text-white">
-                            Get the latest articles
+                            {t('newsletter.title')}
                           </h2>
                           <p className="text-md font-medium text-neutral-500 dark:text-gray-300">
-                            Delivered to your inbox
+                            {t('newsletter.subtitle')}
                           </p>
                         </div>
                       </div>
