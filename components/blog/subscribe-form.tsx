@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Icons } from '@/components/ui/icons';
 import { H3 } from "@/components/system-ui/typography";
 import { Tenant } from '@/types';
+import { useTranslations } from '@/lib/i18n';
 
 interface SubscribeFormProps {
     isPopup?: boolean;
@@ -26,12 +27,14 @@ export function SubscribeForm({
     // Get tenant direction settings
     const tenantDirection = tenant.website_direction || 'ltr';
     const isTenantRTL = tenantDirection === 'rtl';
+    const tenantLanguage = tenant.website_language || 'en';
+    const { t } = useTranslations(tenantLanguage);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (!email) {
-            setError('Email is required');
+            setError(t('common.email_required'));
             return;
         }
 
@@ -52,9 +55,9 @@ export function SubscribeForm({
             if (err?.getUserMessage) {
                 setError(err.getUserMessage());
             } else {
-                setError('Failed to subscribe. Please try again.');
+                setError(t('common.subscription_error'));
             }
-        } finally {
+        } finally{
             setProcessing(false);
         }
     };
@@ -67,7 +70,7 @@ export function SubscribeForm({
                     <Icons.check className="h-4 w-4 text-white" />
                 </div>
                 <H3 className="text-lg font-medium mb-2">
-                    You&apos;re subscribed! 🎉
+                    {t('common.subscription_success')}
                 </H3>
             </div>
         );
@@ -81,7 +84,7 @@ export function SubscribeForm({
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     className={`${error ? 'border-destructive' : ''} ${isTenantRTL ? 'text-right' : 'text-left'} h-10 rounded-lg border-gray-300 dark:border-base-800 dark:bg-base-800 dark:text-base-400`}
-                    placeholder="Enter your email address"
+                    placeholder={t('common.email_placeholder')}
                     required
                     dir={tenantDirection}
                 />
@@ -107,10 +110,10 @@ export function SubscribeForm({
                     ) : subscribed ? (
                         <>
                             <Icons.check className="h-4 w-4 mr-1" />
-                            Subscribed
+                            {t('common.subscribed')}
                         </>
                     ) : (
-                        'Subscribe'
+                        t('common.subscribe')
                     )}
                 </Button>
             </div>

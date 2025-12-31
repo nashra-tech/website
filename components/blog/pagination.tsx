@@ -19,6 +19,7 @@ interface PaginationProps {
   from: number;
   to: number;
   tenantDirection?: 'ltr' | 'rtl';
+  language?: string; // Add language prop for future extensibility
 }
 
 export function Pagination({

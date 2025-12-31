@@ -1,0 +1,39 @@
+{
+  "common": {
+    "powered_by": "Desenvolvido por",
+    "subscribe": "Inscrever-se",
+    "subscribing": "Inscrevendo...",
+    "subscribed": "Inscrito",
+    "email_placeholder": "Digite seu endereço de e-mail",
+    "email_required": "E-mail é obrigatório",
+    "invalid_email": "Por favor, insira um endereço de e-mail válido",
+    "subscription_success": "Você está inscrito! 🎉",
+    "subscription_error": "Falha ao inscrever. Por favor, tente novamente.",
+    "explore": "Explorar"
+  },
+  "home": {
+    "empty_title": "Estamos apenas começando. Inscreva-se para atualizações!",
+    "page": "Página",
+    "of": "de",
+    "previous": "Anterior",
+    "next": "Próximo"
+  },
+  "magic_link": {
+    "subscribe": "Inscrever-se",
+    "subscribing": "Inscrevendo...",
+    "already_subscribed": "Já Inscrito",
+    "already_subscribed_message": "Você já está inscrito em",
+    "check_email": "Verifique seu e-mail",
+    "check_email_message": "Por favor, verifique seu e-mail para confirmar sua inscrição em",
+    "you_are_in": "Você está dentro",
+    "subscribed_to": "Inscrito em",
+    "your_email": "Seu e-mail"
+  },
+  "errors": {
+    "tenant_not_found": "O espaço de trabalho solicitado não foi encontrado.",
+    "post_not_found": "A publicação solicitada não foi encontrada.",
+    "email_already_subscribed": "Este e-mail já está inscrito.",
+    "subscription_failed": "Falha ao inscrever. Por favor, tente novamente.",
+    "generic_error": "Ocorreu um erro inesperado. Por favor, tente novamente."
+  }
+}

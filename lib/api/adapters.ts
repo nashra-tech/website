@@ -28,7 +28,7 @@ export function adaptTenant(apiTenant: ApiTenant): Tenant {
       footer_text: apiTenant.footer_text || undefined,
     },
     website_direction: apiTenant.website_direction,
-    website_language:apiTenant.website_language,
+    website_language: apiTenant.website_language,
     has_paid_subscription: apiTenant.has_active_subscription,
   };
 }

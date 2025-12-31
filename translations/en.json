@@ -1,0 +1,39 @@
+{
+  "common": {
+    "powered_by": "Powered by",
+    "subscribe": "Subscribe",
+    "subscribing": "Subscribing...",
+    "subscribed": "Subscribed",
+    "email_placeholder": "Enter your email address",
+    "email_required": "Email is required",
+    "invalid_email": "Please enter a valid email address",
+    "subscription_success": "You're subscribed! 🎉",
+    "subscription_error": "Failed to subscribe. Please try again.",
+    "explore": "Explore"
+  },
+  "home": {
+    "empty_title": "We're just getting started. Sign up for updates!",
+    "page": "Page",
+    "of": "of",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "magic_link": {
+    "subscribe": "Subscribe",
+    "subscribing": "Subscribing...",
+    "already_subscribed": "Already Subscribed",
+    "already_subscribed_message": "You are already subscribed to",
+    "check_email": "Check your email",
+    "check_email_message": "Please check your email to confirm your subscription to",
+    "you_are_in": "You are in",
+    "subscribed_to": "Subscribed to",
+    "your_email": "Your email"
+  },
+  "errors": {
+    "tenant_not_found": "The requested workspace was not found.",
+    "post_not_found": "The requested post was not found.",
+    "email_already_subscribed": "This email is already subscribed.",
+    "subscription_failed": "Failed to subscribe. Please try again.",
+    "generic_error": "An unexpected error occurred. Please try again."
+  }
+}

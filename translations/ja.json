@@ -1,0 +1,39 @@
+{
+  "common": {
+    "powered_by": "提供：",
+    "subscribe": "購読する",
+    "subscribing": "購読中...",
+    "subscribed": "購読済み",
+    "email_placeholder": "メールアドレスを入力してください",
+    "email_required": "メールアドレスは必須です",
+    "invalid_email": "有効なメールアドレスを入力してください",
+    "subscription_success": "購読しました！🎉",
+    "subscription_error": "購読に失敗しました。もう一度お試しください。",
+    "explore": "探索する"
+  },
+  "home": {
+    "empty_title": "始めたばかりです。更新情報を受け取るためにサインアップしてください！",
+    "page": "ページ",
+    "of": "の",
+    "previous": "前へ",
+    "next": "次へ"
+  },
+  "magic_link": {
+    "subscribe": "購読する",
+    "subscribing": "購読中...",
+    "already_subscribed": "購読済み",
+    "already_subscribed_message": "すでに購読しています",
+    "check_email": "メールを確認してください",
+    "check_email_message": "購読を確認するためにメールをご確認ください",
+    "you_are_in": "登録完了",
+    "subscribed_to": "購読済み",
+    "your_email": "あなたのメール"
+  },
+  "errors": {
+    "tenant_not_found": "リクエストされたワークスペースが見つかりませんでした。",
+    "post_not_found": "リクエストされた投稿が見つかりませんでした。",
+    "email_already_subscribed": "このメールアドレスはすでに購読されています。",
+    "subscription_failed": "購読に失敗しました。もう一度お試しください。",
+    "generic_error": "予期しないエラーが発生しました。もう一度お試しください。"
+  }
+}

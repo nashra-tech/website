@@ -1,0 +1,39 @@
+{
+  "common": {
+    "powered_by": "Bereitgestellt von",
+    "subscribe": "Abonnieren",
+    "subscribing": "Wird abonniert...",
+    "subscribed": "Abonniert",
+    "email_placeholder": "Geben Sie Ihre E-Mail-Adresse ein",
+    "email_required": "E-Mail ist erforderlich",
+    "invalid_email": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+    "subscription_success": "Sie sind abonniert! 🎉",
+    "subscription_error": "Abonnement fehlgeschlagen. Bitte versuchen Sie es erneut.",
+    "explore": "Erkunden"
+  },
+  "home": {
+    "empty_title": "Wir fangen gerade erst an. Melden Sie sich für Updates an!",
+    "page": "Seite",
+    "of": "von",
+    "previous": "Zurück",
+    "next": "Weiter"
+  },
+  "magic_link": {
+    "subscribe": "Abonnieren",
+    "subscribing": "Wird abonniert...",
+    "already_subscribed": "Bereits Abonniert",
+    "already_subscribed_message": "Sie sind bereits abonniert bei",
+    "check_email": "Überprüfen Sie Ihre E-Mail",
+    "check_email_message": "Bitte überprüfen Sie Ihre E-Mail, um Ihr Abonnement zu bestätigen bei",
+    "you_are_in": "Sie sind dabei",
+    "subscribed_to": "Abonniert bei",
+    "your_email": "Ihre E-Mail"
+  },
+  "errors": {
+    "tenant_not_found": "Der angeforderte Arbeitsbereich wurde nicht gefunden.",
+    "post_not_found": "Der angeforderte Beitrag wurde nicht gefunden.",
+    "email_already_subscribed": "Diese E-Mail ist bereits abonniert.",
+    "subscription_failed": "Abonnement fehlgeschlagen. Bitte versuchen Sie es erneut.",
+    "generic_error": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
+  }
+}

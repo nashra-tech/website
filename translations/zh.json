@@ -1,0 +1,39 @@
+{
+  "common": {
+    "powered_by": "提供支持",
+    "subscribe": "订阅",
+    "subscribing": "订阅中...",
+    "subscribed": "已订阅",
+    "email_placeholder": "输入您的电子邮件地址",
+    "email_required": "电子邮件为必填项",
+    "invalid_email": "请输入有效的电子邮件地址",
+    "subscription_success": "您已订阅！🎉",
+    "subscription_error": "订阅失败。请重试。",
+    "explore": "探索"
+  },
+  "home": {
+    "empty_title": "我们刚刚开始。注册以获取更新！",
+    "page": "页",
+    "of": "共",
+    "previous": "上一页",
+    "next": "下一页"
+  },
+  "magic_link": {
+    "subscribe": "订阅",
+    "subscribing": "订阅中...",
+    "already_subscribed": "已订阅",
+    "already_subscribed_message": "您已订阅",
+    "check_email": "检查您的电子邮件",
+    "check_email_message": "请检查您的电子邮件以确认您对以下内容的订阅",
+    "you_are_in": "您已加入",
+    "subscribed_to": "已订阅",
+    "your_email": "您的电子邮件"
+  },
+  "errors": {
+    "tenant_not_found": "未找到请求的工作区。",
+    "post_not_found": "未找到请求的帖子。",
+    "email_already_subscribed": "此电子邮件已订阅。",
+    "subscription_failed": "订阅失败。请重试。",
+    "generic_error": "发生意外错误。请重试。"
+  }
+}

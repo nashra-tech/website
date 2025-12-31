@@ -1,0 +1,39 @@
+{
+  "common": {
+    "powered_by": "Propulsé par",
+    "subscribe": "S'abonner",
+    "subscribing": "Abonnement en cours...",
+    "subscribed": "Abonné",
+    "email_placeholder": "Entrez votre adresse e-mail",
+    "email_required": "L'e-mail est requis",
+    "invalid_email": "Veuillez entrer une adresse e-mail valide",
+    "subscription_success": "Vous êtes abonné ! 🎉",
+    "subscription_error": "Échec de l'abonnement. Veuillez réessayer.",
+    "explore": "Explorer"
+  },
+  "home": {
+    "empty_title": "Nous venons de commencer. Inscrivez-vous pour les mises à jour !",
+    "page": "Page",
+    "of": "de",
+    "previous": "Précédent",
+    "next": "Suivant"
+  },
+  "magic_link": {
+    "subscribe": "S'abonner",
+    "subscribing": "Abonnement en cours...",
+    "already_subscribed": "Déjà Abonné",
+    "already_subscribed_message": "Vous êtes déjà abonné à",
+    "check_email": "Vérifiez votre e-mail",
+    "check_email_message": "Veuillez vérifier votre e-mail pour confirmer votre abonnement à",
+    "you_are_in": "Vous êtes inscrit",
+    "subscribed_to": "Abonné à",
+    "your_email": "Votre e-mail"
+  },
+  "errors": {
+    "tenant_not_found": "L'espace de travail demandé n'a pas été trouvé.",
+    "post_not_found": "La publication demandée n'a pas été trouvée.",
+    "email_already_subscribed": "Cet e-mail est déjà abonné.",
+    "subscription_failed": "Échec de l'abonnement. Veuillez réessayer.",
+    "generic_error": "Une erreur inattendue s'est produite. Veuillez réessayer."
+  }
+}

@@ -9,6 +9,7 @@ import { InputField } from '@/components/system-ui/InputField';
 import { DotPattern } from '@/components/ui/DotPattern';
 import { AppAvatar } from '@/components/ui/app-avatar';
 import { subscribeMagicLink } from '@/lib/data';
+import { useTranslations } from '@/lib/i18n';
 
 interface MagicLinkClientProps {
   form: MagicLinkForm;
@@ -24,6 +25,8 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
 
   const direction = tenant.website_direction || 'ltr';
   const isRTL = direction === 'rtl';
+  const language = tenant.website_language || 'en';
+  const { t } = useTranslations(language);
 
   // Email validation function
   const validateEmail = (email: string): boolean => {
@@ -39,12 +42,12 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
 
     // Frontend validation
     if (!email.trim()) {
-      setEmailError('Email is required');
+      setEmailError(t('common.email_required'));
       return;
     }
 
     if (!validateEmail(email.trim())) {
-      setEmailError('Please enter a valid email address');
+      setEmailError(t('common.invalid_email'));
       return;
     }
 
@@ -68,10 +71,10 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
         }
       } else {
         // Handle API error
-        setEmailError(result.error || 'Failed to subscribe. Please try again.');
+        setEmailError(result.error || t('common.subscription_error'));
       }
     } catch (error) {
-      setEmailError('Failed to subscribe. Please try again.');
+      setEmailError(t('common.subscription_error'));
     } finally {
       setProcessing(false);
     }
@@ -137,7 +140,7 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
                     type="email"
                     name="email"
                     autoComplete="email"
-                    placeholder="Your email"
+                    placeholder={t('magic_link.your_email')}
                     value={email}
                     onChange={(e) => {
                       setEmail(e.target.value);
@@ -153,7 +156,7 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
                     disabled={processing}
                     className="w-full bg-gray-900 text-white hover:bg-black rounded-lg font-medium transition-all shadow-lg shadow-gray-900/10"
                   >
-                    {processing ? 'Subscribing...' : 'Subscribe'}
+                    {processing ? t('magic_link.subscribing') : t('magic_link.subscribe')}
                   </Button>
                 </div>
               </form>
@@ -164,22 +167,22 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
               <div className="space-y-2">
                 <h2 className="text-xl font-bold text-gray-900" dir={direction}>
                   {alreadySubscribed
-                    ? 'Already Subscribed'
+                    ? t('magic_link.already_subscribed')
                     : form.requires_confirmation
-                    ? 'Check your email'
-                    : 'You are in'}
+                    ? t('magic_link.check_email')
+                    : t('magic_link.you_are_in')}
                 </h2>
                 <p className="text-gray-500 text-sm leading-relaxed">
                   {alreadySubscribed ? (
                     <>
-                      You are already subscribed to{' '}
+                      {t('magic_link.already_subscribed_message')}{' '}
                       <span className="font-semibold text-gray-900">{form.title}</span>.
                     </>
                   ) : form.requires_confirmation ? (
-                    `Please check your email to confirm your subscription to ${form.title}`
+                    `${t('magic_link.check_email_message')} ${form.title}`
                   ) : (
                     <>
-                      Subscribed to{' '}
+                      {t('magic_link.subscribed_to')}{' '}
                       <span className="font-semibold text-gray-900">{form.title}</span>.
                     </>
                   )}
@@ -191,7 +194,7 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
                   dir={direction}
                   className="w-full bg-gray-900 text-white hover:bg-black rounded-lg font-medium shadow-lg shadow-gray-900/10"
                 >
-                  Explore {tenant.name}
+                  {t('common.explore')} {tenant.name}
                 </Button>
               )}
             </div>
@@ -202,7 +205,7 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
         <div className="w-full flex justify-center">
           <PoweredByNashra
             isRtl={isRTL}
-            translations={{ made_with: 'Powered by' }}
+            translations={{ made_with: t('common.powered_by') }}
             clickable={true}
             className="opacity-80 hover:opacity-100 transition-opacity"
           />

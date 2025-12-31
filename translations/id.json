@@ -1,0 +1,39 @@
+{
+  "common": {
+    "powered_by": "Didukung oleh",
+    "subscribe": "Berlangganan",
+    "subscribing": "Berlangganan...",
+    "subscribed": "Berlangganan",
+    "email_placeholder": "Masukkan alamat email Anda",
+    "email_required": "Email wajib diisi",
+    "invalid_email": "Silakan masukkan alamat email yang valid",
+    "subscription_success": "Anda telah berlangganan! 🎉",
+    "subscription_error": "Gagal berlangganan. Silakan coba lagi.",
+    "explore": "Jelajahi"
+  },
+  "home": {
+    "empty_title": "Kami baru saja memulai. Daftar untuk pembaruan!",
+    "page": "Halaman",
+    "of": "dari",
+    "previous": "Sebelumnya",
+    "next": "Berikutnya"
+  },
+  "magic_link": {
+    "subscribe": "Berlangganan",
+    "subscribing": "Berlangganan...",
+    "already_subscribed": "Sudah Berlangganan",
+    "already_subscribed_message": "Anda sudah berlangganan",
+    "check_email": "Periksa email Anda",
+    "check_email_message": "Silakan periksa email Anda untuk mengonfirmasi langganan Anda ke",
+    "you_are_in": "Anda masuk",
+    "subscribed_to": "Berlangganan ke",
+    "your_email": "Email Anda"
+  },
+  "errors": {
+    "tenant_not_found": "Ruang kerja yang diminta tidak ditemukan.",
+    "post_not_found": "Postingan yang diminta tidak ditemukan.",
+    "email_already_subscribed": "Email ini sudah berlangganan.",
+    "subscription_failed": "Gagal berlangganan. Silakan coba lagi.",
+    "generic_error": "Terjadi kesalahan tak terduga. Silakan coba lagi."
+  }
+}

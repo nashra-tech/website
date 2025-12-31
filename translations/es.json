@@ -1,0 +1,39 @@
+{
+  "common": {
+    "powered_by": "Desarrollado por",
+    "subscribe": "Suscribirse",
+    "subscribing": "Suscribiendo...",
+    "subscribed": "Suscrito",
+    "email_placeholder": "Ingresa tu dirección de correo electrónico",
+    "email_required": "El correo electrónico es obligatorio",
+    "invalid_email": "Por favor ingresa una dirección de correo electrónico válida",
+    "subscription_success": "¡Te has suscrito! 🎉",
+    "subscription_error": "Error al suscribirse. Por favor, inténtalo de nuevo.",
+    "explore": "Explorar"
+  },
+  "home": {
+    "empty_title": "¡Acabamos de empezar. Regístrate para recibir actualizaciones!",
+    "page": "Página",
+    "of": "de",
+    "previous": "Anterior",
+    "next": "Siguiente"
+  },
+  "magic_link": {
+    "subscribe": "Suscribirse",
+    "subscribing": "Suscribiendo...",
+    "already_subscribed": "Ya Suscrito",
+    "already_subscribed_message": "Ya estás suscrito a",
+    "check_email": "Revisa tu correo electrónico",
+    "check_email_message": "Por favor revisa tu correo electrónico para confirmar tu suscripción a",
+    "you_are_in": "Estás dentro",
+    "subscribed_to": "Suscrito a",
+    "your_email": "Tu correo electrónico"
+  },
+  "errors": {
+    "tenant_not_found": "No se encontró el espacio de trabajo solicitado.",
+    "post_not_found": "No se encontró la publicación solicitada.",
+    "email_already_subscribed": "Este correo electrónico ya está suscrito.",
+    "subscription_failed": "Error al suscribirse. Por favor, inténtalo de nuevo.",
+    "generic_error": "Ocurrió un error inesperado. Por favor, inténtalo de nuevo."
+  }
+}

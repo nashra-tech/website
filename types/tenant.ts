@@ -31,7 +31,7 @@ export interface Tenant {
 
   // Configuration
   website_direction?: 'ltr' | 'rtl';
-  website_language?: string;
+  website_language?: string; // ISO language code (e.g., 'en', 'ar', 'es')
 
   // Subscription settings
   has_paid_subscription?: boolean;
