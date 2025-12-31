@@ -15,7 +15,7 @@ import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/ui/icons';
 import { Small } from '@/components/system-ui/typography';
-
+import { getSocialPlatformByName } from '@/lib/data/social-links';
 interface PostDetailClientProps {
   tenant: Tenant;
   post: Post;
@@ -83,7 +83,7 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
                   {post.subtitle}
                 </h2>
               )}
-              <Small>{formattedDate}</Small>
+              <Small className='text-muted-foreground'>{formattedDate}</Small>
             </div>
           </div>
 
@@ -124,22 +124,24 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
             {tenant.footer_data.social_links &&
               tenant.footer_data.social_links.length > 0 && (
                 <div className="flex justify-center items-center gap-3 sm:gap-4 flex-wrap mb-6 sm:mb-8">
-                  {tenant.footer_data.social_links.map((link, index) => (
-                    <a
-                      key={index}
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="opacity-60 hover:opacity-100 transition-opacity flex-shrink-0"
-                      title={link.name}
-                    >
-                      <img
-                        src={`/images/socials/${link.name.toLowerCase()}.png`}
-                        alt={link.name}
-                        className="w-4 h-4 sm:w-5 sm:h-5"
-                      />
-                    </a>
-                  ))}
+                  {tenant.footer_data.social_links &&
+                  tenant.footer_data.social_links.length > 0 &&
+                  tenant.footer_data.social_links.map((link, index) => {
+                    const iconName = getSocialPlatformByName(link.name)?.icon as keyof typeof Icons;
+                    const Icon = Icons[iconName];
+                    return (
+                      <a
+                        key={index}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="opacity-60 hover:opacity-100 transition-opacity flex-shrink-0"
+                        title={link.name}
+                      >
+                        {Icon ? <Icon className="w-5 h-5 dark:invert" /> : null}
+                      </a>
+                    );
+                  })}
                 </div>
               )}
 

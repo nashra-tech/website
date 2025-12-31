@@ -11,6 +11,8 @@ import { Tenant } from '@/types';
 import { SubscribeForm } from './subscribe-form';
 import { PoweredByNashra } from './powered-by-nashra';
 import { useTranslations } from '@/lib/i18n';
+import { getSocialPlatformByName } from '@/lib/data/social-links';
+import { Icons,IconsMap } from '../ui/icons';
 
 interface WebsiteFooterProps {
   tenant: Tenant;
@@ -61,22 +63,22 @@ export function WebsiteFooter({ tenant }: WebsiteFooterProps) {
               <div className="flex items-center gap-3">
                 {tenant.footer_data.social_links &&
                   tenant.footer_data.social_links.length > 0 &&
-                  tenant.footer_data.social_links.map((link, index) => (
-                    <a
-                      key={index}
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="opacity-60 hover:opacity-100 transition-opacity flex-shrink-0"
-                      title={link.name}
-                    >
-                      <img
-                        src={`/images/socials/${link.name.toLowerCase()}.png`}
-                        alt={link.name}
-                        className="w-5 h-5"
-                      />
-                    </a>
-                  ))}
+                  tenant.footer_data.social_links.map((link, index) => {
+                    const iconName = getSocialPlatformByName(link.name)?.icon as keyof typeof Icons;
+                    const Icon = Icons[iconName];
+                    return (
+                      <a
+                        key={index}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="opacity-60 hover:opacity-100 transition-opacity flex-shrink-0"
+                        title={link.name}
+                      >
+                        {Icon ? <Icon className="w-5 h-5 dark:invert" /> : null}
+                      </a>
+                    );
+                  })}
               </div>
             </div>
 
