@@ -1,6 +1,12 @@
 import { type NextRequest, NextResponse } from 'next/server';
 import { rootDomain } from '@/lib/utils';
 
+/**
+ * Extract tenant identifier from request
+ *
+ * For nashra.website subdomains: returns subdomain only (e.g., "mahmoud" from mahmoud.nashra.website)
+ * For custom domains: returns full hostname (e.g., "mahmoud.msgpilot.com" or "msgpilot.com")
+ */
 function extractSubdomain(request: NextRequest): string | null {
   const url = request.url;
   const host = request.headers.get('host') || '';
@@ -31,13 +37,28 @@ function extractSubdomain(request: NextRequest): string | null {
     return parts.length > 0 ? parts[0] : null;
   }
 
-  // Regular subdomain detection
-  const isSubdomain =
+  // Check if this is a nashra.website subdomain
+  const isNashraSubdomain =
     hostname !== rootDomainFormatted &&
     hostname !== `www.${rootDomainFormatted}` &&
     hostname.endsWith(`.${rootDomainFormatted}`);
 
-  return isSubdomain ? hostname.replace(`.${rootDomainFormatted}`, '') : null;
+  if (isNashraSubdomain) {
+    // For nashra.website subdomains, return subdomain only
+    return hostname.replace(`.${rootDomainFormatted}`, '');
+  }
+
+  // Check if this is a custom domain (not the root domain and not www)
+  const isCustomDomain =
+    hostname !== rootDomainFormatted &&
+    hostname !== `www.${rootDomainFormatted}`;
+
+  if (isCustomDomain) {
+    // For custom domains, return the full hostname
+    return hostname;
+  }
+
+  return null;
 }
 
 export async function middleware(request: NextRequest) {
