@@ -11,6 +11,7 @@ import { WebsiteLayout } from '@/components/blog/website-layout';
 import { WebsiteFooter } from '@/components/blog/website-footer';
 import { BlogPostItem } from '@/components/blog/blog-post-item';
 import { Pagination } from '@/components/blog/pagination';
+import { PageTracker } from '@/components/blog/page-tracker';
 import { Separator } from '@/components/ui/separator';
 import { Empty } from '@/components/ui/empty';
 import { Icons } from '@/components/ui/icons';
@@ -55,6 +56,12 @@ export default async function TenantHomePage({ params, searchParams }: PageProps
       dir={tenantDirection}
       style={{ fontFamily: 'Cairo, system-ui, sans-serif' }}
     >
+      {/* PostHog Page Tracking */}
+      <PageTracker 
+        pageType="blog_index"
+        tenantUuid={tenant.uuid}
+      />
+      
       <WebsiteLayout tenant={tenant}>
         <div className="max-w-[560px] mx-auto p-3 sm:p-0">
           {/* Header Section - Responsive */}

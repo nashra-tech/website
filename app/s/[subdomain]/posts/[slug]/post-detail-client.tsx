@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/ui/icons';
 import { Small } from '@/components/system-ui/typography';
 import { getSocialPlatformByName } from '@/lib/data/social-links';
+import { usePageTracking } from '@/hooks/use-page-tracking';
 interface PostDetailClientProps {
   tenant: Tenant;
   post: Post;
@@ -24,6 +25,14 @@ interface PostDetailClientProps {
 
 export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientProps) {
   const [copied, setCopied] = useState(false);
+
+  // Track pageview with PostHog
+  // Captures analytics data for individual post views
+  usePageTracking({
+    page_type: 'blog_post',
+    tenant_uuid: tenant.uuid,
+    post_uuid: post.uuid,
+  });
 
   const tenantDirection = tenant.website_direction || 'ltr';
   const isRTL = tenantDirection === 'rtl';

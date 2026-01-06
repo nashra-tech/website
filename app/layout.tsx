@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { PostHogProvider } from '@/contexts/posthog-provider';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -15,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-sans antialiased">
-        {children}
+        <PostHogProvider>
+          {children}
+        </PostHogProvider>
         <SpeedInsights />
       </body>
     </html>
