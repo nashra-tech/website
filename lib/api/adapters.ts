@@ -20,7 +20,7 @@ export function adaptTenant(apiTenant: ApiTenant): Tenant {
     slug: apiTenant.slug,
     name: apiTenant.name,
     title: apiTenant.name, // Use name as title
-    subtitle: apiTenant.description, // Not provided by API
+    subtitle: apiTenant.description??'', // Not provided by API
     logo: apiTenant.logo || undefined,
     footer_data: {
       physical_address: apiTenant.physical_address || undefined,
@@ -30,6 +30,8 @@ export function adaptTenant(apiTenant: ApiTenant): Tenant {
     website_direction: apiTenant.website_direction,
     website_language: apiTenant.website_language,
     has_paid_subscription: apiTenant.has_active_subscription,
+    show_branding:apiTenant.show_branding??true,
+    brandColor:apiTenant.brandColor||'#1c1c1c'
   };
 }
 

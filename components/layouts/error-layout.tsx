@@ -31,7 +31,7 @@ function ErrorContent({
         <div className="flex flex-col items-center gap-1.5">
           {/* Light mode logo */}
           <Image
-            src="/logo/logo-dark.png"
+            src="/images/logo/logo-dark.png"
             alt="Nashra"
             width={100}
             height={14}
@@ -53,7 +53,7 @@ function ErrorContent({
           />
           {/* Dark mode logo */}
           <Image
-            src="/logo/logo-light.png"
+            src="/images/logo/logo-light.png"
             alt="Nashra"
             width={100}
             height={14}

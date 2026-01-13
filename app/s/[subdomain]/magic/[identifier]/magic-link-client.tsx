@@ -10,6 +10,7 @@ import { DotPattern } from '@/components/ui/DotPattern';
 import { AppAvatar } from '@/components/ui/app-avatar';
 import { subscribeMagicLink } from '@/lib/data';
 import { useTranslations } from '@/lib/i18n';
+import { ThemeProvider } from '@/contexts/theme-context';
 
 interface MagicLinkClientProps {
   form: MagicLinkForm;
@@ -88,7 +89,8 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
   const [hasPublishedPosts, setHasPublishedPosts] = useState(true);
 
   return (
-    <div className="relative min-h-screen w-full flex items-center justify-center p-0 bg-gray-50 overflow-hidden">
+    <ThemeProvider brandColor={tenant.brandColor}>
+      <div className="relative min-h-screen w-full flex items-center justify-center p-0 bg-gray-50 overflow-hidden">
       <div className="absolute inset-0 w-full h-full [mask-image:radial-gradient(600px_circle_at_center,white,transparent)]">
         <DotPattern width={24} height={24} cx={1} cy={1} cr={1} className="text-gray-200" />
       </div>
@@ -154,7 +156,7 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
                   <Button
                     type="submit"
                     disabled={processing}
-                    className="w-full bg-gray-900 text-white hover:bg-black rounded-lg font-medium transition-all shadow-lg shadow-gray-900/10"
+                    className="w-full"
                   >
                     {processing ? t('magic_link.subscribing') : t('magic_link.subscribe')}
                   </Button>
@@ -169,8 +171,8 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
                   {alreadySubscribed
                     ? t('magic_link.already_subscribed')
                     : form.requires_confirmation
-                    ? t('magic_link.check_email')
-                    : t('magic_link.you_are_in')}
+                      ? t('magic_link.check_email')
+                      : t('magic_link.you_are_in')}
                 </h2>
                 <p className="text-gray-500 text-sm leading-relaxed">
                   {alreadySubscribed ? (
@@ -202,15 +204,21 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
         </div>
 
         {/* 3. Footer Section: Powered By */}
-        <div className="w-full flex justify-center">
-          <PoweredByNashra
-            isRtl={isRTL}
-            translations={{ made_with: t('common.powered_by') }}
-            clickable={true}
-            className="opacity-80 hover:opacity-100 transition-opacity"
-          />
-        </div>
+
+
+        {tenant.show_branding && (
+          <div className="w-full flex justify-center">
+            <PoweredByNashra
+              isRtl={isRTL}
+              translations={{ made_with: t('common.powered_by') }}
+              clickable={true}
+              className="opacity-80 hover:opacity-100 transition-opacity"
+            />
+          </div>
+        )}
+
       </div>
-    </div>
+      </div>
+    </ThemeProvider>
   );
 }

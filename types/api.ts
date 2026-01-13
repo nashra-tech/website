@@ -70,6 +70,8 @@ export interface ApiTenant {
   description: string | null;
   footer_text: string | null;
   physical_address: string | null;
+  show_branding:boolean;
+  brandColor:string;
 }
 
 // ============================================================================

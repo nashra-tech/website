@@ -35,6 +35,8 @@ export interface Tenant {
 
   // Subscription settings
   has_paid_subscription?: boolean;
+  show_branding?: boolean;
+  brandColor?:string;
 }
 
 export interface TenantMeta {

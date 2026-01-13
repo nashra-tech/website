@@ -102,7 +102,7 @@ export function SubscribeForm({
                     className={`absolute top-1/2 -translate-y-1/2 ${isTenantRTL ? 'left-1' : 'right-1'} h-8 px-4 font-normal text-xs ${
                         subscribed
                             ? 'bg-green-600 hover:bg-green-600 text-white'
-                            : 'bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200'
+                            : ''
                     }`}
                 >
                     {processing ? (

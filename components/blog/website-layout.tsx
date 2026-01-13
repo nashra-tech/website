@@ -47,9 +47,8 @@ export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
   const tenantDirection = tenant.website_direction || 'ltr';
   const tenantLanguage = tenant.website_language || 'en';
   const { t } = useTranslations(tenantLanguage);
-
   return (
-    <ThemeProvider>
+    <ThemeProvider brandColor={tenant.brandColor}>
       <div
         className="min-h-[600px] flex flex-col bg-background transition-colors font-sans"
         dir={tenantDirection}
@@ -77,7 +76,6 @@ export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
                 <Dialog open={open} onOpenChange={setOpen}>
                   <DialogTrigger asChild>
                     <Button
-                      className="px-3 sm:px-4 bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 text-xs !font-normal"
                       size="sm"
                       variant="default"
                     >

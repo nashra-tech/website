@@ -72,7 +72,6 @@ export default async function TenantHomePage({ params, searchParams }: PageProps
             </Subtitle>
           </div>
 
-          <Separator />
 
           {/* Posts List */}
           <div className="w-full">
@@ -94,7 +93,6 @@ export default async function TenantHomePage({ params, searchParams }: PageProps
                     description={undefined}
                     icons={[Icons.annotation, Icons.email]}
                   />
-                  <Separator />
                 </div>
               )}
             </div>
