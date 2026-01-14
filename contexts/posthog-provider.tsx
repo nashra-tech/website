@@ -13,8 +13,8 @@ import { useEffect } from 'react';
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     // Only initialize if we have the API key and haven't initialized yet
-    const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY;
-    const posthogHost = process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com';
+    const posthogKey = process.env.POSTHOG_KEY;
+    const posthogHost = process.env.POSTHOG_HOST || 'https://us.i.posthog.com';
 
     if (posthogKey && typeof window !== 'undefined') {
       posthog.init(posthogKey, {
