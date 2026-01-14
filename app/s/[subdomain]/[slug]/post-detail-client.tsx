@@ -77,7 +77,7 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
     <div
       dir={tenantDirection}
       className="min-h-screen transition-colors"
-      style={{ fontFamily: 'sans-serif' }}
+      // style={{ fontFamily: 'sans-serif' }}
     >
       <WebsiteLayout tenant={tenant}>
         <div className="sm:mt-20 mt-16 w-full max-w-[560px] mx-auto p-3 sm:p-0">

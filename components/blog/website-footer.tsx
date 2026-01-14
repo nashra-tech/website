@@ -97,7 +97,7 @@ export function WebsiteFooter({ tenant }: WebsiteFooterProps) {
                         title={link.name}
                       >
                         <img
-                          src={`/images/socials/${link.name.toLowerCase()}.png`}
+                          src={`/images/socials/svg/${link.name.toLowerCase()}.svg`}
                           alt={link.name}
                           className="w-5 h-5"
                         />

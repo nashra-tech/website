@@ -41,7 +41,7 @@ export function BlogPostItem({
 
   return (
     <Link
-      href={`/posts/${post.slug}`}
+      href={`/${post.slug}`}
       className="py-3 px-2 w-full border-b cursor-pointer transition-colors block"
       dir={tenantDirection}
     >

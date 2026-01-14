@@ -77,9 +77,9 @@ export async function middleware(request: NextRequest) {
     }
 
     // For post detail pages on subdomain
-    if (pathname.startsWith('/posts/')) {
-      const slug = pathname.replace('/posts/', '');
-      return NextResponse.rewrite(new URL(`/s/${subdomain}/posts/${slug}${search}`, request.url));
+    if (pathname.startsWith('/')) {
+      const slug = pathname.replace('/', '');
+      return NextResponse.rewrite(new URL(`/s/${subdomain}/${slug}${search}`, request.url));
     }
 
     // For any other paths on subdomain, rewrite to subdomain route
