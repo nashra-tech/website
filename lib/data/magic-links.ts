@@ -2,8 +2,10 @@
  * Magic Link Forms Data
  *
  * Now uses API calls to the backend.
+ * Uses React cache() to deduplicate requests across generateMetadata and page components.
  */
 
+import { cache } from 'react';
 import { MagicLinkForm } from '@/types/magic-link';
 import {
   getMagicLinkFormByIdentifier as apiGetMagicLinkForm,
@@ -16,11 +18,12 @@ import { ApiError } from '@/lib/api/errors';
  * Get magic link form by identifier
  *
  * Now uses API: GET /api/v1/tenants/{slug}/magic-links/{identifier}
+ * Wrapped with React cache() to deduplicate requests in the same render
  */
-export async function getMagicLinkFormByIdentifier(
+export const getMagicLinkFormByIdentifier = cache(async (
   tenantSlug: string,
   identifier: string
-): Promise<MagicLinkForm | null> {
+): Promise<MagicLinkForm | null> => {
   const apiForm = await apiGetMagicLinkForm(tenantSlug, identifier);
 
   if (!apiForm) {
@@ -29,7 +32,7 @@ export async function getMagicLinkFormByIdentifier(
 
   // Note: API doesn't provide requires_confirmation, defaulting to false
   return adaptMagicLinkForm(apiForm, tenantSlug, false);
-}
+});
 
 /**
  * Subscribe via magic link

@@ -8,6 +8,7 @@
 import { notFound } from 'next/navigation';
 import { getTenantBySlug, getPostBySlug, getMorePosts } from '@/lib/data';
 import { PostDetailClient } from './post-detail-client';
+import { ThemeColorScript } from '@/components/theme/theme-color-script';
 
 interface PageProps {
   params: Promise<{
@@ -37,11 +38,14 @@ export default async function PostDetailPage({ params }: PageProps) {
   const morePosts = await getMorePosts(subdomain, post.uuid, 3);
 
   return (
-    <PostDetailClient
-      tenant={tenant}
-      post={post}
-      morePosts={morePosts}
-    />
+    <>
+      <ThemeColorScript brandColor={tenant.brandColor} />
+      <PostDetailClient
+        tenant={tenant}
+        post={post}
+        morePosts={morePosts}
+      />
+    </>
   );
 }
 

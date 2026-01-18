@@ -17,6 +17,7 @@ import { Empty } from '@/components/ui/empty';
 import { Icons } from '@/components/ui/icons';
 import { H2, Subtitle } from '@/components/system-ui/typography';
 import { getTranslations } from '@/lib/i18n';
+import { ThemeColorScript } from '@/components/theme/theme-color-script';
 
 interface PageProps {
   params: Promise<{
@@ -51,11 +52,13 @@ export default async function TenantHomePage({ params, searchParams }: PageProps
   const translations = getTranslations(tenantLanguage);
 
   return (
-    <div
-      className="min-h-screen  transition-colors flex justify-between flex-col"
-      dir={tenantDirection}
-      style={{ fontFamily: 'Cairo, system-ui, sans-serif' }}
-    >
+    <>
+      <ThemeColorScript brandColor={tenant.brandColor} />
+      <div
+        className="min-h-screen  transition-colors flex justify-between flex-col"
+        dir={tenantDirection}
+        style={{ fontFamily: 'Cairo, system-ui, sans-serif' }}
+      >
       {/* PostHog Page Tracking */}
       <PageTracker 
         pageType="blog_index"
@@ -115,7 +118,8 @@ export default async function TenantHomePage({ params, searchParams }: PageProps
       </WebsiteLayout>
 
       <WebsiteFooter tenant={tenant} />
-    </div>
+      </div>
+    </>
   );
 }
 

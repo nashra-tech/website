@@ -8,6 +8,7 @@
 import { notFound } from 'next/navigation';
 import { getTenantBySlug, getMagicLinkFormByIdentifier } from '@/lib/data';
 import { MagicLinkClient } from './magic-link-client';
+import { ThemeColorScript } from '@/components/theme/theme-color-script';
 
 interface PageProps {
   params: Promise<{
@@ -33,7 +34,12 @@ export default async function MagicLinkPage({ params }: PageProps) {
     notFound();
   }
 
-  return <MagicLinkClient form={form} tenant={tenant} />;
+  return (
+    <>
+      <ThemeColorScript brandColor={tenant.brandColor} />
+      <MagicLinkClient form={form} tenant={tenant} />
+    </>
+  );
 }
 
 // Generate metadata for SEO

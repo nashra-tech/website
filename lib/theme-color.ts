@@ -51,17 +51,13 @@ function toOklchString(l: number, c: number, h: number): string {
  * @param color - Hex color string (e.g., '#1c1c1c')
  */
 export function applyThemeColor(color: string | null | undefined) {
-  console.log('🎨 applyThemeColor called with:', color);
-
   if (typeof document === 'undefined') {
-    console.log('❌ Document is undefined (SSR)');
     return;
   }
 
   const root = document.documentElement;
 
   if (!color) {
-    console.log('⚠️ No color provided, removing theme variables');
     // Remove custom properties to use defaults from CSS
     root.style.removeProperty('--primary');
     root.style.removeProperty('--ring');
@@ -75,7 +71,6 @@ export function applyThemeColor(color: string | null | undefined) {
   }
 
   const oklch = hexToOklch(color);
-  console.log('🔄 Converted to OKLCh:', oklch);
 
   // Light mode primary (slightly darker)
   const lightPrimary = toOklchString(oklch.l * 0.95, oklch.c, oklch.h);
@@ -88,9 +83,6 @@ export function applyThemeColor(color: string | null | undefined) {
   const isDark = root.classList.contains('dark');
   const primary = isDark ? darkPrimary : lightPrimary;
 
-  console.log('🌙 Dark mode:', isDark);
-  console.log('🎨 Primary color:', primary);
-
   // Set primary color variables
   root.style.setProperty('--primary', primary);
   root.style.setProperty('--ring', primary);
@@ -102,6 +94,4 @@ export function applyThemeColor(color: string | null | undefined) {
   root.style.setProperty('--theme-color', color);
   root.style.setProperty('--theme-color-light', mutedPrimary);
   root.style.setProperty('--theme-color-muted', `${color}20`); // 12% opacity for backgrounds
-
-  console.log('✅ Theme color applied successfully!');
 }

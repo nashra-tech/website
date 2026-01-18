@@ -5,8 +5,11 @@
  * Migrated to use API calls instead of static data.
  *
  * All consuming code remains unchanged - only the implementation has changed!
+ *
+ * Uses React cache() to deduplicate requests across generateMetadata and page components.
  */
 
+import { cache } from 'react';
 import { Tenant, Post, PaginatedPosts } from '@/types';
 import {
   getTenantBySlug as apiGetTenantBySlug,
@@ -34,8 +37,9 @@ export {
  * Get tenant by slug
  *
  * Now uses API: GET /api/v1/tenants/{slug}
+ * Wrapped with React cache() to deduplicate requests in the same render
  */
-export async function getTenantBySlug(slug: string): Promise<Tenant | null> {
+export const getTenantBySlug = cache(async (slug: string): Promise<Tenant | null> => {
   const apiTenant = await apiGetTenantBySlug(slug);
 
   if (!apiTenant) {
@@ -43,7 +47,7 @@ export async function getTenantBySlug(slug: string): Promise<Tenant | null> {
   }
 
   return adaptTenant(apiTenant);
-}
+});
 
 // ============================================================================
 // POST DATA ACCESS
@@ -53,31 +57,33 @@ export async function getTenantBySlug(slug: string): Promise<Tenant | null> {
  * Get all posts for a tenant (with optional pagination)
  *
  * Now uses API: GET /api/v1/tenants/{slug}/posts
+ * Wrapped with React cache() to deduplicate requests in the same render
  */
-export async function getPosts(
+export const getPosts = cache(async (
   tenantSlug: string,
   options: {
     page?: number;
     perPage?: number;
     published?: boolean; // Note: API only returns published posts
   } = {}
-): Promise<PaginatedPosts> {
+): Promise<PaginatedPosts> => {
   const { page = 1, perPage = 10 } = options;
 
   const apiResponse = await apiGetPosts(tenantSlug, { page, perPage });
 
   return adaptPaginatedPosts(apiResponse, tenantSlug);
-}
+});
 
 /**
  * Get a single post by slug
  *
  * Now uses API: GET /api/v1/tenants/{slug}/posts/{post}
+ * Wrapped with React cache() to deduplicate requests in the same render
  */
-export async function getPostBySlug(
+export const getPostBySlug = cache(async (
   tenantSlug: string,
   postSlug: string
-): Promise<Post | null> {
+): Promise<Post | null> => {
   const apiPost = await apiGetPostBySlug(tenantSlug, postSlug);
 
   if (!apiPost) {
@@ -85,19 +91,20 @@ export async function getPostBySlug(
   }
 
   return adaptPostDetail(apiPost, tenantSlug);
-}
+});
 
 /**
  * Get more posts for "Related Articles" section
  * Excludes the current post
  *
  * Now uses API: GET /api/v1/tenants/{slug}/posts (with client-side filtering)
+ * Wrapped with React cache() to deduplicate requests in the same render
  */
-export async function getMorePosts(
+export const getMorePosts = cache(async (
   tenantSlug: string,
   currentPostUuid: string,
   limit: number = 3
-): Promise<Post[]> {
+): Promise<Post[]> => {
   const apiPosts = await apiGetMorePosts(tenantSlug, currentPostUuid, limit);
 
   return apiPosts.map((post) => ({
@@ -114,4 +121,4 @@ export async function getMorePosts(
     updated_at: post.created_at,
     published: true,
   }));
-}
+});
