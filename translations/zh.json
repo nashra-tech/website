@@ -9,7 +9,8 @@
     "invalid_email": "请输入有效的电子邮件地址",
     "subscription_success": "您已订阅！🎉",
     "subscription_error": "订阅失败。请重试。",
-    "explore": "探索"
+    "explore": "探索",
+    "more_articles": "更多文章"
   },
   "home": {
     "empty_title": "我们刚刚开始。注册以获取更新！",

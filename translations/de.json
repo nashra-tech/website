@@ -9,7 +9,8 @@
     "invalid_email": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
     "subscription_success": "Sie sind abonniert! 🎉",
     "subscription_error": "Abonnement fehlgeschlagen. Bitte versuchen Sie es erneut.",
-    "explore": "Erkunden"
+    "explore": "Erkunden",
+    "more_articles": "Weitere Artikel"
   },
   "home": {
     "empty_title": "Wir fangen gerade erst an. Melden Sie sich für Updates an!",

@@ -9,7 +9,8 @@
     "invalid_email": "Por favor, insira um endereço de e-mail válido",
     "subscription_success": "Você está inscrito! 🎉",
     "subscription_error": "Falha ao inscrever. Por favor, tente novamente.",
-    "explore": "Explorar"
+    "explore": "Explorar",
+    "more_articles": "Mais artigos"
   },
   "home": {
     "empty_title": "Estamos apenas começando. Inscreva-se para atualizações!",

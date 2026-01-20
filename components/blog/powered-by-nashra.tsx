@@ -18,7 +18,7 @@ export function PoweredByNashra({
 }: PoweredByNashraProps) {
     const poweredByText = translations.made_with || 'Powered by';
 
-    const flexDirection = isRtl ? "flex-row-reverse" : "flex-row";
+    const flexDirection = isRtl ? "flex-row" : "flex-row";
 
     const content = (
         <div

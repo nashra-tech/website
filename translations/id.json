@@ -9,7 +9,8 @@
     "invalid_email": "Silakan masukkan alamat email yang valid",
     "subscription_success": "Anda telah berlangganan! 🎉",
     "subscription_error": "Gagal berlangganan. Silakan coba lagi.",
-    "explore": "Jelajahi"
+    "explore": "Jelajahi",
+    "more_articles": "Artikel lainnya"
   },
   "home": {
     "empty_title": "Kami baru saja memulai. Daftar untuk pembaruan!",

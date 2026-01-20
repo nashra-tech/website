@@ -32,7 +32,7 @@ export function WebsiteFooter({ tenant }: WebsiteFooterProps) {
           <div className={`fixed bottom-4 z-50 ${isTenantRTL ? 'left-4' : 'right-4'}`}>
             <PoweredByNashra
               isRtl={isTenantRTL}
-              translations={{ made_with: 'Powered by' }}
+              translations={{ made_with: t('common.powered_by') }}
               clickable={true}
               className="opacity-80 hover:opacity-100 transition-opacity"
             />

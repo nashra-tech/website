@@ -17,6 +17,7 @@ import { Icons } from '@/components/ui/icons';
 import { Small } from '@/components/system-ui/typography';
 import { getSocialPlatformByName } from '@/lib/data/social-links';
 import { usePageTracking } from '@/hooks/use-page-tracking';
+import { useTranslations } from '@/lib/i18n/use-translations';
 interface PostDetailClientProps {
   tenant: Tenant;
   post: Post;
@@ -24,6 +25,8 @@ interface PostDetailClientProps {
 }
 
 export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientProps) {
+    const tenantLanguage = tenant.website_language || 'en';
+  const { t } = useTranslations(tenantLanguage);
   const [copied, setCopied] = useState(false);
 
   // Track pageview with PostHog
@@ -163,7 +166,7 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
                   }`}
                 >
                   <h3 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white">
-                    More Articles
+                    {t('common.more_articles')}
                   </h3>
                   {isRTL ? (
                     <Icons.arrowLeft className="w-3 h-3 sm:w-4 sm:h-4 text-base" />
@@ -173,12 +176,13 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
                 </div>
                 <div className="space-y-0">
                   <Separator />
-                  {morePosts.map((morePost) => (
+                  {morePosts.map((morePost, idx) => (
                     <BlogPostItem
                       key={morePost.uuid}
                       post={morePost}
                       tenantSlug={tenant.slug}
                       tenantDirection={tenantDirection}
+                      isLast={idx === morePosts.length - 1}
                     />
                   ))}
                 </div>

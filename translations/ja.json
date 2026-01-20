@@ -9,7 +9,8 @@
     "invalid_email": "有効なメールアドレスを入力してください",
     "subscription_success": "購読しました！🎉",
     "subscription_error": "購読に失敗しました。もう一度お試しください。",
-    "explore": "探索する"
+     "explore": "探索する",
+     "more_articles": "その他の記事"
   },
   "home": {
     "empty_title": "始めたばかりです。更新情報を受け取るためにサインアップしてください！",

@@ -13,6 +13,7 @@ interface BlogPostItemProps {
   tenantSlug: string;
   tenantDirection?: 'ltr' | 'rtl';
   isFirst?: boolean;
+  isLast?: boolean;
 }
 
 export function BlogPostItem({
@@ -20,6 +21,7 @@ export function BlogPostItem({
   tenantSlug,
   tenantDirection = 'ltr',
   isFirst = false,
+  isLast = false,
 }: BlogPostItemProps) {
   const isRTL = tenantDirection === 'rtl';
   const locale = isRTL ? 'ar-EG' : 'en-US';
@@ -42,7 +44,7 @@ export function BlogPostItem({
   return (
     <Link
       href={`/${post.slug}`}
-      className="py-3 px-2 w-full border-b cursor-pointer transition-colors block"
+      className={`py-3 px-2 w-full ${!isLast ? 'border-b' : ''} cursor-pointer transition-colors block`}
       dir={tenantDirection}
     >
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-4">
