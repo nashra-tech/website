@@ -28,6 +28,7 @@ export async function getTenantBySlug(
         timeout: API_CONFIG.timeout.read,
       }
     );
+    console.log(response.data);
     return response.data;
   } catch (error) {
     // Return null for 404 errors (tenant not found)

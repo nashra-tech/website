@@ -115,7 +115,7 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
                 )}
               </Button>
               <div
-                className="!p-0 !m-0 [&_.slate-editor]:!p-0 [&_.slate-p]:dark:!text-base-400 [&_.slate-h3]:dark:!text-white"
+                className="!p-0 !m-0 [&_.slate-editor]:!p-0 [&_.slate-p]:dark:!text-base-400 [&_.slate-h3]:dark:!text-white w-full"
                 dangerouslySetInnerHTML={{ __html: post.website_content || '' }}
               />
             </div>
