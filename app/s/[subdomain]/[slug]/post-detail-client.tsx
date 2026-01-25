@@ -95,11 +95,13 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
                   {post.subtitle}
                 </h2>
               )}
-              <Small className='text-muted-foreground'>{formattedDate}</Small>
+              <div className='mt-3'>
+                <Small className='text-muted-foreground'>{formattedDate}</Small>
+              </div>
             </div>
           </div>
 
-          <article className="mt-8.5 mb-6">
+          <article className="mt-10 mb-6">
             <div className="flex gap-11 items-base">
               <Button
                 variant="outline"
