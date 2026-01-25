@@ -101,7 +101,7 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
             </div>
           </div>
 
-          <article className="mt-10 mb-6">
+          <article className="my-10">
             <div className="flex gap-11 items-base">
               <Button
                 variant="outline"
@@ -127,7 +127,7 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
           </article>
 
           {/* Footer Section */}
-          <footer className="mt-16 space-y-4">
+          <footer className="space-y-4">
                        {/* Footer Text */}
                         {tenant.footer_data.footer_text && (
                             <div className="text-center text-base">
@@ -161,7 +161,7 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
 
             {/* More Articles Section */}
             {morePosts && morePosts.length > 0 && (
-              <div className="space-y-3 sm:space-y-4 mt-16">
+              <div className="space-y-3 sm:space-y-4 mt-13.5">
                 <div
                   className={`flex items-center gap-2 mb-3 sm:mb-4 ${
                     isRTL ? 'flex-row' : ''
