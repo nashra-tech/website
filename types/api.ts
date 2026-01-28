@@ -77,7 +77,11 @@ export interface ApiTenant {
 // ============================================================================
 // Post API Types
 // ============================================================================
-
+export interface ApiCategory {
+name: string;
+emoji: string;
+color:string
+}
 export interface ApiPostListItem {
   id: number;
   uuid: string;
@@ -88,6 +92,7 @@ export interface ApiPostListItem {
   created_at: string;
   main_image_url: string | null;
   main_image_thumb_url: string | null;
+  category:ApiCategory |null;
 }
 
 export interface ApiPostDetail extends ApiPostListItem {

@@ -6,6 +6,8 @@
  * throughout the application.
  */
 
+import { ApiCategory } from "./api";
+
 export interface Post {
   // Identification
   uuid: string;
@@ -28,6 +30,7 @@ export interface Post {
 
   // Status
   published: boolean;
+  category?:ApiCategory |null;
 }
 
 export interface PaginatedPosts {

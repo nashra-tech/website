@@ -18,6 +18,8 @@ import { Small } from '@/components/system-ui/typography';
 import { getSocialPlatformByName } from '@/lib/data/social-links';
 import { usePageTracking } from '@/hooks/use-page-tracking';
 import { useTranslations } from '@/lib/i18n/use-translations';
+import { Badge } from '@/components/ui/badge';
+import { getCategoryColorClass } from '@/lib/data/colors';
 interface PostDetailClientProps {
   tenant: Tenant;
   post: Post;
@@ -95,8 +97,16 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
                   {post.subtitle}
                 </h2>
               )}
-              <div className='mt-3'>
+              <div className='mt-3 flex gap-2'>
                 <Small className='text-muted-foreground'>{formattedDate}</Small>
+                {post.category && (
+                  <Badge
+                  
+                  className={`${getCategoryColorClass(post.category.color)} rounded-sm`}
+                  >
+                    {post.category.emoji} {post.category.name}
+                    </Badge>
+                )}
               </div>
             </div>
           </div>

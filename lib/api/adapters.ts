@@ -72,6 +72,7 @@ export function adaptPostDetail(apiPost: ApiPostDetail, tenantSlug: string): Pos
     created_at: apiPost.created_at,
     updated_at: apiPost.created_at, // API doesn't provide updated_at
     published: true,
+    category:apiPost.category
   };
 }
 
