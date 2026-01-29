@@ -18,6 +18,7 @@ import { Icons } from '@/components/ui/icons';
 import { H2, Subtitle } from '@/components/system-ui/typography';
 import { getTranslations } from '@/lib/i18n';
 import { ThemeColorScript } from '@/components/theme/theme-color-script';
+import { BlogPostItemImage } from '@/components/blog/blog-post-item-image';
 
 interface PageProps {
   params: Promise<{
@@ -81,7 +82,7 @@ export default async function TenantHomePage({ params, searchParams }: PageProps
             <div className="space-y-0">
               {posts.data.length > 0 ? (
                 posts.data.map((post, index) => (
-                  <BlogPostItem
+                  <BlogPostItemImage
                     key={post.uuid}
                     post={post}
                     tenantSlug={subdomain}

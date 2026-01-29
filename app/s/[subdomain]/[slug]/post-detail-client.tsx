@@ -20,6 +20,7 @@ import { usePageTracking } from '@/hooks/use-page-tracking';
 import { useTranslations } from '@/lib/i18n/use-translations';
 import { Badge } from '@/components/ui/badge';
 import { getCategoryColorClass } from '@/lib/data/colors';
+import { BlogPostItemImage } from '@/components/blog/blog-post-item-image';
 interface PostDetailClientProps {
   tenant: Tenant;
   post: Post;
@@ -189,7 +190,7 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
                 <div className="space-y-0">
                   <Separator />
                   {morePosts.map((morePost, idx) => (
-                    <BlogPostItem
+                    <BlogPostItemImage
                       key={morePost.uuid}
                       post={morePost}
                       tenantSlug={tenant.slug}
