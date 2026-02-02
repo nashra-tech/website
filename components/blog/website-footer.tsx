@@ -75,7 +75,6 @@ export function WebsiteFooter({ tenant }: WebsiteFooterProps) {
                         className="opacity-60 hover:opacity-100 transition-opacity flex-shrink-0"
                         title={link.name}
                       >
-                        {console.log(iconName)}
                         {Icon ? <Icon className="w-5 h-5 dark:invert" /> : null}
                       </a>
                     );
