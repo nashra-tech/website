@@ -22,6 +22,7 @@ export function adaptTenant(apiTenant: ApiTenant): Tenant {
     title: apiTenant.name, // Use name as title
     subtitle: apiTenant.description??'', // Not provided by API
     logo: apiTenant.logo || undefined,
+    logo_thumb: apiTenant.logo_thumb || null,
     footer_data: {
       physical_address: apiTenant.physical_address || undefined,
       social_links: apiTenant.social_links || [],

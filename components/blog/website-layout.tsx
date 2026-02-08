@@ -60,7 +60,7 @@ export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
               <Link href={'/'}>
                 <div className="flex items-center gap-2 sm:gap-3">
                   <AppAvatar
-                    src={tenant.logo}
+                    src={tenant.logo_thumb || tenant.logo}
                     name={tenant.name}
                     alt={tenant.name}
                     className="size-8"

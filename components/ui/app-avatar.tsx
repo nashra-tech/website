@@ -39,7 +39,7 @@ export function AppAvatar({
 
   return (
     <Avatar className={cn('rounded-lg', className)} {...props}>
-      {src && <AvatarImage src={src} alt={alt || name || 'Avatar'} />}
+      {src && <AvatarImage className='object-cover' src={src} alt={alt || name || 'Avatar'} />}
       <AvatarFallback
         className={cn(
           'rounded-full bg-primary text-white dark:text-foreground text-xs',

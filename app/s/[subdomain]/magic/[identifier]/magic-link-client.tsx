@@ -100,7 +100,7 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
         {/* 1. Header Section: Avatar & Workspace Name */}
         <div className="w-full flex flex-col items-center justify-center pt-8">
           <AppAvatar
-            src={tenant.logo}
+            src={tenant.logo_thumb || tenant.logo}
             name={tenant.name}
             alt={tenant.name}
             className="size-16 mb-4"

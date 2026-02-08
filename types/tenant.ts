@@ -21,6 +21,7 @@ export interface Tenant {
   title: string;
   subtitle: string | null;
   logo?: string;
+  logo_thumb?: string | null;
 
   // Footer data
   footer_data: {

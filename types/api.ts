@@ -62,6 +62,7 @@ export interface ApiTenant {
   slug: string;
   name: string;
   logo: string | null;
+  logo_thumb: string | null;
   website_language: string;
   website_direction: 'ltr' | 'rtl';
   is_rtl: boolean;
