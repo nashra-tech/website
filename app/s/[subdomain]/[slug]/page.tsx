@@ -5,8 +5,10 @@
  * Recreates the functionality from Show.tsx with Next.js App Router.
  */
 
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getTenantBySlug, getPostBySlug, getMorePosts } from '@/lib/data';
+import { getPostCanonicalUrl } from '@/lib/canonical-url';
 import { PostDetailClient } from './post-detail-client';
 import { ThemeColorScript } from '@/components/theme/theme-color-script';
 
@@ -50,9 +52,13 @@ export default async function PostDetailPage({ params }: PageProps) {
 }
 
 // Generate metadata for SEO
-export async function generateMetadata({ params }: PageProps) {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { subdomain, slug } = await params;
-  const post = await getPostBySlug(subdomain, slug);
+
+  const [tenant, post] = await Promise.all([
+    getTenantBySlug(subdomain),
+    getPostBySlug(subdomain, slug),
+  ]);
 
   if (!post) {
     return {
@@ -60,8 +66,36 @@ export async function generateMetadata({ params }: PageProps) {
     };
   }
 
+  const canonicalUrl = await getPostCanonicalUrl(post.slug);
+  const title = `${post.title} - ${tenant?.name || ''}`;
+  const description = post.subtitle || post.title;
+  const ogImage = post.main_image_url || tenant?.logo || undefined;
+
   return {
-    title: post.title,
-    description: post.subtitle || post.title,
+    title,
+    description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title: post.title,
+      description,
+      type: 'article',
+      url: canonicalUrl,
+      siteName: tenant?.name || '',
+      locale: tenant?.website_language || 'en',
+      publishedTime: post.publish_date,
+      ...(ogImage && {
+        images: [{ url: ogImage, width: 1200, height: 630 }],
+      }),
+    },
+    twitter: {
+      card: ogImage ? 'summary_large_image' : 'summary',
+      title: post.title,
+      description,
+      ...(ogImage && {
+        images: [ogImage],
+      }),
+    },
   };
 }

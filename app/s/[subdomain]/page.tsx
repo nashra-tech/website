@@ -5,8 +5,10 @@
  * Recreates the functionality from Index.tsx with Next.js App Router.
  */
 
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getTenantBySlug, getPosts } from '@/lib/data';
+import { getTenantCanonicalUrl } from '@/lib/canonical-url';
 import { WebsiteLayout } from '@/components/blog/website-layout';
 import { WebsiteFooter } from '@/components/blog/website-footer';
 import { BlogPostItem } from '@/components/blog/blog-post-item';
@@ -125,7 +127,7 @@ export default async function TenantHomePage({ params, searchParams }: PageProps
 }
 
 // Generate metadata for SEO
-export async function generateMetadata({ params }: PageProps) {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { subdomain } = await params;
   const tenant = await getTenantBySlug(subdomain);
 
@@ -135,8 +137,35 @@ export async function generateMetadata({ params }: PageProps) {
     };
   }
 
+  const canonicalUrl = await getTenantCanonicalUrl();
+  const title = tenant.title || tenant.name;
+  const description = tenant.subtitle || '';
+  const ogImage = tenant.logo || undefined;
+
   return {
-    title: tenant.title,
-    description: tenant.subtitle,
+    title,
+    description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+      url: canonicalUrl,
+      siteName: tenant.name,
+      locale: tenant.website_language || 'en',
+      ...(ogImage && {
+        images: [{ url: ogImage }],
+      }),
+    },
+    twitter: {
+      card: ogImage ? 'summary_large_image' : 'summary',
+      title,
+      description,
+      ...(ogImage && {
+        images: [ogImage],
+      }),
+    },
   };
 }
