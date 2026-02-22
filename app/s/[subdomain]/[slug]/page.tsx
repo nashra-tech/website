@@ -12,6 +12,8 @@ import { getPostCanonicalUrl } from '@/lib/canonical-url';
 import { PostDetailClient } from './post-detail-client';
 import { ThemeColorScript } from '@/components/theme/theme-color-script';
 
+export const dynamic = 'force-dynamic';
+
 interface PageProps {
   params: Promise<{
     subdomain: string;

@@ -42,7 +42,8 @@ export const getMagicLinkFormByIdentifier = cache(async (
 export async function subscribeMagicLink(
   formIdentifier: string,
   email: string,
-  tenantSlug: string
+  tenantSlug: string,
+  extraFields?: Record<string, string>
 ): Promise<{
   success: boolean;
   already_subscribed?: boolean;
@@ -53,7 +54,8 @@ export async function subscribeMagicLink(
     const response = await apiSubscribeMagicLink(
       tenantSlug,
       formIdentifier,
-      email
+      email,
+      extraFields
     );
 
     return {

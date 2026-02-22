@@ -58,13 +58,14 @@ export async function getMagicLinkFormByIdentifier(
 export async function subscribeMagicLink(
   tenantSlug: string,
   identifier: string,
-  email: string
+  email: string,
+  extraFields?: Record<string, string>
 ): Promise<{
   data: ApiSubscriptionResponse;
   message?: string;
   headers: ApiMagicLinkSubscriptionHeaders;
 }> {
-  const requestBody: ApiMagicLinkSubscriptionRequest = { email };
+  const requestBody: ApiMagicLinkSubscriptionRequest = { email, ...extraFields };
 
   const response = await apiPost<
     ApiMagicLinkSubscriptionRequest,

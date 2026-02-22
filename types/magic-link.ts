@@ -4,6 +4,12 @@
  * Type definitions for magic link subscription forms.
  */
 
+export interface MagicLinkFormField {
+  key: string;
+  label: string;
+  type: string;
+}
+
 export interface MagicLinkForm {
   id: string;
   uuid: string;
@@ -13,6 +19,8 @@ export interface MagicLinkForm {
   image_url: string | null;
   tenant_slug: string;
   requires_confirmation: boolean;
+  button_text: string;
+  fields: MagicLinkFormField[];
 }
 
 export interface MagicLinkSubscription {

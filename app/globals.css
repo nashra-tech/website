@@ -1,4 +1,3 @@
-@import "./plate-tailwind-css";
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -131,6 +130,135 @@
     @apply bg-background text-foreground;
   }
 }
+
+/*
+ * Post content — minimal overrides for inline-styled Plate HTML
+ *
+ * Post HTML is self-contained with inline styles (no Tailwind class dependency).
+ * These rules handle dark-mode colour inheritance and highlight/syntax overrides.
+ */
+
+/* ── Post content: inherit foreground colour from blog theme ──────────── */
+.post-content {
+  color: var(--foreground);
+}
+
+/* ── Dark mode: highlighted blocks keep pastel bg, force dark text ───── */
+/* Plate.js serializes highlight colours as inline background-color styles
+   with light pastel values. In dark mode we keep those pastel backgrounds
+   and force dark text so it stays readable.  We match on the RGB value
+   substring to work regardless of spacing in the rgb() function. */
+.dark .post-content [style*="rgb(241, 241, 239)"],
+.dark .post-content [style*="rgb(235, 229, 220)"],
+.dark .post-content [style*="rgb(254, 235, 200)"],
+.dark .post-content [style*="rgb(254, 249, 195)"],
+.dark .post-content [style*="rgb(204, 251, 241)"],
+.dark .post-content [style*="rgb(219, 234, 254)"],
+.dark .post-content [style*="rgb(243, 232, 255)"],
+.dark .post-content [style*="rgb(252, 231, 243)"],
+.dark .post-content [style*="rgb(254, 226, 226)"] {
+  color: #0f172a !important;
+}
+
+/* ── Dark mode: code block syntax highlighting ─────────────────────── */
+.dark .post-content .hljs-comment,
+.dark .post-content .hljs-code,
+.dark .post-content .hljs-formula { color: #8b949e; }
+
+.dark .post-content .hljs-keyword,
+.dark .post-content .hljs-doctag,
+.dark .post-content .hljs-template-tag,
+.dark .post-content .hljs-template-variable,
+.dark .post-content .hljs-type,
+.dark .post-content .hljs-variable.language_ { color: #ff7b72; }
+
+.dark .post-content .hljs-title,
+.dark .post-content .hljs-title.class_,
+.dark .post-content .hljs-title.class_.inherited__,
+.dark .post-content .hljs-title.function_ { color: #d2a8ff; }
+
+.dark .post-content .hljs-attr,
+.dark .post-content .hljs-attribute,
+.dark .post-content .hljs-literal,
+.dark .post-content .hljs-meta,
+.dark .post-content .hljs-number,
+.dark .post-content .hljs-operator,
+.dark .post-content .hljs-selector-attr,
+.dark .post-content .hljs-selector-class,
+.dark .post-content .hljs-selector-id,
+.dark .post-content .hljs-variable { color: #79c0ff; }
+
+.dark .post-content .hljs-regexp,
+.dark .post-content .hljs-string,
+.dark .post-content .hljs-meta .hljs-string { color: #a5d6ff; }
+
+.dark .post-content .hljs-built_in,
+.dark .post-content .hljs-symbol { color: #ffa657; }
+
+.dark .post-content .hljs-name,
+.dark .post-content .hljs-quote,
+.dark .post-content .hljs-selector-tag,
+.dark .post-content .hljs-selector-pseudo { color: #7ee787; }
+
+.dark .post-content .hljs-emphasis { font-style: italic; }
+.dark .post-content .hljs-strong { font-weight: bold; }
+.dark .post-content .hljs-section { font-weight: bold; color: #79c0ff; }
+.dark .post-content .hljs-bullet { color: #d2a8ff; }
+.dark .post-content .hljs-addition { background-color: rgba(46, 160, 67, 0.15); color: #7ee787; }
+.dark .post-content .hljs-deletion { background-color: rgba(248, 81, 73, 0.15); color: #ffa198; }
+
+/* ── Safety resets (prevent Tailwind Preflight from interfering) ─────── */
+.post-content img { max-width: 100%; height: auto; }
+
+/* ── Code block syntax highlighting (backward compat for old posts) ─── */
+/* New posts use inline colour styles. These rules cover old posts that
+   were serialized before the inline-styles migration. Safe to remove
+   once all posts have been re-serialized. */
+.post-content .hljs-comment,
+.post-content .hljs-code,
+.post-content .hljs-formula { color: #6a737d; }
+
+.post-content .hljs-keyword,
+.post-content .hljs-doctag,
+.post-content .hljs-template-tag,
+.post-content .hljs-template-variable,
+.post-content .hljs-type,
+.post-content .hljs-variable.language_ { color: #d73a49; }
+
+.post-content .hljs-title,
+.post-content .hljs-title.class_,
+.post-content .hljs-title.class_.inherited__,
+.post-content .hljs-title.function_ { color: #6f42c1; }
+
+.post-content .hljs-attr,
+.post-content .hljs-attribute,
+.post-content .hljs-literal,
+.post-content .hljs-meta,
+.post-content .hljs-number,
+.post-content .hljs-operator,
+.post-content .hljs-selector-attr,
+.post-content .hljs-selector-class,
+.post-content .hljs-selector-id,
+.post-content .hljs-variable { color: #005cc5; }
+
+.post-content .hljs-regexp,
+.post-content .hljs-string,
+.post-content .hljs-meta .hljs-string { color: #032f62; }
+
+.post-content .hljs-built_in,
+.post-content .hljs-symbol { color: #e36209; }
+
+.post-content .hljs-name,
+.post-content .hljs-quote,
+.post-content .hljs-selector-tag,
+.post-content .hljs-selector-pseudo { color: #22863a; }
+
+.post-content .hljs-emphasis { font-style: italic; }
+.post-content .hljs-strong { font-weight: bold; }
+.post-content .hljs-section { font-weight: bold; color: #005cc5; }
+.post-content .hljs-bullet { color: #735c0f; }
+.post-content .hljs-addition { background-color: #f0fff4; color: #22863a; }
+.post-content .hljs-deletion { background-color: #ffeef0; color: #b31d28; }
 
 .emoji-picker-container .epr-body::-webkit-scrollbar {
   width: 8px;

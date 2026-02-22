@@ -14,6 +14,7 @@ interface BlogPostItemProps {
   post: Post;
   tenantSlug: string;
   tenantDirection?: 'ltr' | 'rtl';
+  tenantLanguage?: string;
   isFirst?: boolean;
   isLast?: boolean;
 }
@@ -22,46 +23,46 @@ export function BlogPostItemImage({
   post,
   tenantSlug,
   tenantDirection = 'ltr',
+  tenantLanguage = 'en',
   isFirst = false,
   isLast = false,
 }: BlogPostItemProps) {
   const isRTL = tenantDirection === 'rtl';
-  const locale = isRTL ? 'ar-EG' : 'en-US';
 
-  const formattedDate = new Date(post.publish_date).toLocaleDateString(locale, {
+  const formattedDate = new Date(post.publish_date).toLocaleDateString(tenantLanguage, {
     year: 'numeric',
-    month: 'long',
+    month: 'short',
     day: '2-digit',
   });
 
   return (
     <Link
       href={`/${post.slug}`}
-      className={`py-3 px-2 w-full ${!isLast ? 'border-b' : ''} cursor-pointer transition-colors block rounded-lg hover:bg-neutral-100`}
+      className={`py-3 px-3 w-full ${!isLast ? 'border-b' : ''} cursor-pointer transition-colors block rounded-lg hover:bg-neutral-100`}
       dir={tenantDirection}
     >
-      <div className={`flex items-center gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
-        <div className="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 bg-neutral-100">
+      <div className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+        <div className="w-[44px] h-[44px] rounded-md overflow-hidden flex-shrink-0 bg-neutral-100">
           {post.main_image_thumb_url ? (
             <Image
               src={post.main_image_thumb_url}
               alt={post.title}
-              width={48}
-              height={48}
+              width={44}
+              height={44}
               className="w-full h-full object-cover"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
-              <FileText className="w-6 h-6 text-muted-foreground" />
+              <FileText className="w-5 h-5 text-muted-foreground" />
             </div>
           )}
         </div>
 
-        <div className={`flex flex-col ${isRTL ? 'text-right' : 'text-left'}`}>
-          <h3 className="text-base font-medium leading-snug text-foreground">
+        <div className={`flex flex-col gap-1 ${isRTL ? 'text-right' : 'text-left'}`}>
+          <h3 className="text-[17px] font-medium leading-[1.2] text-foreground tracking-tight">
             {post.title}
           </h3>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-xs text-muted-foreground">
             {formattedDate}
           </p>
         </div>

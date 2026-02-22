@@ -104,12 +104,20 @@ export interface ApiPostDetail extends ApiPostListItem {
 // Magic Link API Types
 // ============================================================================
 
+export interface ApiMagicLinkFormField {
+  key: string;
+  label: string;
+  type: string;
+}
+
 export interface ApiMagicLinkForm {
   id: string;
   identifier: string;
   title: string;
   subtitle: string;
   image_url: string | null;
+  button_text: string;
+  fields: ApiMagicLinkFormField[];
 }
 
 // ============================================================================
@@ -123,6 +131,7 @@ export interface ApiSubscriptionRequest {
 
 export interface ApiMagicLinkSubscriptionRequest {
   email: string;
+  [key: string]: string;
 }
 
 export interface ApiSubscriptionResponse {

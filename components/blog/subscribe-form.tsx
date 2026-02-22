@@ -78,12 +78,12 @@ export function SubscribeForm({
 
     return (
         <form onSubmit={handleSubmit} dir={tenantDirection}>
-            <div className="relative max-w-sm rounded-lg bg-base-50 dark:bg-base-800 dark:text-base-400">
+            <div className="relative max-w-sm rounded-xl bg-neutral-100 dark:bg-neutral-800">
                 <Input
                     type="email"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
-                    className={`${error ? 'border-destructive' : ''} ${isTenantRTL ? 'text-right' : 'text-left'} h-10 rounded-lg dark:bg-base-800 dark:text-base-400`}
+                    className={`${error ? 'ring-1 ring-destructive' : ''} ${isTenantRTL ? 'text-right' : 'text-left'} h-11 rounded-xl border-0 bg-transparent placeholder:text-muted-foreground dark:text-neutral-200`}
                     placeholder={t('common.email_placeholder')}
                     required
                     dir={tenantDirection}
@@ -99,7 +99,7 @@ export function SubscribeForm({
                         handleSubmit(e);
                     }}
                     size="sm"
-                    className={`absolute top-1/2 -translate-y-1/2 ${isTenantRTL ? 'left-1' : 'right-1'} h-8 px-4 font-normal text-xs ${
+                    className={`absolute top-1/2 -translate-y-1/2 ${isTenantRTL ? 'left-1.5' : 'right-1.5'} h-8 px-4 rounded-lg font-medium text-sm ${
                         subscribed
                             ? 'bg-green-600 hover:bg-green-600 text-white'
                             : ''

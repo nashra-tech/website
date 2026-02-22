@@ -19,10 +19,12 @@ interface MagicLinkClientProps {
 
 export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
   const [email, setEmail] = useState('');
+  const [fieldValues, setFieldValues] = useState<Record<string, string>>({});
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [alreadySubscribed, setAlreadySubscribed] = useState(false);
   const [processing, setProcessing] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
+  const [hasPublishedPosts, setHasPublishedPosts] = useState(true);
 
   const direction = tenant.website_direction || 'ltr';
   const isRTL = direction === 'rtl';
@@ -55,10 +57,19 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
     setProcessing(true);
 
     try {
+      // Build extra fields from fieldValues (only non-empty values)
+      const extraFields: Record<string, string> = {};
+      for (const [key, value] of Object.entries(fieldValues)) {
+        if (value.trim()) {
+          extraFields[key] = value.trim();
+        }
+      }
+
       const result = await subscribeMagicLink(
         form.identifier,
         email.trim(),
-        tenant.slug
+        tenant.slug,
+        Object.keys(extraFields).length > 0 ? extraFields : undefined
       );
 
       if (result.success) {
@@ -85,59 +96,85 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
     window.location.href = window.location.origin;
   };
 
-  // Track if tenant has published posts (from API response)
-  const [hasPublishedPosts, setHasPublishedPosts] = useState(true);
-
   return (
     <ThemeProvider brandColor={tenant.brandColor}>
-      <div className="relative min-h-screen w-full flex items-center justify-center p-0 bg-gray-50 overflow-hidden">
-      <div className="absolute inset-0 w-full h-full [mask-image:radial-gradient(600px_circle_at_center,white,transparent)]">
-        <DotPattern width={24} height={24} cx={1} cy={1} cr={1} className="text-gray-200" />
-      </div>
-
-      {/* Centered Card */}
-      <div className="relative w-full max-w-[480px] min-h-screen bg-white rounded-none shadow-sm border-x border-gray-100 p-8 md:p-12 z-10 flex flex-col justify-between">
-        {/* 1. Header Section: Avatar & Workspace Name */}
-        <div className="w-full flex flex-col items-center justify-center pt-8">
-          <AppAvatar
-            src={tenant.logo_thumb || tenant.logo}
-            name={tenant.name}
-            alt={tenant.name}
-            className="size-16 mb-4"
-          />
-          <h2 className="text-lg font-bold text-gray-900 leading-tight">
-            {tenant.name}
-          </h2>
+      <div className="relative min-h-screen w-full flex items-center justify-center p-4 bg-gray-50 dark:bg-neutral-950 overflow-hidden">
+        <div className="absolute inset-0 w-full h-full [mask-image:radial-gradient(600px_circle_at_center,white,transparent)]">
+          <DotPattern width={24} height={24} cx={1} cy={1} cr={1} className="text-gray-200 dark:text-neutral-800" />
         </div>
 
-        {/* 2. Content Section: Image, Details, Form */}
-        <div className="w-full space-y-6 my-auto">
-          {/* Image */}
+        {/* Centered Card */}
+        <div className="relative w-full max-w-[400px] bg-white dark:bg-neutral-900 rounded-2xl shadow-sm border border-gray-100 dark:border-neutral-800 overflow-hidden z-10">
+          {/* Header: Avatar & Name — horizontal layout */}
+          <div className="flex items-center gap-2.5 px-5 pt-6 pb-4">
+            <AppAvatar
+              src={tenant.logo_thumb || tenant.logo}
+              name={tenant.name}
+              alt={tenant.name}
+              className="size-9"
+            />
+            <span className="text-sm font-medium text-foreground">
+              {tenant.name}
+            </span>
+          </div>
+
+          {/* Image — 4:3 aspect ratio */}
           {form.image_url && (
-            <div className="w-full rounded-xl overflow-hidden bg-gray-50">
+            <div className="mx-5 mb-4">
               <img
                 src={form.image_url}
                 alt={form.title}
-                className="w-full h-auto object-cover"
+                className="w-full rounded-xl object-cover"
+                style={{ aspectRatio: '4/3' }}
               />
             </div>
           )}
 
           {!isSubscribed ? (
             <>
-              <div className="text-center space-y-2">
-                <h1 className="text-xl font-bold text-gray-900" dir={direction}>
+              {/* Title */}
+              <div className="px-5 pb-2">
+                <h1 className="text-base font-semibold leading-snug text-foreground" dir={direction}>
                   {form.title}
                 </h1>
-                {form.subtitle && (
-                  <p className="text-gray-500 leading-relaxed text-sm" dir={direction}>
-                    {form.subtitle}
-                  </p>
-                )}
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="space-y-4">
+              {/* Subtitle */}
+              {form.subtitle && (
+                <div className="px-5 pb-5">
+                  <p className="text-sm leading-relaxed text-muted-foreground" dir={direction}>
+                    {form.subtitle}
+                  </p>
+                </div>
+              )}
+
+              {/* Form */}
+              <form onSubmit={handleSubmit}>
+                {/* Dynamic fields */}
+                {form.fields.length > 0 && (
+                  <div className="px-5 space-y-2 pb-2">
+                    {form.fields.map((field) => (
+                      <InputField
+                        key={field.key}
+                        type="text"
+                        name={field.key}
+                        placeholder={field.label}
+                        value={fieldValues[field.key] || ''}
+                        onChange={(e) => {
+                          setFieldValues((prev) => ({
+                            ...prev,
+                            [field.key]: e.target.value,
+                          }));
+                        }}
+                        dir={direction}
+                        className="bg-neutral-50 dark:bg-neutral-800"
+                      />
+                    ))}
+                  </div>
+                )}
+
+                {/* Email input */}
+                <div className="px-5 pb-3">
                   <InputField
                     type="email"
                     name="email"
@@ -146,46 +183,50 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
                     value={email}
                     onChange={(e) => {
                       setEmail(e.target.value);
-                      // Clear error when user starts typing
                       if (emailError) setEmailError(null);
                     }}
                     error={emailError}
                     inputMode="email"
                     dir={direction}
+                    className="bg-neutral-50 dark:bg-neutral-800"
                   />
+                </div>
+
+                {/* Submit button */}
+                <div className="px-5 pb-5">
                   <Button
                     type="submit"
                     disabled={processing}
                     className="w-full"
                   >
-                    {processing ? t('magic_link.subscribing') : t('magic_link.subscribe')}
+                    {processing ? t('magic_link.subscribing') : form.button_text}
                   </Button>
                 </div>
               </form>
             </>
           ) : (
             /* Success State */
-            <div className="text-center space-y-6 py-4">
+            <div className="px-5 pb-5 space-y-6 py-4">
               <div className="space-y-2">
-                <h2 className="text-xl font-bold text-gray-900" dir={direction}>
+                <h2 className="text-base font-semibold text-foreground" dir={direction}>
                   {alreadySubscribed
                     ? t('magic_link.already_subscribed')
                     : form.requires_confirmation
                       ? t('magic_link.check_email')
                       : t('magic_link.you_are_in')}
                 </h2>
-                <p className="text-gray-500 text-sm leading-relaxed">
+                <p className="text-muted-foreground text-sm leading-relaxed">
                   {alreadySubscribed ? (
                     <>
                       {t('magic_link.already_subscribed_message')}{' '}
-                      <span className="font-semibold text-gray-900">{form.title}</span>.
+                      <span className="font-semibold text-foreground">{form.title}</span>.
                     </>
                   ) : form.requires_confirmation ? (
                     `${t('magic_link.check_email_message')} ${form.title}`
                   ) : (
                     <>
                       {t('magic_link.subscribed_to')}{' '}
-                      <span className="font-semibold text-gray-900">{form.title}</span>.
+                      <span className="font-semibold text-foreground">{form.title}</span>.
                     </>
                   )}
                 </p>
@@ -194,30 +235,26 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
                 <Button
                   onClick={handleExploreBlog}
                   dir={direction}
-                  className="w-full bg-gray-900 text-white hover:bg-black rounded-lg font-medium shadow-lg shadow-gray-900/10"
+                  className="w-full"
                 >
                   {t('common.explore')} {tenant.name}
                 </Button>
               )}
             </div>
           )}
+
+          {/* Footer: Powered By */}
+          {tenant.show_branding && (
+            <div className="flex items-center justify-center border-t border-border py-3">
+              <PoweredByNashra
+                isRtl={isRTL}
+                translations={{ made_with: t('common.powered_by') }}
+                clickable={true}
+                className="opacity-80 hover:opacity-100 transition-opacity"
+              />
+            </div>
+          )}
         </div>
-
-        {/* 3. Footer Section: Powered By */}
-
-
-        {tenant.show_branding && (
-          <div className="w-full flex justify-center">
-            <PoweredByNashra
-              isRtl={isRTL}
-              translations={{ made_with: t('common.powered_by') }}
-              clickable={true}
-              className="opacity-80 hover:opacity-100 transition-opacity"
-            />
-          </div>
-        )}
-
-      </div>
       </div>
     </ThemeProvider>
   );

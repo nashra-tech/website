@@ -94,6 +94,8 @@ export function adaptMagicLinkForm(
     image_url: apiForm.image_url,
     tenant_slug: tenantSlug,
     requires_confirmation: requiresConfirmation, // Not provided by API, default to false
+    button_text: apiForm.button_text || 'Subscribe',
+    fields: apiForm.fields || [],
   };
 }
 

@@ -2,78 +2,37 @@
 
 import { useEffect } from 'react';
 import { usePostHog } from 'posthog-js/react';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 /**
  * PostHog page tracking hook for Next.js
  *
- * Tracks pageviews and user activity for analytics including:
- * - Unique visitors
- * - Total pageviews
- * - Bounce rate
- * - Average session duration
+ * Tracks pageviews for analytics (unique visitors, total pageviews,
+ * bounce rate, average session duration).
  *
- * @param additionalProperties - Optional additional properties to include with the pageview event
- *
- * @example
- * ```tsx
- * // Basic usage
- * usePageTracking();
- *
- * // With additional properties for blog index
- * usePageTracking({ 
- *   page_type: 'blog_index',
- *   tenant_uuid: tenant.uuid 
- * });
- *
- * // With additional properties for post detail
- * usePageTracking({ 
- *   page_type: 'blog_post',
- *   tenant_uuid: tenant.uuid,
- *   post_uuid: post.uuid 
- * });
- * ```
+ * @param additionalProperties - Stable (memoized) object of extra properties
  */
 export function usePageTracking(additionalProperties?: Record<string, any>) {
   const posthog = usePostHog();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   useEffect(() => {
-    // Only track if PostHog is available and initialized
     if (!posthog || typeof window === 'undefined') return;
 
-    /**
-     * Captures a pageview event with standard tracking properties
-     */
-    const capturePageview = () => {
-      // Get subdomain from hostname (e.g., user1.nashra.ai -> user1)
-      const hostname = window.location.hostname;
-      const subdomain = hostname.split('.')[0];
+    const hostname = window.location.hostname;
+    const subdomain = hostname.split('.')[0];
 
-      // Build tracking properties
-      const properties = {
-        path: pathname,
-        subdomain: hostname,
-        subdomain_name: subdomain,
-        referrer: document.referrer || null,
-        url: window.location.href,
-        title: document.title,
-        search: searchParams?.toString() || '',
-        ...additionalProperties,
-      };
-
-      // Capture the pageview event
-      posthog.capture('pageview', properties);
-
-      // Also update PostHog's internal pageview tracking
-      // This helps with their built-in analytics features
-      posthog.capture('$pageview', properties);
-    };
-
-    // Capture pageview on initial mount and when path changes
-    capturePageview();
-  }, [posthog, pathname, searchParams, additionalProperties]);
+    posthog.capture('$pageview', {
+      path: pathname,
+      subdomain: hostname,
+      subdomain_name: subdomain,
+      referrer: document.referrer || null,
+      url: window.location.href,
+      title: document.title,
+      search: window.location.search,
+      ...additionalProperties,
+    });
+  }, [posthog, pathname, additionalProperties]);
 }
 
 /**

@@ -1,26 +1,16 @@
-/**
- * Post Detail Client Component
- *
- * Client-side component for post detail page with interactive features.
- */
-
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { Tenant, Post } from '@/types';
 import { WebsiteLayout } from '@/components/blog/website-layout';
 import { WebsiteFooter } from '@/components/blog/website-footer';
-import { BlogPostItem } from '@/components/blog/blog-post-item';
 import { Separator } from '@/components/ui/separator';
-import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/ui/icons';
 import { Small } from '@/components/system-ui/typography';
-import { getSocialPlatformByName } from '@/lib/data/social-links';
 import { usePageTracking } from '@/hooks/use-page-tracking';
 import { useTranslations } from '@/lib/i18n/use-translations';
-import { Badge } from '@/components/ui/badge';
-import { getCategoryColorClass } from '@/lib/data/colors';
 import { BlogPostItemImage } from '@/components/blog/blog-post-item-image';
+
 interface PostDetailClientProps {
   tenant: Tenant;
   post: Post;
@@ -28,166 +18,131 @@ interface PostDetailClientProps {
 }
 
 export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientProps) {
-    const tenantLanguage = tenant.website_language || 'en';
-  const { t } = useTranslations(tenantLanguage);
-  const [copied, setCopied] = useState(false);
-
-  // Track pageview with PostHog
-  // Captures analytics data for individual post views
-  usePageTracking({
-    page_type: 'blog_post',
-    tenant_uuid: tenant.uuid,
-    post_uuid: post.uuid,
-  });
-
+  const tenantLanguage = tenant.website_language || 'en';
   const tenantDirection = tenant.website_direction || 'ltr';
   const isRTL = tenantDirection === 'rtl';
-  const locale = isRTL ? 'ar-EG' : 'en-US';
+  const { t } = useTranslations(tenantLanguage);
+  const contentRef = useRef<HTMLDivElement>(null);
 
-  const formattedDate = new Date(post.publish_date).toLocaleDateString(locale, {
+  const trackingProps = useMemo(() => ({
+    page_type: 'blog_post' as const,
+    tenant_uuid: tenant.uuid,
+    post_uuid: post.uuid,
+  }), [tenant.uuid, post.uuid]);
+
+  usePageTracking(trackingProps);
+
+  // Replace YouTube/Vimeo iframes with thumbnail + play button
+  useEffect(() => {
+    const container = contentRef.current;
+    if (!container) return;
+
+    const iframes = container.querySelectorAll('iframe');
+    iframes.forEach((iframe) => {
+      const src = iframe.src || '';
+
+      const ytMatch = src.match(/youtube\.com\/embed\/([^?&#]+)/);
+      const vimeoMatch = src.match(/player\.vimeo\.com\/video\/(\d+)/);
+
+      if (!ytMatch && !vimeoMatch) return;
+
+      const videoId = ytMatch?.[1] || vimeoMatch?.[1];
+      const originalUrl = ytMatch
+        ? `https://www.youtube.com/watch?v=${videoId}`
+        : `https://vimeo.com/${videoId}`;
+      const thumbnailUrl = ytMatch
+        ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
+        : `https://vumbnail.com/${videoId}.jpg`;
+
+      const link = document.createElement('a');
+      link.href = originalUrl;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.style.aspectRatio = '16/9';
+      link.style.display = 'block';
+      link.style.position = 'relative';
+      link.style.width = '100%';
+      link.style.overflow = 'hidden';
+      link.style.borderRadius = '0.125rem';
+
+      const img = document.createElement('img');
+      img.src = thumbnailUrl;
+      img.alt = '';
+      img.style.width = '100%';
+      img.style.height = '100%';
+      img.style.objectFit = 'cover';
+
+      const overlay = document.createElement('div');
+      overlay.style.position = 'absolute';
+      overlay.style.inset = '0';
+      overlay.style.display = 'flex';
+      overlay.style.alignItems = 'center';
+      overlay.style.justifyContent = 'center';
+      overlay.style.pointerEvents = 'none';
+      overlay.innerHTML = `<svg width="68" height="48" viewBox="0 0 68 48"><path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="#212121" fill-opacity="0.8"/><path d="M45 24L27 14v20" fill="#fff"/></svg>`;
+
+      link.appendChild(img);
+      link.appendChild(overlay);
+
+      const parent = iframe.parentElement;
+      if (parent) {
+        parent.replaceChild(link, iframe);
+      }
+    });
+  }, [post.website_content]);
+
+  const formattedDate = new Date(post.publish_date).toLocaleDateString(tenantLanguage, {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
   });
 
-  const handleCopyToClipboard = async () => {
-    try {
-      const currentUrl = window.location.href;
-
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        await navigator.clipboard.writeText(currentUrl);
-      } else {
-        // Fallback
-        const textArea = document.createElement('textarea');
-        textArea.value = currentUrl;
-        textArea.style.position = 'fixed';
-        textArea.style.left = '-999999px';
-        textArea.style.top = '-999999px';
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
-        document.execCommand('copy');
-        textArea.remove();
-      }
-
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error('Failed to copy URL:', err);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }
-  };
-
   return (
-    <div
-      dir={tenantDirection}
-      className="min-h-screen transition-colors"
-      // style={{ fontFamily: 'sans-serif' }}
-    >
+    <div dir={tenantDirection} className="min-h-screen transition-colors">
       <WebsiteLayout tenant={tenant}>
         <div className="sm:mt-20 mt-16 w-full max-w-[560px] mx-auto p-3 sm:p-0">
-          <div className="">
-            {/* Article Header - Responsive */}
-            <div className="">
-              <h1 className="text-4xl font-semibold text-[#141C25] tracking-tight dark:text-white mb-1 leading-tight">
-                {post.title}
-              </h1>
-              {post.subtitle && (
-                <h2 className="text-base sm:text-lg md:text-2xl lg:text-3xl font-medium tracking-tight text-gray-700 dark:text-base-400 leading-tight">
-                  {post.subtitle}
-                </h2>
-              )}
-              <div className='mt-3 flex gap-2'>
-                <Small className='text-muted-foreground'>{formattedDate}</Small>
-                {post.category && (
-                  <Badge
-                  
-                  className={`${getCategoryColorClass(post.category.color)} rounded-sm`}
-                  >
-                    {post.category.emoji} {post.category.name}
-                    </Badge>
-                )}
-              </div>
-            </div>
+          <h1 className="text-4xl font-semibold text-foreground tracking-tight mb-1 leading-tight">
+            {post.title}
+          </h1>
+          {post.subtitle && (
+            <h2 className="text-lg font-medium tracking-tight text-muted-foreground leading-tight">
+              {post.subtitle}
+            </h2>
+          )}
+          <div className="mt-3 flex items-center gap-2">
+            <Small className="text-muted-foreground">{formattedDate}</Small>
+            {post.category && (
+              <>
+                <span className="text-muted-foreground">&bull;</span>
+                <Small className="text-muted-foreground">
+                  {post.category.emoji} {post.category.name}
+                </Small>
+              </>
+            )}
           </div>
 
           <article className="my-10">
-            <div className="flex gap-11 items-base">
-              <Button
-                variant="outline"
-                className={`w-9 h-9 flex items-center justify-center rounded-md transition-all duration-200 ${
-                  copied
-                    ? 'bg-green-50 border-green-200 dark:bg-green-900/20 dark:border-green-800'
-                    : ''
-                }`}
-                onClick={handleCopyToClipboard}
-                title={copied ? 'Copied!' : 'Copy to clipboard'}
-              >
-                {copied ? (
-                  <Icons.check className="w-4 h-4 sm:w-4 sm:h-4 text-green-600 dark:text-green-400" />
-                ) : (
-                  <Icons.copy02 className="w-4 h-4 sm:w-4 sm:h-4" />
-                )}
-              </Button>
-              <div
-                className="!p-0 !m-0 [&_.slate-editor]:!p-0 [&_.slate-p]:dark:!text-base-400 [&_.slate-h3]:dark:!text-white w-full"
-                dangerouslySetInnerHTML={{ __html: post.website_content || '' }}
-              />
-            </div>
+            <div
+              ref={contentRef}
+              className="post-content [&_.slate-editor]:!p-0 w-full"
+              dangerouslySetInnerHTML={{ __html: post.website_content || '' }}
+            />
           </article>
 
-          {/* Footer Section */}
-          <footer className="space-y-4">
-                       {/* Footer Text */}
-                        {tenant.footer_data.footer_text && (
-                            <div className="text-center text-base">
-                                {tenant.footer_data.footer_text}
-                            </div>
-                        )}
-            {/* Social Links */}
-            {tenant.footer_data.social_links &&
-              tenant.footer_data.social_links.length > 0 && (
-                <div className="flex justify-center items-center gap-3 sm:gap-4 flex-wrap mb-6 sm:mb-8">
-                  {tenant.footer_data.social_links &&
-                  tenant.footer_data.social_links.length > 0 &&
-                  tenant.footer_data.social_links.map((link, index) => {
-                    const iconName = getSocialPlatformByName(link.name)?.icon as keyof typeof Icons;
-                    const Icon = Icons[iconName];
-                    return (
-                      <a
-                        key={index}
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="opacity-60 hover:opacity-100 transition-opacity flex-shrink-0"
-                        title={link.name}
-                      >
-                        {Icon ? <Icon className="w-5 h-5 dark:invert" /> : null}
-                      </a>
-                    );
-                  })}
-                </div>
-              )}
-
-            {/* More Articles Section */}
-            {morePosts && morePosts.length > 0 && (
-              <div className="space-y-3 sm:space-y-4 mt-13.5">
-                <div
-                  className={`flex items-center gap-2 mb-3 sm:mb-4 ${
-                    isRTL ? 'flex-row' : ''
-                  }`}
-                >
-                  <h3 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white">
+          <footer>
+            {morePosts.length > 0 && (
+              <div className="space-y-3 mt-16">
+                <div className="flex items-center gap-1">
+                  <h3 className="text-lg font-medium text-foreground tracking-tight">
                     {t('common.more_articles')}
                   </h3>
                   {isRTL ? (
-                    <Icons.arrowLeft className="w-3 h-3 sm:w-4 sm:h-4 text-base" />
+                    <Icons.arrowLeft className="w-5 h-5" />
                   ) : (
-                    <Icons.arrowRight className="w-3 h-3 sm:w-4 sm:h-4 text-base" />
+                    <Icons.arrowRight className="w-5 h-5" />
                   )}
                 </div>
-                <div className="space-y-0">
+                <div>
                   <Separator />
                   {morePosts.map((morePost, idx) => (
                     <BlogPostItemImage
@@ -195,6 +150,7 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
                       post={morePost}
                       tenantSlug={tenant.slug}
                       tenantDirection={tenantDirection}
+                      tenantLanguage={tenantLanguage}
                       isLast={idx === morePosts.length - 1}
                     />
                   ))}

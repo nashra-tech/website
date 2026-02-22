@@ -10,6 +10,8 @@ import { getTenantBySlug, getMagicLinkFormByIdentifier } from '@/lib/data';
 import { MagicLinkClient } from './magic-link-client';
 import { ThemeColorScript } from '@/components/theme/theme-color-script';
 
+export const dynamic = 'force-dynamic';
+
 interface PageProps {
   params: Promise<{
     subdomain: string;

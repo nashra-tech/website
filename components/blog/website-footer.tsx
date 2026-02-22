@@ -1,8 +1,8 @@
 /**
  * WebsiteFooter Component
  *
- * Footer with subscription form, social links, and tenant info.
- * Matches design from website-footer.tsx
+ * Footer with subscription form, social links, and footer text.
+ * Matches Figma design: subscribe section + footer row (footer_text left, social icons right).
  */
 
 'use client';
@@ -12,7 +12,7 @@ import { SubscribeForm } from './subscribe-form';
 import { PoweredByNashra } from './powered-by-nashra';
 import { useTranslations } from '@/lib/i18n';
 import { getSocialPlatformByName } from '@/lib/data/social-links';
-import { Icons,IconsMap } from '../ui/icons';
+import { Icons } from '../ui/icons';
 
 interface WebsiteFooterProps {
   tenant: Tenant;
@@ -26,7 +26,7 @@ export function WebsiteFooter({ tenant }: WebsiteFooterProps) {
 
   return (
     <footer className="p-3 sm:p-0">
-      <section className="py-0 mb-0 sm:py-6 sm:mb-3 bg-white relative font-sans dark:bg-neutral-900 border-t">
+      <section className="pt-16 pb-0 mb-0 sm:pb-6 sm:mb-3 bg-white relative font-sans dark:bg-neutral-900">
         {/* Fixed Badge at Bottom Right */}
         {tenant.show_branding && (
           <div className={`fixed bottom-4 z-50 ${isTenantRTL ? 'left-4' : 'right-4'}`}>
@@ -40,30 +40,58 @@ export function WebsiteFooter({ tenant }: WebsiteFooterProps) {
         )}
 
         <div className="max-w-[560px] mx-auto">
-          <div>
-            {/* Subscription Form Section */}
-            <div className="mb-4 sm:mt-0 mt-4" dir={tenantDirection}>
-              <h2 className="text-md text-primary font-medium text-gray-900 dark:text-white">
-                {t('newsletter.title')}
-              </h2>
-              <p className="text-md font-medium text-neutral-500 dark:text-base-400">
-                {t('newsletter.subtitle')}
-              </p>
-            </div>
+          {/* Subscription Form Section */}
+          <div className="mb-3" dir={tenantDirection}>
+            <p className="text-[17px] font-medium leading-[1.2] tracking-tight text-black dark:text-white">
+              {t('newsletter.title')}
+            </p>
+            <p className="text-[17px] font-medium leading-[1.2] tracking-tight text-neutral-500 dark:text-base-400">
+              {t('newsletter.subtitle')}
+            </p>
+          </div>
 
-            <div className="mb-3">
-              <SubscribeForm tenant={tenant} />
-            </div>
+          <div className="mb-3">
+            <SubscribeForm tenant={tenant} />
+          </div>
 
-            {/* Desktop Layout - Copyright and Social Links */}
-            <div className="hidden sm:flex justify-between items-center">
-              <div className="text-neutral-500 dark:text-base-400 text-xs">
-                {tenant.footer_data.physical_address}
-              </div>
-              <div className="flex items-center gap-3">
-                {tenant.footer_data.social_links &&
-                  tenant.footer_data.social_links.length > 0 &&
-                  tenant.footer_data.social_links.map((link, index) => {
+          {/* Desktop Layout - Footer Text and Social Links */}
+          <div className="hidden sm:flex justify-between items-center">
+            {tenant.footer_data.footer_text ? (
+              <div
+                className="text-neutral-500 dark:text-base-400 text-xs [&_a]:underline [&_a]:text-neutral-500 dark:[&_a]:text-base-400 [&_a]:hover:text-neutral-700 dark:[&_a]:hover:text-base-200 [&_p]:m-0"
+                dangerouslySetInnerHTML={{ __html: tenant.footer_data.footer_text }}
+              />
+            ) : (
+              <div />
+            )}
+            <div className="flex items-center gap-3">
+              {tenant.footer_data.social_links &&
+                tenant.footer_data.social_links.length > 0 &&
+                tenant.footer_data.social_links.map((link, index) => {
+                  const iconName = getSocialPlatformByName(link.name)?.icon as keyof typeof Icons;
+                  const Icon = Icons[iconName];
+                  return (
+                    <a
+                      key={index}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="opacity-60 hover:opacity-100 transition-opacity flex-shrink-0"
+                      title={link.name}
+                    >
+                      {Icon ? <Icon className="w-5 h-5" /> : null}
+                    </a>
+                  );
+                })}
+            </div>
+          </div>
+
+          {/* Mobile Layout - Centered */}
+          <div className="sm:hidden text-center px-4 py-6 space-y-4">
+            {tenant.footer_data.social_links &&
+              tenant.footer_data.social_links.length > 0 && (
+                <div className="flex justify-center items-center gap-4 flex-wrap">
+                  {tenant.footer_data.social_links.map((link, index) => {
                     const iconName = getSocialPlatformByName(link.name)?.icon as keyof typeof Icons;
                     const Icon = Icons[iconName];
                     return (
@@ -75,43 +103,19 @@ export function WebsiteFooter({ tenant }: WebsiteFooterProps) {
                         className="opacity-60 hover:opacity-100 transition-opacity flex-shrink-0"
                         title={link.name}
                       >
-                        {Icon ? <Icon className="w-5 h-5 dark:invert" /> : null}
+                        {Icon ? <Icon className="w-5 h-5" /> : null}
                       </a>
                     );
                   })}
-              </div>
-            </div>
+                </div>
+              )}
 
-            {/* Mobile Layout - Centered */}
-            <div className="sm:hidden text-center px-4 py-6 space-y-4">
-              {tenant.footer_data.social_links &&
-                tenant.footer_data.social_links.length > 0 && (
-                  <div className="flex justify-center items-center gap-4 flex-wrap">
-                    {tenant.footer_data.social_links.map((link, index) => (
-                      <a
-                        key={index}
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="opacity-60 hover:opacity-100 transition-opacity flex-shrink-0"
-                        title={link.name}
-                      >
-                        <img
-                          src={`/images/socials/svg/${link.name.toLowerCase()}.svg`}
-                          alt={link.name}
-                          className="w-5 h-5"
-                        />
-                      </a>
-                    ))}
-                  </div>
-                )}
-
-              <div className="text-center">
-                <p className="text-neutral-500 dark:text-base-400 text-sm">
-                  ©{new Date().getFullYear()} {tenant.name} - All rights reserved
-                </p>
-              </div>
-            </div>
+            {tenant.footer_data.footer_text && (
+              <div
+                className="text-neutral-500 dark:text-base-400 text-xs [&_a]:underline [&_a]:text-neutral-500 dark:[&_a]:text-base-400 [&_a]:hover:text-neutral-700 dark:[&_a]:hover:text-base-200 [&_p]:m-0"
+                dangerouslySetInnerHTML={{ __html: tenant.footer_data.footer_text }}
+              />
+            )}
           </div>
         </div>
       </section>

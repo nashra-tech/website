@@ -83,31 +83,28 @@ export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
                     </Button>
                   </DialogTrigger>
                   <DialogContent
-                    className="sm:max-w-[390px] p-0 sm:p-0 px-3 sm:px-3 border"
+                    className="sm:max-w-[390px] p-5 sm:p-5 gap-0 border"
                     showCloseButton={!showSuccess}
                     dir={tenantDirection}
                   >
-                    <DialogHeader className="">
+                    <DialogHeader>
                       <DialogTitle className="sr-only">
                         {showSuccess ? t('dialog.subscription_success_title') : t('dialog.subscribe_title')}
                       </DialogTitle>
                     </DialogHeader>
 
                     {!showSuccess && (
-                      <div>
-                        {/* Start Form Section */}
-                        <div className="mb-3" dir={tenantDirection}>
-                          <h2 className="text-md text-primary font-medium text-gray-900 dark:text-white">
-                            {t('newsletter.title')}
-                          </h2>
-                          <p className="text-md font-medium text-neutral-500 dark:text-gray-300">
-                            {t('newsletter.subtitle')}
-                          </p>
-                        </div>
+                      <div className="mb-4" dir={tenantDirection}>
+                        <p className="text-[17px] font-medium leading-[1.2] tracking-tight text-black dark:text-white">
+                          {t('newsletter.title')}
+                        </p>
+                        <p className="text-[17px] font-medium leading-[1.2] tracking-tight text-neutral-500 dark:text-base-400">
+                          {t('newsletter.subtitle')}
+                        </p>
                       </div>
                     )}
 
-                    <div className="mb-3">
+                    <div>
                       <SubscribeForm
                         isPopup={true}
                         tenant={tenant}

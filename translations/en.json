@@ -4,7 +4,7 @@
     "subscribe": "Subscribe",
     "subscribing": "Subscribing...",
     "subscribed": "Subscribed",
-    "email_placeholder": "Enter your email address",
+    "email_placeholder": "Email Address",
     "email_required": "Email is required",
     "invalid_email": "Please enter a valid email address",
     "subscription_success": "You're subscribed! 🎉",
@@ -20,8 +20,8 @@
     "next": "Next"
   },
   "newsletter": {
-    "title": "Get the latest articles",
-    "subtitle": "Delivered to your inbox"
+    "title": "Our latest posts.",
+    "subtitle": "Right into your inbox."
   },
   "dialog": {
     "subscribe_title": "Subscribe to newsletter",
@@ -37,7 +37,7 @@
     "check_email_message": "Please check your email to confirm your subscription to",
     "you_are_in": "You are in",
     "subscribed_to": "Subscribed to",
-    "your_email": "Your email"
+    "your_email": "Email Address"
   },
   "errors": {
     "tenant_not_found": "The requested workspace was not found.",

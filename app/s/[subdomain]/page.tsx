@@ -72,10 +72,7 @@ export default async function TenantHomePage({ params, searchParams }: PageProps
         <div className="max-w-[560px] mx-auto p-3 sm:p-0">
           {/* Header Section - Responsive */}
           <div className="sm:mt-20 sm:mb-16 mt-16 mb-16">
-            <H2 className="mb-2">{tenant.name || ''}</H2>
-            <Subtitle fontWeight={'font-normal'} textSize={'text-lg'}>
-              {tenant.subtitle}
-            </Subtitle>
+            <H2 className="mb-2">{tenant.subtitle || tenant.name || ''}</H2>
           </div>
 
 
@@ -89,6 +86,7 @@ export default async function TenantHomePage({ params, searchParams }: PageProps
                     post={post}
                     tenantSlug={subdomain}
                     tenantDirection={tenantDirection}
+                    tenantLanguage={tenantLanguage}
                     isFirst={index === 0}
                   />
                 ))
