@@ -34,7 +34,6 @@ export function WebsiteFooter({ tenant }: WebsiteFooterProps) {
               isRtl={isTenantRTL}
               translations={{ made_with: t('common.powered_by') }}
               clickable={true}
-              className="opacity-80 hover:opacity-100 transition-opacity"
             />
           </div>
         )}

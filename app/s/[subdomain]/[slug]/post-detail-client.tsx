@@ -87,6 +87,15 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
       const parent = iframe.parentElement;
       if (parent) {
         parent.replaceChild(link, iframe);
+
+        // Preserve figcaption in the figure after iframe replacement
+        const figure = parent.closest('figure');
+        if (figure) {
+          const figcaption = figure.querySelector('figcaption');
+          if (figcaption) {
+            figure.appendChild(figcaption);
+          }
+        }
       }
     });
   }, [post.website_content]);
