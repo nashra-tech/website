@@ -54,7 +54,7 @@ export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
         dir={tenantDirection}
       >
         {/* Header */}
-        <header className="py-2 sm:py-3 border-b ">
+        <header className="py-2 sm:py-3">
           <div className="container mx-auto px-3 sm:px-0 max-w-[560px]">
             <div className="flex items-center justify-between">
               <Link href={'/'}>
