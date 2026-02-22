@@ -236,45 +236,36 @@
   color: var(--muted-foreground, #a3a3a3);
 }
 
-/* ── Dark mode: highlighted text — remove bg, use hue-matched text color ─ */
+/* ── Dark mode: highlighted text — keep pastel bg, use hue-matched text color ─ */
 /* Plate.js serializes highlight colours as inline background-color styles
-   with light pastel values. In dark mode we remove those backgrounds and
-   set a matching text colour instead for a cleaner look. */
-.dark .post-content [style*="rgb(241, 241, 239)"] { /* Gray */
-  background-color: transparent !important;
-  color: #a3a3a3 !important;
+   with light pastel values. In dark mode we keep those backgrounds and
+   set a matching text colour for better readability. */
+.dark .post-content [style*="rgb(241, 241, 239)"] { /* Gray → gray-900 */
+  color: #171717 !important;
 }
-.dark .post-content [style*="rgb(235, 229, 220)"] { /* Brown */
-  background-color: transparent !important;
-  color: #d4a574 !important;
+.dark .post-content [style*="rgb(235, 229, 220)"] { /* Brown → stone-900 */
+  color: #1c1917 !important;
 }
-.dark .post-content [style*="rgb(254, 235, 200)"] { /* Orange */
-  background-color: transparent !important;
-  color: #fb923c !important;
+.dark .post-content [style*="rgb(254, 235, 200)"] { /* Orange → orange-900 */
+  color: #7c2d12 !important;
 }
-.dark .post-content [style*="rgb(254, 249, 195)"] { /* Yellow */
-  background-color: transparent !important;
-  color: #facc15 !important;
+.dark .post-content [style*="rgb(254, 249, 195)"] { /* Yellow → yellow-900 */
+  color: #713f12 !important;
 }
-.dark .post-content [style*="rgb(204, 251, 241)"] { /* Green */
-  background-color: transparent !important;
-  color: #34d399 !important;
+.dark .post-content [style*="rgb(204, 251, 241)"] { /* Green → emerald-900 */
+  color: #064e3b !important;
 }
-.dark .post-content [style*="rgb(219, 234, 254)"] { /* Blue */
-  background-color: transparent !important;
-  color: #60a5fa !important;
+.dark .post-content [style*="rgb(219, 234, 254)"] { /* Blue → blue-900 */
+  color: #1e3a5f !important;
 }
-.dark .post-content [style*="rgb(243, 232, 255)"] { /* Purple */
-  background-color: transparent !important;
-  color: #a78bfa !important;
+.dark .post-content [style*="rgb(243, 232, 255)"] { /* Purple → purple-900 */
+  color: #3b0764 !important;
 }
-.dark .post-content [style*="rgb(252, 231, 243)"] { /* Pink */
-  background-color: transparent !important;
-  color: #f472b6 !important;
+.dark .post-content [style*="rgb(252, 231, 243)"] { /* Pink → pink-900 */
+  color: #831843 !important;
 }
-.dark .post-content [style*="rgb(254, 226, 226)"] { /* Red */
-  background-color: transparent !important;
-  color: #f87171 !important;
+.dark .post-content [style*="rgb(254, 226, 226)"] { /* Red → red-900 */
+  color: #7f1d1d !important;
 }
 
 /* ── Dark mode: code block syntax highlighting ─────────────────────── */
