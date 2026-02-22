@@ -212,7 +212,7 @@
 /* ── Video/media containers ───────────────────────────────── */
 .post-content figure {
   margin: 0;
-  display: inline-block;
+  display: block;
   position: relative;
   width: 100%;
 }
@@ -325,7 +325,7 @@
 .dark .post-content .hljs-deletion { background-color: rgba(248, 81, 73, 0.15); color: #ffa198; }
 
 /* ── Safety resets (prevent Tailwind Preflight from interfering) ─────── */
-.post-content img { max-width: 100%; height: auto; }
+.post-content img { display: block; max-width: 100%; height: auto; }
 
 /* ── Code block syntax highlighting (backward compat for old posts) ─── */
 /* New posts use inline colour styles. These rules cover old posts that
