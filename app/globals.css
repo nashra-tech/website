@@ -178,7 +178,12 @@
 }
 
 /* ── Typography: paragraphs ───────────────────────────────── */
-.post-content p {
+/* Plate.js serializes paragraphs as <div class="py-3 …"> not <p>.
+   The py-3 Tailwind class doesn't compile in dangerouslySetInnerHTML,
+   so we replicate it here via the attribute selector. */
+.post-content p,
+.post-content > [data-slate-editor] > div[class*="py-3"],
+.post-content > div[class*="py-3"] {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
 }
