@@ -73,6 +73,7 @@ export interface ApiTenant {
   physical_address: string | null;
   show_branding:boolean;
   brandColor:string;
+  favicon: string | null;
 }
 
 // ============================================================================

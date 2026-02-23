@@ -32,7 +32,8 @@ export function adaptTenant(apiTenant: ApiTenant): Tenant {
     website_language: apiTenant.website_language,
     has_paid_subscription: apiTenant.has_active_subscription,
     show_branding:apiTenant.show_branding??true,
-    brandColor:apiTenant.brandColor||'#1c1c1c'
+    brandColor:apiTenant.brandColor||'#1c1c1c',
+    favicon: apiTenant.favicon || null
   };
 }
 

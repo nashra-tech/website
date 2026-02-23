@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Tenant } from '@/types';
 import { Button } from '@/components/ui/button';
@@ -43,6 +43,24 @@ function ThemeToggleDropdown() {
 
 export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
   const [open, setOpen] = useState(false);
+
+  // Set dynamic favicon from tenant data
+  useEffect(() => {
+    if (!tenant.favicon) return;
+
+    // Remove all existing favicon link tags
+    document
+      .querySelectorAll('link[rel="icon"], link[rel="shortcut icon"]')
+      .forEach((el) => el.remove());
+
+    // Create a fresh link tag
+    const link = document.createElement('link');
+    link.rel = 'icon';
+    link.type = 'image/png';
+    link.setAttribute('sizes', '32x32');
+    link.href = tenant.favicon;
+    document.head.appendChild(link);
+  }, [tenant.favicon]);
   const [showSuccess, setShowSuccess] = useState(false);
   const tenantDirection = tenant.website_direction || 'ltr';
   const tenantLanguage = tenant.website_language || 'en';
