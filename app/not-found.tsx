@@ -11,7 +11,7 @@ export default function NotFound() {
     <ErrorLayout
       code="404"
       message="This page doesn't seem to exist anymore."
-      showHomeLink={false}
+      showHomeLink={true}
     />
   );
 }
