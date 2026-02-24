@@ -71,6 +71,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const canonicalUrl = await getPostCanonicalUrl(post.slug);
   const title = `${post.title} - ${tenant?.name || ''}`;
   const description = post.subtitle || post.title;
+  const ogDescription = 'Wrote in Nashra, simple newsletter + blogging platform';
   const ogImage = post.main_image_url || tenant?.logo || undefined;
 
   return {
@@ -81,7 +82,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     },
     openGraph: {
       title: post.title,
-      description,
+      description: ogDescription,
       type: 'article',
       url: canonicalUrl,
       siteName: tenant?.name || '',
@@ -94,7 +95,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     twitter: {
       card: ogImage ? 'summary_large_image' : 'summary',
       title: post.title,
-      description,
+      description: ogDescription,
       ...(ogImage && {
         images: [ogImage],
       }),
