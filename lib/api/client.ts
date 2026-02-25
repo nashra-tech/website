@@ -6,7 +6,7 @@
  */
 
 import { getApiBaseUrl, API_CONFIG } from './config';
-import { ApiError, parseApiError, handleFetchError } from './errors';
+import { parseApiError, handleFetchError } from './errors';
 import type { ApiErrorResponse } from '@/types/api';
 
 /**
