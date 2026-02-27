@@ -1,0 +1,74 @@
+name: Taco Task Implementation
+
+on:
+  workflow_dispatch:
+    inputs:
+      task_description:
+        description: 'The task to implement'
+        required: true
+        type: string
+      branch_name:
+        description: 'Branch name for this implementation'
+        required: true
+        type: string
+      task_context:
+        description: 'Additional context or notes for the task'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  implement:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Configure git
+        run: |
+          git config user.name "taco-automation-bot"
+          git config user.email "taco-automation-bot@users.noreply.github.com"
+
+      - name: Create branch
+        env:
+          BRANCH_NAME: ${{ inputs.branch_name }}
+        run: |
+          git checkout -b "${BRANCH_NAME}"
+
+      - name: Implement task
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TASK_DESCRIPTION: ${{ inputs.task_description }}
+          TASK_CONTEXT: ${{ inputs.task_context }}
+        run: |
+          PROMPT="Implement the following task: ${TASK_DESCRIPTION}"
+          if [ -n "${TASK_CONTEXT}" ]; then
+            PROMPT="${PROMPT}\n\nAdditional context:\n${TASK_CONTEXT}"
+          fi
+          PROMPT="$PROMPT\n\nAfter making all changes, commit them with a descriptive commit message."
+          claude -p "$PROMPT" --allowedTools "Edit" "Write" "Bash(git add:*)" "Bash(git commit:*)" "Read" "Glob" "Grep"
+
+      - name: Commit remaining changes
+        env:
+          TASK_DESCRIPTION: ${{ inputs.task_description }}
+        run: |
+          git add -A
+          git diff --cached --quiet || git commit -m "Implement: ${TASK_DESCRIPTION}"
+
+      - name: Push branch
+        env:
+          BRANCH_NAME: ${{ inputs.branch_name }}
+        run: |
+          git push -u origin "${BRANCH_NAME}"
