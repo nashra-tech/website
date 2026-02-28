@@ -22,7 +22,6 @@ import type {
  * @returns Paginated posts
  *
  * Endpoint: GET /api/v1/tenants/{slug}/posts
- * Cache: 10 minutes (page 1), 15 minutes (other pages)
  */
 export async function getPosts(
   tenantSlug: string,
@@ -38,16 +37,9 @@ export async function getPosts(
     per_page: perPage,
   });
 
-  // Use different cache time for page 1 vs other pages
-  const revalidate =
-    page === 1
-      ? API_CONFIG.revalidate.postsPage1
-      : API_CONFIG.revalidate.postsOther;
-
   const response = await apiGet<ApiPaginatedResponse<ApiPostListItem>>(
     `/tenants/${tenantSlug}/posts${queryString}`,
     {
-      revalidate,
       timeout: API_CONFIG.timeout.read,
     }
   );
@@ -63,7 +55,6 @@ export async function getPosts(
  * @returns Post detail or null if not found
  *
  * Endpoint: GET /api/v1/tenants/{slug}/posts/{post}
- * Cache: 30 minutes
  */
 export async function getPostBySlug(
   tenantSlug: string,
@@ -73,7 +64,6 @@ export async function getPostBySlug(
     const response = await apiGet<ApiSuccessResponse<ApiPostDetail>>(
       `/tenants/${tenantSlug}/posts/${postSlug}`,
       {
-        revalidate: API_CONFIG.revalidate.postDetail,
         timeout: API_CONFIG.timeout.read,
       }
     );

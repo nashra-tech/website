@@ -4,7 +4,8 @@
       "WebFetch(domain:github.com)",
       "Bash(find:*)",
       "Bash(pnpm install:*)",
-      "Bash(which npm && npm install 2>&1 || npx pnpm install 2>&1)"
+      "Bash(which npm && npm install 2>&1 || npx pnpm install 2>&1)",
+      "Bash(npx tsc:*)"
     ]
   },
   "enableAllProjectMcpServers": true,

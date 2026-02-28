@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
   try {
     const response = await fetch(
       `${API_CONFIG.baseUrl}/api/${API_CONFIG.version}/tenants/${slug}/robots.txt`,
-      { next: { revalidate: 86400 } } // Cache for 24 hours
+      { cache: 'no-store' }
     );
 
     if (!response.ok) {
@@ -33,7 +33,6 @@ export async function GET(request: NextRequest) {
       status: 200,
       headers: {
         'Content-Type': 'text/plain',
-        'Cache-Control': 'public, max-age=86400',
       },
     });
   } catch {

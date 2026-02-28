@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
   try {
     const response = await fetch(
       `${API_CONFIG.baseUrl}/api/${API_CONFIG.version}/tenants/${slug}/sitemap.xml`,
-      { next: { revalidate: 3600 } } // Cache for 1 hour (matches cron interval)
+      { cache: 'no-store' }
     );
 
     if (!response.ok) {
@@ -27,7 +27,6 @@ export async function GET(request: NextRequest) {
         status: 200,
         headers: {
           'Content-Type': 'application/xml',
-          'Cache-Control': 'public, max-age=3600',
         },
       });
     }
@@ -37,7 +36,6 @@ export async function GET(request: NextRequest) {
       status: 200,
       headers: {
         'Content-Type': 'application/xml',
-        'Cache-Control': 'public, max-age=3600',
       },
     });
   } catch {

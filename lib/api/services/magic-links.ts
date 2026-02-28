@@ -22,7 +22,6 @@ import type {
  * @returns Magic link form data or null if not found
  *
  * Endpoint: GET /api/v1/tenants/{slug}/magic-links/{identifier}
- * Cache: 30 minutes
  */
 export async function getMagicLinkFormByIdentifier(
   tenantSlug: string,
@@ -32,7 +31,6 @@ export async function getMagicLinkFormByIdentifier(
     const response = await apiGet<ApiSuccessResponse<ApiMagicLinkForm>>(
       `/tenants/${tenantSlug}/magic-links/${identifier}`,
       {
-        revalidate: API_CONFIG.revalidate.magicLink,
         timeout: API_CONFIG.timeout.read,
       }
     );

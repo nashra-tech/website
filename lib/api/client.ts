@@ -2,10 +2,10 @@
  * API Client
  *
  * Core HTTP client for making API requests to the Laravel backend
- * Handles authentication, error handling, caching, and request formatting
+ * Handles authentication, error handling, and request formatting
  */
 
-import { getApiBaseUrl, API_CONFIG } from './config';
+import { getApiBaseUrl } from './config';
 import { parseApiError, handleFetchError } from './errors';
 import type { ApiErrorResponse } from '@/types/api';
 
@@ -13,12 +13,6 @@ import type { ApiErrorResponse } from '@/types/api';
  * Request options for API client
  */
 export interface ApiRequestOptions extends RequestInit {
-  /**
-   * Revalidation time in seconds for Next.js caching
-   * Set to 0 or false to disable caching
-   */
-  revalidate?: number | false;
-
   /**
    * Timeout in milliseconds (optional)
    */
@@ -37,7 +31,7 @@ export async function apiGet<T>(
   path: string,
   options: ApiRequestOptions = {}
 ): Promise<T> {
-  const { revalidate, timeout, skipErrorParsing, ...fetchOptions } = options;
+  const { timeout, skipErrorParsing, ...fetchOptions } = options;
 
   const url = `${getApiBaseUrl()}${path}`;
 
@@ -48,20 +42,9 @@ export async function apiGet<T>(
       Accept: 'application/json',
       ...fetchOptions.headers,
     },
+    cache: 'no-store',
     ...fetchOptions,
   };
-
-  // Apply Next.js caching strategy
-  // Caching can be globally disabled via NEXT_PUBLIC_ENABLE_API_CACHE=false
-  if (!API_CONFIG.enableCache) {
-    requestOptions.cache = 'no-store';
-  } else if (revalidate !== undefined) {
-    if (revalidate === false || revalidate === 0) {
-      requestOptions.cache = 'no-store';
-    } else {
-      requestOptions.next = { revalidate };
-    }
-  }
 
   try {
     const controller = new AbortController();
@@ -103,6 +86,7 @@ export async function apiPost<TRequest, TResponse>(
   options: ApiRequestOptions = {}
 ): Promise<TResponse> {
   const { timeout, skipErrorParsing, ...fetchOptions } = options;
+
 
   const url = `${getApiBaseUrl()}${path}`;
 

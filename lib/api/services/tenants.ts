@@ -15,7 +15,6 @@ import type { ApiSuccessResponse, ApiTenant } from '@/types/api';
  * @returns Tenant data
  *
  * Endpoint: GET /api/v1/tenants/{slug}
- * Cache: 1 hour
  */
 export async function getTenantBySlug(
   slug: string
@@ -24,7 +23,6 @@ export async function getTenantBySlug(
     const response = await apiGet<ApiSuccessResponse<ApiTenant>>(
       `/tenants/${slug}`,
       {
-        revalidate: API_CONFIG.revalidate.tenant,
         timeout: API_CONFIG.timeout.read,
       }
     );
