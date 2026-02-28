@@ -5,6 +5,8 @@
  * Recreates the functionality from Index.tsx with Next.js App Router.
  */
 
+export const dynamic = 'force-dynamic';
+
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getTenantBySlug, getPosts } from '@/lib/data';
