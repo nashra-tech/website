@@ -4,13 +4,15 @@
     "subscribe": "Abonnieren",
     "subscribing": "Wird abonniert...",
     "subscribed": "Abonniert",
-    "email_placeholder": "Geben Sie Ihre E-Mail-Adresse ein",
+    "email_placeholder": "E-Mail-Adresse",
     "email_required": "E-Mail ist erforderlich",
     "invalid_email": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
     "subscription_success": "Sie sind abonniert! 🎉",
     "subscription_error": "Abonnement fehlgeschlagen. Bitte versuchen Sie es erneut.",
     "explore": "Erkunden",
-    "more_articles": "Weitere Artikel"
+    "more_articles": "Weitere Artikel",
+    "more_posts": "Weitere Beiträge",
+    "posts": "Beiträge"
   },
   "home": {
     "empty_title": "Wir fangen gerade erst an. Melden Sie sich für Updates an!",

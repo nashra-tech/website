@@ -4,13 +4,15 @@
     "subscribe": "Suscribirse",
     "subscribing": "Suscribiendo...",
     "subscribed": "Suscrito",
-    "email_placeholder": "Ingresa tu dirección de correo electrónico",
+    "email_placeholder": "Correo electrónico",
     "email_required": "El correo electrónico es obligatorio",
     "invalid_email": "Por favor ingresa una dirección de correo electrónico válida",
     "subscription_success": "¡Te has suscrito! 🎉",
     "subscription_error": "Error al suscribirse. Por favor, inténtalo de nuevo.",
     "explore": "Explorar",
-    "more_articles": "Más artículos"
+    "more_articles": "Más artículos",
+    "more_posts": "Más publicaciones",
+    "posts": "Publicaciones"
   },
   "home": {
     "empty_title": "¡Acabamos de empezar. Regístrate para recibir actualizaciones!",

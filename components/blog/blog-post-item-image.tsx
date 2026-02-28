@@ -27,8 +27,6 @@ export function BlogPostItemImage({
   isFirst = false,
   isLast = false,
 }: BlogPostItemProps) {
-  const isRTL = tenantDirection === 'rtl';
-
   const formattedDate = new Date(post.publish_date).toLocaleDateString(tenantLanguage, {
     year: 'numeric',
     month: 'short',
@@ -41,7 +39,7 @@ export function BlogPostItemImage({
       className={`py-3 px-3 w-full ${!isLast ? 'border-b' : ''} cursor-pointer transition-colors block rounded-lg hover:bg-neutral-100`}
       dir={tenantDirection}
     >
-      <div className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+      <div className="flex items-center gap-3">
         <div className="w-[44px] h-[44px] rounded-md overflow-hidden flex-shrink-0 bg-neutral-100">
           {post.main_image_thumb_url ? (
             <Image
@@ -58,7 +56,7 @@ export function BlogPostItemImage({
           )}
         </div>
 
-        <div className={`flex flex-col gap-1 ${isRTL ? 'text-right' : 'text-left'}`}>
+        <div className="flex flex-col gap-1">
           <h3 className="text-[17px] font-medium leading-[1.2] text-foreground tracking-tight">
             {post.title}
           </h3>

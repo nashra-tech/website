@@ -4,13 +4,15 @@
     "subscribe": "Berlangganan",
     "subscribing": "Berlangganan...",
     "subscribed": "Berlangganan",
-    "email_placeholder": "Masukkan alamat email Anda",
+    "email_placeholder": "Alamat email",
     "email_required": "Email wajib diisi",
     "invalid_email": "Silakan masukkan alamat email yang valid",
     "subscription_success": "Anda telah berlangganan! 🎉",
     "subscription_error": "Gagal berlangganan. Silakan coba lagi.",
     "explore": "Jelajahi",
-    "more_articles": "Artikel lainnya"
+    "more_articles": "Artikel lainnya",
+    "more_posts": "Postingan lainnya",
+    "posts": "Postingan"
   },
   "home": {
     "empty_title": "Kami baru saja memulai. Daftar untuk pembaruan!",

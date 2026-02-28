@@ -21,7 +21,6 @@ function NashraLogoIcon({ className = '' }: { className?: string }) {
 export function PoweredByNashra({
     className = "",
     translations = {},
-    isRtl = false,
     clickable = true
 }: PoweredByNashraProps) {
     const poweredByText = translations.made_with || 'Powered by';
@@ -30,23 +29,11 @@ export function PoweredByNashra({
         <div
             className={`inline-flex items-center gap-2 px-3 py-2 border bg-white dark:bg-neutral-800 border-[#E5E5E5] dark:border-neutral-700 rounded-[4px] text-[13px] leading-4 text-[#737373] dark:text-neutral-400 ${className}`}
         >
-            {isRtl ? (
-                <>
-                    <span className="inline-flex items-center gap-[2.8px]">
-                        <span className="font-medium text-black dark:text-neutral-200">Nashra</span>
-                        <NashraLogoIcon className="text-black dark:invert" />
-                    </span>
-                    <span>{poweredByText}</span>
-                </>
-            ) : (
-                <>
-                    <span>{poweredByText}</span>
-                    <span className="inline-flex items-center gap-[2.8px]">
-                        <NashraLogoIcon className="text-black dark:invert" />
-                        <span className="font-medium text-black dark:text-neutral-200">Nashra</span>
-                    </span>
-                </>
-            )}
+            <span>{poweredByText}</span>
+            <span dir="ltr" className="inline-flex items-center gap-[2.8px]">
+                <NashraLogoIcon className="text-black dark:invert" />
+                <span className="font-medium text-black dark:text-neutral-200">Nashra</span>
+            </span>
         </div>
     );
 

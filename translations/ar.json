@@ -4,13 +4,15 @@
     "subscribe": "اشترك",
     "subscribing": "جاري الاشتراك...",
     "subscribed": "مشترك",
-    "email_placeholder": "أدخل عنوان بريدك الإلكتروني",
+    "email_placeholder": "البريد الإلكتروني",
     "email_required": "البريد الإلكتروني مطلوب",
     "invalid_email": "يرجى إدخال عنوان بريد إلكتروني صالح",
     "subscription_success": "تم الاشتراك بنجاح! 🎉",
     "subscription_error": "فشل الاشتراك. يرجى المحاولة مرة أخرى.",
     "explore": "استكشف",
-    "more_articles": "المزيد من المقالات"
+    "more_articles": "المزيد من المقالات",
+    "more_posts": "المزيد من المنشورات",
+    "posts": "المنشورات"
   },
   "home": {
     "empty_title": "لقد بدأنا للتو. اشترك للحصول على التحديثات!",

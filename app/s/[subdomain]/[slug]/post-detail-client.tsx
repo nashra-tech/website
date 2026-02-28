@@ -4,8 +4,6 @@ import { useEffect, useMemo, useRef } from 'react';
 import { Tenant, Post } from '@/types';
 import { WebsiteLayout } from '@/components/blog/website-layout';
 import { WebsiteFooter } from '@/components/blog/website-footer';
-import { Separator } from '@/components/ui/separator';
-import { Icons } from '@/components/ui/icons';
 import { Small } from '@/components/system-ui/typography';
 import { usePageTracking } from '@/hooks/use-page-tracking';
 import { useTranslations } from '@/lib/i18n/use-translations';
@@ -140,19 +138,11 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
 
           <footer>
             {morePosts.length > 0 && (
-              <div className="space-y-3 mt-16">
-                <div className="flex items-center gap-1">
-                  <h3 className="text-lg font-medium text-foreground tracking-tight">
-                    {t('common.more_articles')}
-                  </h3>
-                  {isRTL ? (
-                    <Icons.arrowLeft className="w-5 h-5" />
-                  ) : (
-                    <Icons.arrowRight className="w-5 h-5" />
-                  )}
-                </div>
+              <div className="mt-16">
+                <h3 className="text-sm font-medium text-muted-foreground mb-4">
+                  {t('common.more_posts')}
+                </h3>
                 <div>
-                  <Separator />
                   {morePosts.map((morePost, idx) => (
                     <BlogPostItemImage
                       key={morePost.uuid}

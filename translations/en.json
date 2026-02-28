@@ -10,7 +10,9 @@
     "subscription_success": "You're subscribed! 🎉",
     "subscription_error": "Failed to subscribe. Please try again.",
     "explore": "Explore",
-    "more_articles": "More Articles"
+    "more_articles": "More Articles",
+    "more_posts": "More Posts",
+    "posts": "Posts"
   },
   "home": {
     "empty_title": "We're just getting started. Sign up for updates!",

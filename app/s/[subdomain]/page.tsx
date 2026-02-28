@@ -17,7 +17,6 @@ import { PageTracker } from '@/components/blog/page-tracker';
 import { Separator } from '@/components/ui/separator';
 import { Empty } from '@/components/ui/empty';
 import { Icons } from '@/components/ui/icons';
-import { H2, Subtitle } from '@/components/system-ui/typography';
 import { getTranslations } from '@/lib/i18n';
 import { ThemeColorScript } from '@/components/theme/theme-color-script';
 import { BlogPostItemImage } from '@/components/blog/blog-post-item-image';
@@ -72,12 +71,13 @@ export default async function TenantHomePage({ params, searchParams }: PageProps
         <div className="max-w-[560px] mx-auto p-3 sm:p-0">
           {/* Header Section - Responsive */}
           <div className="sm:mt-20 sm:mb-16 mt-16 mb-16">
-            <H2 className="mb-2">{tenant.subtitle || tenant.name || ''}</H2>
+            <p className="text-[20px] sm:text-[24px] font-medium text-foreground leading-snug max-w-[460px]">{tenant.subtitle || tenant.name || ''}</p>
           </div>
 
 
           {/* Posts List */}
           <div className="w-full">
+            <h2 className="text-sm font-medium text-muted-foreground mb-4">{translations.common.posts}</h2>
             <div className="space-y-0">
               {posts.data.length > 0 ? (
                 posts.data.map((post, index) => (
