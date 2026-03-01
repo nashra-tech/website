@@ -15,7 +15,6 @@ interface BlogPostItemProps {
   tenantSlug: string;
   tenantDirection?: 'ltr' | 'rtl';
   tenantLanguage?: string;
-  isFirst?: boolean;
   isLast?: boolean;
 }
 
@@ -24,7 +23,6 @@ export function BlogPostItemImage({
   tenantSlug,
   tenantDirection = 'ltr',
   tenantLanguage = 'en',
-  isFirst = false,
   isLast = false,
 }: BlogPostItemProps) {
   const formattedDate = new Date(post.publish_date).toLocaleDateString(tenantLanguage, {

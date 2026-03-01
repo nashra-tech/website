@@ -12,7 +12,6 @@ interface BlogPostItemProps {
   post: Post;
   tenantSlug: string;
   tenantDirection?: 'ltr' | 'rtl';
-  isFirst?: boolean;
   isLast?: boolean;
 }
 
@@ -20,7 +19,6 @@ export function BlogPostItem({
   post,
   tenantSlug,
   tenantDirection = 'ltr',
-  isFirst = false,
   isLast = false,
 }: BlogPostItemProps) {
   const isRTL = tenantDirection === 'rtl';

@@ -11,10 +11,8 @@ import { getTenantBySlug, getPosts } from '@/lib/data';
 import { getTenantCanonicalUrl } from '@/lib/canonical-url';
 import { WebsiteLayout } from '@/components/blog/website-layout';
 import { WebsiteFooter } from '@/components/blog/website-footer';
-import { BlogPostItem } from '@/components/blog/blog-post-item';
 import { Pagination } from '@/components/blog/pagination';
 import { PageTracker } from '@/components/blog/page-tracker';
-import { Separator } from '@/components/ui/separator';
 import { Empty } from '@/components/ui/empty';
 import { Icons } from '@/components/ui/icons';
 import { getTranslations } from '@/lib/i18n';
@@ -87,7 +85,6 @@ export default async function TenantHomePage({ params, searchParams }: PageProps
                     tenantSlug={subdomain}
                     tenantDirection={tenantDirection}
                     tenantLanguage={tenantLanguage}
-                    isFirst={index === 0}
                   />
                 ))
               ) : (
@@ -106,12 +103,8 @@ export default async function TenantHomePage({ params, searchParams }: PageProps
               <Pagination
                 currentPage={posts.current_page}
                 totalPages={posts.last_page}
-                perPage={posts.per_page}
                 total={posts.total}
-                from={posts.from}
-                to={posts.to}
                 tenantDirection={tenantDirection}
-                language={tenantLanguage}
               />
             )}
           </div>

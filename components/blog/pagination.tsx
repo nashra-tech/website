@@ -14,12 +14,8 @@ import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
-  perPage: number;
   total: number;
-  from: number;
-  to: number;
   tenantDirection?: 'ltr' | 'rtl';
-  language?: string; // Add language prop for future extensibility
 }
 
 export function Pagination({

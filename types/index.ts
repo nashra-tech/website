@@ -4,6 +4,6 @@
  * Central export point for all application types.
  */
 
-export type { Tenant, TenantMeta, SocialLink } from './tenant';
+export type { Tenant } from './tenant';
 export type { Post, PaginatedPosts } from './post';
-export type { MagicLinkForm, MagicLinkFormField, MagicLinkSubscription } from './magic-link';
+export type { MagicLinkForm } from './magic-link';

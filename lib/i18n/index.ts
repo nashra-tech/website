@@ -7,8 +7,6 @@
 export {
   getTranslations,
   t,
-  isRTL,
-  LANGUAGE_NAMES,
   type SupportedLanguage,
   type Translations,
   type TranslationKey,

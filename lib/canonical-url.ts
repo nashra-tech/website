@@ -18,7 +18,7 @@ import { protocol, rootDomain } from '@/lib/utils';
  *
  * Returns e.g. "https://myblog.com" or "https://cool-blog.nashra.ai"
  */
-export async function getCanonicalBaseUrl(): Promise<string> {
+async function getCanonicalBaseUrl(): Promise<string> {
   const headersList = await headers();
   const host = headersList.get('host') || '';
   const hostname = host.split(':')[0];
@@ -34,7 +34,7 @@ export async function getCanonicalBaseUrl(): Promise<string> {
 /**
  * Build a canonical URL for a specific path
  */
-export async function getCanonicalUrl(path: string = ''): Promise<string> {
+async function getCanonicalUrl(path: string = ''): Promise<string> {
   const baseUrl = await getCanonicalBaseUrl();
   const cleanPath = path.startsWith('/') ? path : `/${path}`;
   return path ? `${baseUrl}${cleanPath}` : baseUrl;
