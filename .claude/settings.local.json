@@ -5,7 +5,16 @@
       "Bash(find:*)",
       "Bash(pnpm install:*)",
       "Bash(which npm && npm install 2>&1 || npx pnpm install 2>&1)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "WebSearch",
+      "WebFetch(domain:vercel.com)",
+      "WebFetch(domain:llmstxt.org)",
+      "Bash(pnpm add:*)",
+      "Bash(npm:*)",
+      "Bash(export:*)",
+      "Bash(corepack enable:*)",
+      "Bash(npx pnpm:*)",
+      "Bash(COREPACK_INTEGRITY_KEYS=0 npx pnpm:*)"
     ]
   },
   "enableAllProjectMcpServers": true,

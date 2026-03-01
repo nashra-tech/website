@@ -61,6 +61,11 @@ function extractSubdomain(request: NextRequest): string | null {
   return null;
 }
 
+function prefersMarkdown(request: NextRequest): boolean {
+  const accept = request.headers.get('accept') || '';
+  return accept.includes('text/markdown');
+}
+
 export async function middleware(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
   const subdomain = extractSubdomain(request);
@@ -71,19 +76,22 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL('/', request.url));
     }
 
-    // For the root path on a subdomain, rewrite to the subdomain page
+    const markdown = prefersMarkdown(request);
+
+    // For the root path on a subdomain
     if (pathname === '/') {
-      return NextResponse.rewrite(new URL(`/s/${subdomain}${search}`, request.url));
+      const target = markdown ? `/md/${subdomain}` : `/s/${subdomain}`;
+      return NextResponse.rewrite(new URL(`${target}${search}`, request.url));
     }
 
     // For post detail pages on subdomain
     if (pathname.startsWith('/')) {
       const slug = pathname.replace('/', '');
-      return NextResponse.rewrite(new URL(`/s/${subdomain}/${slug}${search}`, request.url));
+      const target = markdown ? `/md/${subdomain}/${slug}` : `/s/${subdomain}/${slug}`;
+      return NextResponse.rewrite(new URL(`${target}${search}`, request.url));
     }
 
     // For any other paths on subdomain, rewrite to subdomain route
-    // This handles pagination and other query params
     return NextResponse.rewrite(new URL(`/s/${subdomain}${pathname}${search}`, request.url));
   }
 
@@ -93,6 +101,8 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
+    // Explicitly match llms.txt (would otherwise be excluded by the static file pattern)
+    '/llms.txt',
     /*
      * Match all paths except for:
      * 1. /api routes
