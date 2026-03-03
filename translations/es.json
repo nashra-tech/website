@@ -12,7 +12,8 @@
     "explore": "Explorar",
     "more_articles": "Más artículos",
     "more_posts": "Más publicaciones",
-    "posts": "Publicaciones"
+    "posts": "Publicaciones",
+    "min_read": "min de lectura"
   },
   "home": {
     "empty_title": "¡Acabamos de empezar. Regístrate para recibir actualizaciones!",
@@ -37,9 +38,10 @@
     "already_subscribed_message": "Ya estás suscrito a",
     "check_email": "Revisa tu correo electrónico",
     "check_email_message": "Por favor revisa tu correo electrónico para confirmar tu suscripción a",
-    "you_are_in": "Estás dentro",
+    "you_are_in": "Te has suscrito a",
     "subscribed_to": "Suscrito a",
-    "your_email": "Tu correo electrónico"
+    "your_email": "Tu correo electrónico",
+    "browse_posts": "Ver publicaciones"
   },
   "errors": {
     "tenant_not_found": "No se encontró el espacio de trabajo solicitado.",

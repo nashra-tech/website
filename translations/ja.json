@@ -12,7 +12,8 @@
      "explore": "探索する",
      "more_articles": "その他の記事",
      "more_posts": "その他の投稿",
-     "posts": "投稿"
+     "posts": "投稿",
+     "min_read": "分で読めます"
   },
   "home": {
     "empty_title": "始めたばかりです。更新情報を受け取るためにサインアップしてください！",
@@ -37,9 +38,10 @@
     "already_subscribed_message": "すでに購読しています",
     "check_email": "メールを確認してください",
     "check_email_message": "購読を確認するためにメールをご確認ください",
-    "you_are_in": "登録完了",
+    "you_are_in": "登録が完了しました",
     "subscribed_to": "購読済み",
-    "your_email": "あなたのメール"
+    "your_email": "あなたのメール",
+    "browse_posts": "投稿を見る"
   },
   "errors": {
     "tenant_not_found": "リクエストされたワークスペースが見つかりませんでした。",

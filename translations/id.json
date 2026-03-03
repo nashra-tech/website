@@ -12,7 +12,8 @@
     "explore": "Jelajahi",
     "more_articles": "Artikel lainnya",
     "more_posts": "Postingan lainnya",
-    "posts": "Postingan"
+    "posts": "Postingan",
+    "min_read": "menit baca"
   },
   "home": {
     "empty_title": "Kami baru saja memulai. Daftar untuk pembaruan!",
@@ -37,9 +38,10 @@
     "already_subscribed_message": "Anda sudah berlangganan",
     "check_email": "Periksa email Anda",
     "check_email_message": "Silakan periksa email Anda untuk mengonfirmasi langganan Anda ke",
-    "you_are_in": "Anda masuk",
+    "you_are_in": "Anda sekarang berlangganan",
     "subscribed_to": "Berlangganan ke",
-    "your_email": "Email Anda"
+    "your_email": "Email Anda",
+    "browse_posts": "Lihat postingan"
   },
   "errors": {
     "tenant_not_found": "Ruang kerja yang diminta tidak ditemukan.",

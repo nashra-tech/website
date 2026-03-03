@@ -60,6 +60,9 @@ export function BlogPostItemImage({
           </h3>
           <p className="text-xs text-muted-foreground">
             {formattedDate}
+            {post.category && (
+              <> &middot; {post.category.name}</>
+            )}
           </p>
         </div>
       </div>

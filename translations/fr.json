@@ -12,7 +12,8 @@
     "explore": "Explorer",
     "more_articles": "Plus d'articles",
     "more_posts": "Plus de publications",
-    "posts": "Publications"
+    "posts": "Publications",
+    "min_read": "min de lecture"
   },
   "home": {
     "empty_title": "Nous venons de commencer. Inscrivez-vous pour les mises à jour !",
@@ -37,9 +38,10 @@
     "already_subscribed_message": "Vous êtes déjà abonné à",
     "check_email": "Vérifiez votre e-mail",
     "check_email_message": "Veuillez vérifier votre e-mail pour confirmer votre abonnement à",
-    "you_are_in": "Vous êtes inscrit",
+    "you_are_in": "Vous êtes maintenant abonné à",
     "subscribed_to": "Abonné à",
-    "your_email": "Votre e-mail"
+    "your_email": "Votre e-mail",
+    "browse_posts": "Parcourir les articles"
   },
   "errors": {
     "tenant_not_found": "L'espace de travail demandé n'a pas été trouvé.",

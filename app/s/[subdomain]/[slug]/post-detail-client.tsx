@@ -104,6 +104,13 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
     day: 'numeric',
   });
 
+  const readingTime = useMemo(() => {
+    if (!post.website_content) return 0;
+    const text = post.website_content.replace(/<[^>]*>/g, '');
+    const words = text.trim().split(/\s+/).filter(Boolean).length;
+    return Math.max(1, Math.ceil(words / 200));
+  }, [post.website_content]);
+
   return (
     <div dir={tenantDirection} className="min-h-screen transition-colors">
       <WebsiteLayout tenant={tenant}>
@@ -118,6 +125,8 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
           )}
           <div className="mt-3 flex items-center gap-2">
             <Small className="text-muted-foreground">{formattedDate}</Small>
+            <span className="text-muted-foreground">&bull;</span>
+            <Small className="text-muted-foreground">{readingTime} {t('common.min_read')}</Small>
             {post.category && (
               <>
                 <span className="text-muted-foreground">&bull;</span>

@@ -12,7 +12,8 @@
     "explore": "एक्सप्लोर करें",
     "more_articles": "अधिक लेख",
     "more_posts": "अधिक पोस्ट",
-    "posts": "पोस्ट"
+    "posts": "पोस्ट",
+    "min_read": "मिनट पढ़ें"
   },
   "home": {
     "empty_title": "हमने अभी शुरुआत की है। अपडेट के लिए साइन अप करें!",
@@ -37,9 +38,10 @@
     "already_subscribed_message": "आप पहले से ही सदस्यता ले चुके हैं",
     "check_email": "अपना ईमेल जांचें",
     "check_email_message": "कृपया अपनी सदस्यता की पुष्टि करने के लिए अपना ईमेल जांचें",
-    "you_are_in": "आप शामिल हैं",
+    "you_are_in": "अब आपकी सदस्यता हो गई है",
     "subscribed_to": "सदस्यता ली गई",
-    "your_email": "आपका ईमेल"
+    "your_email": "आपका ईमेल",
+    "browse_posts": "पोस्ट देखें"
   },
   "errors": {
     "tenant_not_found": "अनुरोधित कार्यक्षेत्र नहीं मिला।",

@@ -24,7 +24,6 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
   const [alreadySubscribed, setAlreadySubscribed] = useState(false);
   const [processing, setProcessing] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
-  const [hasPublishedPosts, setHasPublishedPosts] = useState(true);
 
   const direction = tenant.website_direction || 'ltr';
   const isRTL = direction === 'rtl';
@@ -77,10 +76,6 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
         if (result.already_subscribed) {
           setAlreadySubscribed(true);
         }
-        // Update hasPublishedPosts from API response
-        if (result.has_published_posts !== undefined) {
-          setHasPublishedPosts(result.has_published_posts);
-        }
       } else {
         // Handle API error
         setEmailError(result.error || t('common.subscription_error'));
@@ -104,9 +99,9 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
         </div>
 
         {/* Centered Card */}
-        <div className="relative w-full max-w-[400px] bg-white dark:bg-neutral-900 rounded-2xl shadow-sm border border-gray-100 dark:border-neutral-800 overflow-hidden z-10">
+        <div className="relative w-full max-w-[400px] bg-white dark:bg-neutral-900 rounded-2xl shadow-sm border border-gray-100 dark:border-neutral-800 overflow-hidden z-10" dir={direction}>
           {/* Header: Avatar & Name — horizontal layout */}
-          <div className="flex items-center gap-2.5 px-5 pt-6 pb-4">
+          <div className="flex items-center gap-2.5 px-5 pt-6 pb-4" dir={direction}>
             <AppAvatar
               src={tenant.logo_thumb || tenant.logo}
               name={tenant.name}
@@ -207,39 +202,45 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
           ) : (
             /* Success State */
             <div className="px-5 pb-5 space-y-6 py-4">
-              <div className="space-y-2">
-                <h2 className="text-base font-semibold text-foreground" dir={direction}>
-                  {alreadySubscribed
-                    ? t('magic_link.already_subscribed')
-                    : form.requires_confirmation
-                      ? t('magic_link.check_email')
-                      : t('magic_link.you_are_in')}
-                </h2>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  {alreadySubscribed ? (
-                    <>
+              <div className="space-y-2" dir={direction}>
+                {alreadySubscribed ? (
+                  <>
+                    <h2 className="text-base font-semibold text-foreground">
+                      {t('magic_link.already_subscribed')}
+                    </h2>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
                       {t('magic_link.already_subscribed_message')}{' '}
                       <span className="font-semibold text-foreground">{form.title}</span>.
-                    </>
-                  ) : form.requires_confirmation ? (
-                    `${t('magic_link.check_email_message')} ${form.title}`
-                  ) : (
-                    <>
-                      {t('magic_link.subscribed_to')}{' '}
-                      <span className="font-semibold text-foreground">{form.title}</span>.
-                    </>
-                  )}
-                </p>
+                    </p>
+                  </>
+                ) : form.requires_confirmation ? (
+                  <>
+                    <h2 className="text-base font-semibold text-foreground">
+                      {t('magic_link.check_email')}
+                    </h2>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {t('magic_link.check_email_message')} {form.title}
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <p className="text-sm text-muted-foreground">
+                      {t('magic_link.you_are_in')}
+                    </p>
+                    <p className="text-base font-semibold text-foreground">
+                      {form.title}
+                    </p>
+                  </>
+                )}
               </div>
-              {hasPublishedPosts && (
-                <Button
-                  onClick={handleExploreBlog}
-                  dir={direction}
-                  className="w-full"
-                >
-                  {t('common.explore')} {tenant.name}
-                </Button>
-              )}
+              <Button
+                variant="secondary"
+                onClick={handleExploreBlog}
+                dir={direction}
+                className="w-full"
+              >
+                {t('magic_link.browse_posts')}
+              </Button>
             </div>
           )}
 

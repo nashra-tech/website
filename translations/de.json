@@ -12,7 +12,8 @@
     "explore": "Erkunden",
     "more_articles": "Weitere Artikel",
     "more_posts": "Weitere Beiträge",
-    "posts": "Beiträge"
+    "posts": "Beiträge",
+    "min_read": "Min. Lesezeit"
   },
   "home": {
     "empty_title": "Wir fangen gerade erst an. Melden Sie sich für Updates an!",
@@ -37,9 +38,10 @@
     "already_subscribed_message": "Sie sind bereits abonniert bei",
     "check_email": "Überprüfen Sie Ihre E-Mail",
     "check_email_message": "Bitte überprüfen Sie Ihre E-Mail, um Ihr Abonnement zu bestätigen bei",
-    "you_are_in": "Sie sind dabei",
+    "you_are_in": "Sie sind jetzt abonniert bei",
     "subscribed_to": "Abonniert bei",
-    "your_email": "Ihre E-Mail"
+    "your_email": "Ihre E-Mail",
+    "browse_posts": "Beiträge durchsuchen"
   },
   "errors": {
     "tenant_not_found": "Der angeforderte Arbeitsbereich wurde nicht gefunden.",

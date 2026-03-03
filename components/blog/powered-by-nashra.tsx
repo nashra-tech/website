@@ -20,6 +20,7 @@ function NashraLogoIcon({ className = '' }: { className?: string }) {
 
 export function PoweredByNashra({
     className = "",
+    isRtl = false,
     translations = {},
     clickable = true
 }: PoweredByNashraProps) {
@@ -27,6 +28,7 @@ export function PoweredByNashra({
 
     const content = (
         <div
+            dir={isRtl ? 'rtl' : 'ltr'}
             className={`inline-flex items-center gap-2 px-3 py-2 border bg-white dark:bg-neutral-800 border-[#E5E5E5] dark:border-neutral-700 rounded-[4px] text-[13px] leading-4 text-[#737373] dark:text-neutral-400 ${className}`}
         >
             <span>{poweredByText}</span>

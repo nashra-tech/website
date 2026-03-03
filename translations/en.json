@@ -12,7 +12,8 @@
     "explore": "Explore",
     "more_articles": "More Articles",
     "more_posts": "More Posts",
-    "posts": "Posts"
+    "posts": "Posts",
+    "min_read": "min read"
   },
   "home": {
     "empty_title": "We're just getting started. Sign up for updates!",
@@ -37,9 +38,10 @@
     "already_subscribed_message": "You are already subscribed to",
     "check_email": "Check your email",
     "check_email_message": "Please check your email to confirm your subscription to",
-    "you_are_in": "You are in",
+    "you_are_in": "You're now subscribed to",
     "subscribed_to": "Subscribed to",
-    "your_email": "Email Address"
+    "your_email": "Email Address",
+    "browse_posts": "Browse posts"
   },
   "errors": {
     "tenant_not_found": "The requested workspace was not found.",
