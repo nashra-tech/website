@@ -23,7 +23,11 @@
       "Bash(git add .claude/settings.local.json)",
       "Bash(git stash drop stash@{1})",
       "Bash(git stash drop stash@{0})",
-      "Bash(git add app/s/[subdomain]/[slug]/post-detail-client.tsx app/s/[subdomain]/magic/[identifier]/magic-link-client.tsx components/blog/blog-post-item-image.tsx components/blog/powered-by-nashra.tsx translations/ar.json translations/de.json translations/en.json translations/es.json translations/fr.json translations/hi.json translations/id.json translations/ja.json translations/pt.json translations/zh.json .claude/settings.local.json .claude/launch.json app/actions.ts app/page.tsx app/subdomain-form.tsx)"
+      "Bash(git add app/s/[subdomain]/[slug]/post-detail-client.tsx app/s/[subdomain]/magic/[identifier]/magic-link-client.tsx components/blog/blog-post-item-image.tsx components/blog/powered-by-nashra.tsx translations/ar.json translations/de.json translations/en.json translations/es.json translations/fr.json translations/hi.json translations/id.json translations/ja.json translations/pt.json translations/zh.json .claude/settings.local.json .claude/launch.json app/actions.ts app/page.tsx app/subdomain-form.tsx)",
+      "mcp__shadcn__get_add_command_for_items",
+      "Bash(pnpm dlx:*)",
+      "mcp__shadcn__search_items_in_registries",
+      "Bash(pnpm build:*)"
     ]
   },
   "enableAllProjectMcpServers": true,
