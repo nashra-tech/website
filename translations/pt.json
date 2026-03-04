@@ -48,6 +48,8 @@
     "post_not_found": "A publicação solicitada não foi encontrada.",
     "email_already_subscribed": "Este e-mail já está inscrito.",
     "subscription_failed": "Falha ao inscrever. Por favor, tente novamente.",
-    "generic_error": "Ocorreu um erro inesperado. Por favor, tente novamente."
+    "generic_error": "Ocorreu um erro inesperado. Por favor, tente novamente.",
+    "page_not_found": "Esta página não existe.",
+    "back_to_home": "Voltar ao início"
   }
 }

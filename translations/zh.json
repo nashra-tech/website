@@ -48,6 +48,8 @@
     "post_not_found": "未找到请求的帖子。",
     "email_already_subscribed": "此电子邮件已订阅。",
     "subscription_failed": "订阅失败。请重试。",
-    "generic_error": "发生意外错误。请重试。"
+    "generic_error": "发生意外错误。请重试。",
+    "page_not_found": "此页面不存在。",
+    "back_to_home": "返回首页"
   }
 }

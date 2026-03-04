@@ -48,6 +48,8 @@
     "post_not_found": "Der angeforderte Beitrag wurde nicht gefunden.",
     "email_already_subscribed": "Diese E-Mail ist bereits abonniert.",
     "subscription_failed": "Abonnement fehlgeschlagen. Bitte versuchen Sie es erneut.",
-    "generic_error": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
+    "generic_error": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+    "page_not_found": "Diese Seite existiert nicht.",
+    "back_to_home": "Zurück zur Startseite"
   }
 }

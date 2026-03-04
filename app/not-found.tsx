@@ -1,7 +1,7 @@
 /**
- * 404 Not Found Page
+ * 404 Not Found Page (root)
  *
- * Matches the Laravel Blade error layout design.
+ * Fallback for non-tenant routes.
  */
 
 import { ErrorLayout } from '@/components/layouts/error-layout';
@@ -10,7 +10,7 @@ export default function NotFound() {
   return (
     <ErrorLayout
       code="404"
-      message="This page doesn't seem to exist anymore."
+      message="This page doesn't exist."
       showHomeLink={true}
     />
   );

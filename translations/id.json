@@ -48,6 +48,8 @@
     "post_not_found": "Postingan yang diminta tidak ditemukan.",
     "email_already_subscribed": "Email ini sudah berlangganan.",
     "subscription_failed": "Gagal berlangganan. Silakan coba lagi.",
-    "generic_error": "Terjadi kesalahan tak terduga. Silakan coba lagi."
+    "generic_error": "Terjadi kesalahan tak terduga. Silakan coba lagi.",
+    "page_not_found": "Halaman ini tidak ada.",
+    "back_to_home": "Kembali ke beranda"
   }
 }

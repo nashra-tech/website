@@ -48,6 +48,8 @@
     "post_not_found": "リクエストされた投稿が見つかりませんでした。",
     "email_already_subscribed": "このメールアドレスはすでに購読されています。",
     "subscription_failed": "購読に失敗しました。もう一度お試しください。",
-    "generic_error": "予期しないエラーが発生しました。もう一度お試しください。"
+    "generic_error": "予期しないエラーが発生しました。もう一度お試しください。",
+    "page_not_found": "このページは存在しません。",
+    "back_to_home": "ホームに戻る"
   }
 }

@@ -48,6 +48,8 @@
     "post_not_found": "The requested post was not found.",
     "email_already_subscribed": "This email is already subscribed.",
     "subscription_failed": "Failed to subscribe. Please try again.",
-    "generic_error": "An unexpected error occurred. Please try again."
+    "generic_error": "An unexpected error occurred. Please try again.",
+    "page_not_found": "This page doesn't exist.",
+    "back_to_home": "Back to home"
   }
 }
