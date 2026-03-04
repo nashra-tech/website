@@ -27,7 +27,14 @@
       "mcp__shadcn__get_add_command_for_items",
       "Bash(pnpm dlx:*)",
       "mcp__shadcn__search_items_in_registries",
-      "Bash(pnpm build:*)"
+      "Bash(pnpm build:*)",
+      "Bash(git commit:*)",
+      "Bash(git push)",
+      "Bash(npx next build)",
+      "Bash(git pull --rebase)",
+      "Bash(git stash)",
+      "Bash(git stash pop)",
+      "Bash(git stash drop)"
     ]
   },
   "enableAllProjectMcpServers": true,
