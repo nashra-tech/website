@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { Tenant, Post } from '@/types';
 import { WebsiteLayout } from '@/components/blog/website-layout';
 import { WebsiteFooter } from '@/components/blog/website-footer';
