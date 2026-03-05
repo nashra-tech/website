@@ -34,7 +34,7 @@ export function BlogPostItemImage({
   return (
     <Link
       href={`/${post.slug}`}
-      className={`py-3 px-3 w-full ${!isLast ? 'border-b' : ''} cursor-pointer transition-colors block rounded-lg hover:bg-neutral-100`}
+      className={`py-3 px-3 w-full cursor-pointer transition-colors block rounded-lg hover:bg-neutral-100`}
       dir={tenantDirection}
     >
       <div className="flex items-center gap-3">

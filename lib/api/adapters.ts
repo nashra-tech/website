@@ -20,7 +20,8 @@ export function adaptTenant(apiTenant: ApiTenant): Tenant {
     slug: apiTenant.slug,
     name: apiTenant.name,
     title: apiTenant.name, // Use name as title
-    subtitle: apiTenant.description??'', // Not provided by API
+    headline: apiTenant.headline || null,
+    subtitle: apiTenant.subtitle || apiTenant.description || '',
     logo: apiTenant.logo || undefined,
     logo_thumb: apiTenant.logo_thumb || null,
     footer_data: {
@@ -33,7 +34,15 @@ export function adaptTenant(apiTenant: ApiTenant): Tenant {
     has_paid_subscription: apiTenant.has_active_subscription,
     show_branding:apiTenant.show_branding??true,
     brandColor:apiTenant.brandColor||'#1c1c1c',
-    favicon: apiTenant.favicon || null
+    favicon: apiTenant.favicon || null,
+    corner_radius: apiTenant.corner_radius || 'round',
+    button_style: apiTenant.button_style || 'filled',
+    button_width: apiTenant.button_width || 'full_width',
+    homepage_layout: apiTenant.homepage_layout || 'list',
+    newsletter_headline: apiTenant.newsletter_headline || null,
+    newsletter_description: apiTenant.newsletter_description || null,
+    newsletter_button_text: apiTenant.newsletter_button_text || null,
+    pinned_post_id: apiTenant.pinned_post_id || null,
   };
 }
 

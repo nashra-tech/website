@@ -140,8 +140,13 @@
 
 /* ── Post content: inherit foreground colour from blog theme ──────────── */
 .post-content {
-  color: var(--foreground);
+  color: var(--muted-foreground);
   line-height: 1.8 !important;
+}
+.post-content h1,
+.post-content h2,
+.post-content h3 {
+  color: var(--foreground);
 }
 
 /* ── Vertical rhythm: breathing room between all blocks ──── */

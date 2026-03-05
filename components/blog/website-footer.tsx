@@ -23,6 +23,8 @@ export function WebsiteFooter({ tenant }: WebsiteFooterProps) {
   const isTenantRTL = tenantDirection === 'rtl';
   const tenantLanguage = tenant.website_language || 'en';
   const { t } = useTranslations(tenantLanguage);
+  const layout = tenant.homepage_layout || 'list';
+  const maxWidthClass = layout === 'cards' ? 'max-w-[640px]' : 'max-w-[560px]';
 
   return (
     <footer className="p-3 sm:p-0">
@@ -38,19 +40,19 @@ export function WebsiteFooter({ tenant }: WebsiteFooterProps) {
           </div>
         )}
 
-        <div className="max-w-[560px] mx-auto">
+        <div className={`${maxWidthClass} mx-auto`}>
           {/* Subscription Form Section */}
           <div className="mb-3" dir={tenantDirection}>
             <p className="text-[17px] font-medium leading-[1.2] tracking-tight text-black dark:text-white">
-              {t('newsletter.title')}
+              {tenant.newsletter_headline || t('newsletter.title')}
             </p>
             <p className="text-[17px] font-medium leading-[1.2] tracking-tight text-neutral-500 dark:text-base-400">
-              {t('newsletter.subtitle')}
+              {tenant.newsletter_description || t('newsletter.subtitle')}
             </p>
           </div>
 
           <div className="mb-3">
-            <SubscribeForm tenant={tenant} />
+            <SubscribeForm tenant={tenant} buttonText={tenant.newsletter_button_text || undefined} />
           </div>
 
           {/* Desktop Layout - Footer Text and Social Links */}

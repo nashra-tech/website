@@ -16,6 +16,7 @@ import { SubscribeForm } from './subscribe-form';
 import { ThemeProvider, useTheme } from '@/contexts/theme-context';
 import { Icons } from '@/components/ui/icons';
 import { useTranslations } from '@/lib/i18n';
+import { ArrowRight } from 'lucide-react';
 
 interface WebsiteLayoutProps {
   children: React.ReactNode;
@@ -65,6 +66,14 @@ export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
   const tenantDirection = tenant.website_direction || 'ltr';
   const tenantLanguage = tenant.website_language || 'en';
   const { t } = useTranslations(tenantLanguage);
+
+  // Theme settings
+  const cornerRadius = tenant.corner_radius || 'round';
+  const buttonStyle = tenant.button_style || 'filled';
+  const radiusClass = { sharp: 'rounded-md', round: 'rounded-xl', pill: 'rounded-full' }[cornerRadius];
+  const buttonVariant = buttonStyle === 'outline' ? 'outline' as const : 'default' as const;
+  const layout = tenant.homepage_layout || 'list';
+  const maxWidthClass = layout === 'cards' ? 'max-w-[640px]' : 'max-w-[560px]';
   return (
     <ThemeProvider brandColor={tenant.brandColor}>
       <div
@@ -73,7 +82,7 @@ export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
       >
         {/* Header */}
         <header className="py-2 sm:py-3">
-          <div className="container mx-auto px-3 sm:px-0 max-w-[560px]">
+          <div className={`container mx-auto px-3 sm:px-0 ${maxWidthClass}`}>
             <div className="flex items-center justify-between">
               <Link href={'/'}>
                 <div className="flex items-center gap-2 sm:gap-3">
@@ -95,9 +104,11 @@ export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
                   <DialogTrigger asChild>
                     <Button
                       size="sm"
-                      variant="default"
+                      variant={buttonVariant}
+                      className={`h-8 px-4 ${radiusClass} font-medium text-sm shadow-md`}
                     >
                       {t('common.subscribe')}
+                      <ArrowRight className="w-4 h-4 rtl:rotate-180" />
                     </Button>
                   </DialogTrigger>
                   <DialogContent
@@ -114,10 +125,10 @@ export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
                     {!showSuccess && (
                       <div className="mb-4" dir={tenantDirection}>
                         <p className="text-[17px] font-medium leading-[1.2] tracking-tight text-black dark:text-white">
-                          {t('newsletter.title')}
+                          {tenant.newsletter_headline || t('newsletter.title')}
                         </p>
                         <p className="text-[17px] font-medium leading-[1.2] tracking-tight text-neutral-500 dark:text-base-400">
-                          {t('newsletter.subtitle')}
+                          {tenant.newsletter_description || t('newsletter.subtitle')}
                         </p>
                       </div>
                     )}
@@ -126,6 +137,7 @@ export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
                       <SubscribeForm
                         isPopup={true}
                         tenant={tenant}
+                        buttonText={tenant.newsletter_button_text || undefined}
                         onSubscribe={() => {
                           setShowSuccess(true);
                         }}

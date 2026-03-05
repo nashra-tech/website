@@ -18,6 +18,8 @@ import { Icons } from '@/components/ui/icons';
 import { getTranslations } from '@/lib/i18n';
 import { ThemeColorScript } from '@/components/theme/theme-color-script';
 import { BlogPostItemImage } from '@/components/blog/blog-post-item-image';
+import { BlogPostCards } from '@/components/blog/blog-post-cards';
+import { BlogPostMagazine } from '@/components/blog/blog-post-magazine';
 
 interface PageProps {
   params: Promise<{
@@ -50,6 +52,7 @@ export default async function TenantHomePage({ params, searchParams }: PageProps
   const tenantDirection = tenant.website_direction || 'ltr';
   const tenantLanguage = tenant.website_language || 'en';
   const translations = getTranslations(tenantLanguage);
+  const layout = tenant.homepage_layout || 'list';
 
   return (
     <>
@@ -66,37 +69,60 @@ export default async function TenantHomePage({ params, searchParams }: PageProps
       />
       
       <WebsiteLayout tenant={tenant}>
-        <div className="max-w-[560px] mx-auto p-3 sm:p-0">
-          {/* Header Section - Responsive */}
+        <div className={`${layout === 'cards' ? 'max-w-[640px]' : 'max-w-[560px]'} mx-auto p-3 sm:p-0`}>
+          {/* Header Section - Headline + Description */}
           <div className="sm:mt-20 sm:mb-16 mt-16 mb-16">
-            <p className="text-[20px] sm:text-[24px] font-medium text-foreground leading-snug max-w-[460px]">{tenant.subtitle || tenant.name || ''}</p>
+            {tenant.headline && (
+              <h1 className="text-[24px] sm:text-[28px] font-bold text-foreground leading-snug max-w-[460px] mb-3 tracking-tight">{tenant.headline}</h1>
+            )}
+            {(tenant.subtitle || tenant.name) && (
+              <p className="text-[15px] sm:text-base text-muted-foreground leading-relaxed max-w-[460px]">{tenant.subtitle || tenant.name || ''}</p>
+            )}
           </div>
 
-
-          {/* Posts List */}
+          {/* Posts */}
           <div className="w-full">
             <h2 className="text-sm font-medium text-muted-foreground mb-4">{translations.common.posts}</h2>
-            <div className="space-y-0">
-              {posts.data.length > 0 ? (
-                posts.data.map((post, index) => (
-                  <BlogPostItemImage
-                    key={post.uuid}
-                    post={post}
+
+            {posts.data.length > 0 ? (
+              <>
+                {layout === 'cards' ? (
+                  <BlogPostCards
+                    posts={posts.data}
                     tenantSlug={subdomain}
                     tenantDirection={tenantDirection}
                     tenantLanguage={tenantLanguage}
                   />
-                ))
-              ) : (
-                <div className="px-2 py-3 sm:px-2 sm:py-3">
-                  <Empty
-                    title={translations.home.empty_title}
-                    description={undefined}
-                    icons={[Icons.annotation, Icons.email]}
+                ) : layout === 'magazine' ? (
+                  <BlogPostMagazine
+                    posts={posts.data}
+                    tenantSlug={subdomain}
+                    tenantDirection={tenantDirection}
+                    tenantLanguage={tenantLanguage}
                   />
-                </div>
-              )}
-            </div>
+                ) : (
+                  <div className="space-y-0">
+                    {posts.data.map((post) => (
+                      <BlogPostItemImage
+                        key={post.uuid}
+                        post={post}
+                        tenantSlug={subdomain}
+                        tenantDirection={tenantDirection}
+                        tenantLanguage={tenantLanguage}
+                      />
+                    ))}
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="px-2 py-3 sm:px-2 sm:py-3">
+                <Empty
+                  title={translations.home.empty_title}
+                  description={undefined}
+                  icons={[Icons.annotation, Icons.email]}
+                />
+              </div>
+            )}
 
             {/* Pagination */}
             {posts.data.length > 0 && (

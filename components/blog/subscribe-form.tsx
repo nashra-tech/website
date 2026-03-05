@@ -7,17 +7,20 @@ import { Icons } from '@/components/ui/icons';
 import { H3 } from "@/components/system-ui/typography";
 import { Tenant } from '@/types';
 import { useTranslations } from '@/lib/i18n';
+import { ArrowRight } from 'lucide-react';
 
 interface SubscribeFormProps {
     isPopup?: boolean;
     tenant: Tenant;
     onSubscribe?: () => void;
+    buttonText?: string;
 }
 
 export function SubscribeForm({
     isPopup = false,
     tenant,
-    onSubscribe
+    onSubscribe,
+    buttonText,
 }: SubscribeFormProps) {
     const [subscribed, setSubscribed] = useState(false);
     const [email, setEmail] = useState('');
@@ -29,6 +32,12 @@ export function SubscribeForm({
     const isTenantRTL = tenantDirection === 'rtl';
     const tenantLanguage = tenant.website_language || 'en';
     const { t } = useTranslations(tenantLanguage);
+
+    // Theme settings
+    const cornerRadius = tenant.corner_radius || 'round';
+    const buttonStyle = tenant.button_style || 'filled';
+    const radiusClass = { sharp: 'rounded-md', round: 'rounded-xl', pill: 'rounded-full' }[cornerRadius];
+    const buttonVariant = buttonStyle === 'outline' ? 'outline' as const : 'default' as const;
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -99,7 +108,8 @@ export function SubscribeForm({
                         handleSubmit(e);
                     }}
                     size="sm"
-                    className={`absolute top-1/2 -translate-y-1/2 ${isTenantRTL ? 'left-1.5' : 'right-1.5'} h-8 px-4 rounded-lg font-medium text-sm ${
+                    variant={subscribed ? undefined : buttonVariant}
+                    className={`absolute top-1/2 -translate-y-1/2 ${isTenantRTL ? 'left-1.5' : 'right-1.5'} h-8 px-4 ${radiusClass} font-medium text-sm ${
                         subscribed
                             ? 'bg-green-600 hover:bg-green-600 text-white'
                             : ''
@@ -113,7 +123,10 @@ export function SubscribeForm({
                             {t('common.subscribed')}
                         </>
                     ) : (
-                        t('common.subscribe')
+                        <>
+                            {buttonText || t('common.subscribe')}
+                            <ArrowRight className="w-4 h-4 rtl:rotate-180" />
+                        </>
                     )}
                 </Button>
             </div>

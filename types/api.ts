@@ -61,6 +61,7 @@ export enum ApiErrorCode {
 export interface ApiTenant {
   slug: string;
   name: string;
+  headline?: string | null;
   logo: string | null;
   logo_thumb: string | null;
   website_language: string;
@@ -69,11 +70,20 @@ export interface ApiTenant {
   has_active_subscription: boolean;
   social_links: ApiTenantSocialLink[];
   description: string | null;
+  subtitle?: string | null;
   footer_text: string | null;
   physical_address: string | null;
   show_branding:boolean;
   brandColor:string;
   favicon: string | null;
+  corner_radius?: 'sharp' | 'round' | 'pill';
+  button_style?: 'filled' | 'outline';
+  button_width?: 'full_width' | 'compact';
+  homepage_layout?: 'list' | 'cards' | 'magazine';
+  newsletter_headline?: string | null;
+  newsletter_description?: string | null;
+  newsletter_button_text?: string | null;
+  pinned_post_id?: number | null;
 }
 
 // ============================================================================

@@ -39,6 +39,11 @@ export default async function MagicLinkPage({ params }: PageProps) {
   return (
     <>
       <ThemeColorScript brandColor={tenant.brandColor} />
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `(function(){try{var t=localStorage.getItem('theme');var d=t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme:dark)').matches);document.documentElement.classList.toggle('dark',d);document.documentElement.classList.toggle('light',!d)}catch(e){}})()`,
+        }}
+      />
       <MagicLinkClient form={form} tenant={tenant} />
     </>
   );

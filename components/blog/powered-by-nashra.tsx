@@ -8,6 +8,7 @@ interface PoweredByNashraProps {
         [key: string]: any;
     };
     clickable?: boolean;
+    variant?: 'badge' | 'inline';
 }
 
 function NashraLogoIcon({ className = '' }: { className?: string }) {
@@ -22,14 +23,19 @@ export function PoweredByNashra({
     className = "",
     isRtl = false,
     translations = {},
-    clickable = true
+    clickable = true,
+    variant = 'badge'
 }: PoweredByNashraProps) {
     const poweredByText = translations.made_with || 'Powered by';
+
+    const baseStyles = variant === 'badge'
+        ? `inline-flex items-center gap-2 px-3 py-2 border bg-white dark:bg-neutral-800 border-[#E5E5E5] dark:border-neutral-700 rounded-[4px] text-[13px] leading-4 text-[#737373] dark:text-neutral-400`
+        : `inline-flex items-center gap-1.5 text-xs text-muted-foreground`;
 
     const content = (
         <div
             dir={isRtl ? 'rtl' : 'ltr'}
-            className={`inline-flex items-center gap-2 px-3 py-2 border bg-white dark:bg-neutral-800 border-[#E5E5E5] dark:border-neutral-700 rounded-[4px] text-[13px] leading-4 text-[#737373] dark:text-neutral-400 ${className}`}
+            className={`${baseStyles} ${className}`}
         >
             <span>{poweredByText}</span>
             <span dir="ltr" className="inline-flex items-center gap-[2.8px]">

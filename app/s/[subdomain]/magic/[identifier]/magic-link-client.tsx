@@ -8,9 +8,29 @@ import { PoweredByNashra } from '@/components/blog/powered-by-nashra';
 import { InputField } from '@/components/system-ui/InputField';
 import { DotPattern } from '@/components/ui/DotPattern';
 import { AppAvatar } from '@/components/ui/app-avatar';
+import { Icons } from '@/components/ui/icons';
 import { subscribeMagicLink } from '@/lib/data';
 import { useTranslations } from '@/lib/i18n';
-import { ThemeProvider } from '@/contexts/theme-context';
+import { ThemeProvider, useTheme } from '@/contexts/theme-context';
+
+function ThemeToggle() {
+  const { resolvedTheme, setTheme } = useTheme();
+
+  return (
+    <button
+      type="button"
+      onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+      className="p-1.5 rounded-md text-gray-400 hover:text-gray-600 dark:text-neutral-500 dark:hover:text-neutral-300 transition-colors"
+      aria-label="Toggle theme"
+    >
+      {resolvedTheme === 'light' ? (
+        <Icons.moon className="w-4 h-4" />
+      ) : (
+        <Icons.sun className="w-4 h-4" />
+      )}
+    </button>
+  );
+}
 
 interface MagicLinkClientProps {
   form: MagicLinkForm;
@@ -29,6 +49,16 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
   const isRTL = direction === 'rtl';
   const language = tenant.website_language || 'en';
   const { t } = useTranslations(language);
+
+  // Theme settings
+  const cornerRadius = tenant.corner_radius || 'round';
+  const buttonStyle = tenant.button_style || 'filled';
+  const buttonWidth = tenant.button_width || 'full_width';
+
+  const radiusClass = { sharp: 'rounded-md', round: 'rounded-xl', pill: 'rounded-full' }[cornerRadius];
+  const imageRadiusClass = { sharp: 'rounded-md', round: 'rounded-xl', pill: 'rounded-2xl' }[cornerRadius];
+  const buttonVariant = buttonStyle === 'outline' ? 'outline' as const : 'default' as const;
+  const buttonWidthClass = buttonWidth === 'compact' ? 'w-auto mx-auto' : 'w-full';
 
   // Email validation function
   const validateEmail = (email: string): boolean => {
@@ -101,16 +131,19 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
         {/* Centered Card */}
         <div className="relative w-full max-w-[400px] bg-white dark:bg-neutral-900 rounded-2xl shadow-sm border border-gray-100 dark:border-neutral-800 overflow-hidden z-10" dir={direction}>
           {/* Header: Avatar & Name — horizontal layout */}
-          <div className="flex items-center gap-2.5 px-5 pt-6 pb-4" dir={direction}>
-            <AppAvatar
-              src={tenant.logo_thumb || tenant.logo}
-              name={tenant.name}
-              alt={tenant.name}
-              className="size-9"
-            />
-            <span className="text-sm font-medium text-foreground">
-              {tenant.name}
-            </span>
+          <div className="flex items-center justify-between px-5 pt-6 pb-4" dir={direction}>
+            <div className="flex items-center gap-2.5">
+              <AppAvatar
+                src={tenant.logo_thumb || tenant.logo}
+                name={tenant.name}
+                alt={tenant.name}
+                className="size-9"
+              />
+              <span className="text-sm font-medium text-foreground">
+                {tenant.name}
+              </span>
+            </div>
+            <ThemeToggle />
           </div>
 
           {/* Image — 4:3 aspect ratio */}
@@ -119,7 +152,7 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
               <img
                 src={form.image_url}
                 alt={form.title}
-                className="w-full rounded-xl object-cover"
+                className={`w-full ${imageRadiusClass} object-cover`}
                 style={{ aspectRatio: '4/3' }}
               />
             </div>
@@ -191,10 +224,12 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
                 <div className="px-5 pb-5">
                   <Button
                     type="submit"
+                    variant={buttonVariant}
                     disabled={processing}
-                    className="w-full"
+                    className={`${buttonWidthClass} h-12 ${radiusClass} text-[15px] font-medium`}
                   >
                     {processing ? t('magic_link.subscribing') : form.button_text}
+                    {!processing && <span className="ml-1">&rarr;</span>}
                   </Button>
                 </div>
               </form>
@@ -237,7 +272,7 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
                 variant="secondary"
                 onClick={handleExploreBlog}
                 dir={direction}
-                className="w-full"
+                className={`${buttonWidthClass} h-12 ${radiusClass} text-[15px] font-medium`}
               >
                 {t('magic_link.browse_posts')}
               </Button>
@@ -248,10 +283,10 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
           {tenant.show_branding && (
             <div className="flex items-center justify-center border-t border-border py-3">
               <PoweredByNashra
+                variant="inline"
                 isRtl={isRTL}
                 translations={{ made_with: t('common.powered_by') }}
                 clickable={true}
-                className="opacity-80 hover:opacity-100 transition-opacity"
               />
             </div>
           )}
