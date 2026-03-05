@@ -140,13 +140,24 @@
 
 /* ── Post content: inherit foreground colour from blog theme ──────────── */
 .post-content {
-  color: var(--muted-foreground);
+  color: var(--muted-foreground) !important;
   line-height: 1.8 !important;
+}
+.post-content p,
+.post-content div[class*="py-3"],
+.post-content li,
+.post-content p span,
+.post-content div[class*="py-3"] span,
+.post-content li span {
+  color: var(--muted-foreground) !important;
 }
 .post-content h1,
 .post-content h2,
-.post-content h3 {
-  color: var(--foreground);
+.post-content h3,
+.post-content h1 span,
+.post-content h2 span,
+.post-content h3 span {
+  color: var(--foreground) !important;
 }
 
 /* ── Vertical rhythm: breathing room between all blocks ──── */

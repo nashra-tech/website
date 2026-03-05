@@ -21,6 +21,8 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
   const isRTL = tenantDirection === 'rtl';
   const { t } = useTranslations(tenantLanguage);
   const contentRef = useRef<HTMLDivElement>(null);
+  const layout = tenant.homepage_layout || 'list';
+  const maxWidthClass = layout === 'cards' ? 'max-w-[640px]' : 'max-w-[560px]';
 
   const trackingProps = useMemo(() => ({
     page_type: 'blog_post' as const,
@@ -107,7 +109,7 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
   return (
     <div dir={tenantDirection} className="min-h-screen transition-colors">
       <WebsiteLayout tenant={tenant}>
-        <div className="sm:mt-20 mt-16 w-full max-w-[560px] mx-auto p-3 sm:p-0">
+        <div className={`sm:mt-20 mt-16 w-full ${maxWidthClass} mx-auto p-3 sm:p-0`}>
           <h1 className="text-4xl font-semibold text-foreground tracking-tight mb-1 leading-tight">
             {post.title}
           </h1>
