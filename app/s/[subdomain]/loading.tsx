@@ -19,7 +19,7 @@ export default function Loading() {
         <HeaderSkeleton />
 
         <main className="flex-grow">
-          <div className="max-w-[560px] mx-auto p-3 sm:p-0">
+          <div className="max-w-[560px] mx-auto px-5 sm:px-0">
             <BlogHeaderSkeleton />
             <BlogListSkeleton count={8} />
             <PaginationSkeleton />

@@ -81,8 +81,8 @@ export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
         dir={tenantDirection}
       >
         {/* Header */}
-        <header className="py-2 sm:py-3">
-          <div className={`container mx-auto px-3 sm:px-0 ${maxWidthClass}`}>
+        <header className="py-3 sm:py-4">
+          <div className={`container mx-auto px-5 sm:px-0 ${maxWidthClass}`}>
             <div className="flex items-center justify-between">
               <Link href={'/'} className="transition-opacity duration-200 ease-out hover:opacity-80">
                 <div className="flex items-center gap-2 sm:gap-3">

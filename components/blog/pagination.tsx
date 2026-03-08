@@ -90,15 +90,15 @@ export function Pagination({
   };
 
   return (
-    <div className="flex justify-end mt-12 mb-2" dir={tenantDirection}>
-      <div className="flex items-center gap-1">
+    <div className="flex justify-end mt-8 sm:mt-12 mb-2" dir={tenantDirection}>
+      <div className="flex items-center gap-0.5 sm:gap-1">
         {/* Previous button */}
         <Button
           variant="ghost"
           size="sm"
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage <= 1}
-          className="px-3 py-2 bg-base-100 hover:text-gray-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 disabled:opacity-25 disabled:cursor-not-allowed transition-colors duration-200 ease-out"
+          className="px-2.5 py-2 min-w-[40px] min-h-[40px] hover:text-foreground hover:bg-neutral-100 dark:hover:bg-neutral-800 disabled:opacity-25 disabled:cursor-not-allowed transition-colors duration-200 ease-out"
         >
           <ChevronLeftIcon className="h-4 w-4" />
         </Button>
@@ -107,7 +107,7 @@ export function Pagination({
         {pageNumbers.map((page, index) => {
           if (page === '...') {
             return (
-              <span key={`ellipsis-${index}`} className="px-3 py-2 text-gray-400">
+              <span key={`ellipsis-${index}`} className="px-2 py-2 text-muted-foreground text-sm">
                 ...
               </span>
             );
@@ -120,10 +120,10 @@ export function Pagination({
               variant={isCurrentPage ? 'default' : 'ghost'}
               size="sm"
               onClick={() => handlePageChange(page as number)}
-              className={`px-3 py-2 min-w-[36px] transition-colors duration-200 ease-out ${
+              className={`px-2.5 py-2 min-w-[40px] min-h-[40px] text-sm transition-colors duration-200 ease-out ${
                 isCurrentPage
-                  ? 'bg-base-100 text-primary hover:bg-base-100'
-                  : 'text-gray-500 hover:text-gray-700 hover:bg-base-100'
+                  ? 'bg-neutral-100 dark:bg-neutral-800 text-foreground hover:bg-neutral-100 dark:hover:bg-neutral-800'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-neutral-100 dark:hover:bg-neutral-800'
               }`}
             >
               {page}
@@ -137,7 +137,7 @@ export function Pagination({
           size="sm"
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage >= totalPages}
-          className="px-3 py-2 bg-base-100 hover:text-gray-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 disabled:opacity-25 disabled:cursor-not-allowed transition-colors duration-200 ease-out"
+          className="px-2.5 py-2 min-w-[40px] min-h-[40px] hover:text-foreground hover:bg-neutral-100 dark:hover:bg-neutral-800 disabled:opacity-25 disabled:cursor-not-allowed transition-colors duration-200 ease-out"
         >
           <ChevronRightIcon className="h-4 w-4" />
         </Button>

@@ -58,7 +58,7 @@ export default async function TenantHomePage({ params, searchParams }: PageProps
     <>
       <ThemeColorScript brandColor={tenant.brandColor} />
       <div
-        className="min-h-screen  transition-colors flex justify-between flex-col"
+        className="min-h-screen transition-colors flex justify-between flex-col"
         dir={tenantDirection}
         style={{ fontFamily: 'Cairo, system-ui, sans-serif' }}
       >
@@ -69,20 +69,20 @@ export default async function TenantHomePage({ params, searchParams }: PageProps
       />
       
       <WebsiteLayout tenant={tenant}>
-        <div className={`${layout === 'cards' ? 'max-w-[640px]' : 'max-w-[560px]'} mx-auto p-3 sm:p-0`}>
+        <div className={`${layout === 'cards' ? 'max-w-[640px]' : 'max-w-[560px]'} mx-auto px-5 sm:px-0`}>
           {/* Header Section - Headline + Description */}
-          <div className="sm:mt-20 sm:mb-16 mt-16 mb-16">
+          <div className="mt-10 mb-10 sm:mt-20 sm:mb-16">
             {tenant.headline && (
-              <h1 className="text-[24px] sm:text-[28px] font-bold text-foreground leading-snug max-w-[460px] mb-3 tracking-tight">{tenant.headline}</h1>
+              <h1 className="text-[22px] sm:text-[28px] font-bold text-foreground leading-snug max-w-[460px] mb-2 sm:mb-3 tracking-tight">{tenant.headline}</h1>
             )}
             {(tenant.subtitle || tenant.name) && (
-              <p className="text-[15px] sm:text-base text-muted-foreground leading-relaxed max-w-[460px]">{tenant.subtitle || tenant.name || ''}</p>
+              <p className="text-[14px] sm:text-base text-muted-foreground leading-relaxed max-w-[460px]">{tenant.subtitle || tenant.name || ''}</p>
             )}
           </div>
 
           {/* Posts */}
           <div className="w-full">
-            <h2 className="text-sm font-medium text-muted-foreground mb-4">{translations.common.posts}</h2>
+            <h2 className="text-xs sm:text-sm font-medium text-muted-foreground mb-3 sm:mb-4">{translations.common.posts}</h2>
 
             {posts.data.length > 0 ? (
               <>

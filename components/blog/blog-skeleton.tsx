@@ -22,8 +22,8 @@ export function BlogPostItemSkeleton() {
 
 export function BlogHeaderSkeleton() {
   return (
-    <div className="sm:mt-20 sm:mb-16 mt-16 mb-16">
-      <Skeleton className="h-8 w-64 max-w-[460px] mb-3" />
+    <div className="mt-10 mb-10 sm:mt-20 sm:mb-16">
+      <Skeleton className="h-7 sm:h-8 w-64 max-w-[460px] mb-2 sm:mb-3" />
       <Skeleton className="h-4 w-full max-w-[380px]" />
     </div>
   );
@@ -44,10 +44,10 @@ export function BlogListSkeleton({ count = 10 }: { count?: number }) {
 
 export function PostDetailHeaderSkeleton() {
   return (
-    <div className="sm:mt-20 mt-16 w-full max-w-[560px] mx-auto p-3 sm:p-0">
+    <div className="mt-10 sm:mt-20 w-full max-w-[560px] mx-auto px-5 sm:px-0">
       <div className="mb-8">
-        <Skeleton className="h-10 w-full max-w-[420px] mb-1" />
-        <Skeleton className="h-6 w-2/3 mb-3" />
+        <Skeleton className="h-8 sm:h-10 w-full max-w-[420px] mb-1" />
+        <Skeleton className="h-5 sm:h-6 w-2/3 mb-3" />
         <Skeleton className="h-4 w-36" />
       </div>
     </div>
@@ -102,8 +102,8 @@ export function PaginationSkeleton() {
 
 export function HeaderSkeleton() {
   return (
-    <header className="py-2 sm:py-3">
-      <div className="container mx-auto px-3 sm:px-0 max-w-[560px]">
+    <header className="py-3 sm:py-4">
+      <div className="container mx-auto px-5 sm:px-0 max-w-[560px]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 sm:gap-3">
             <Skeleton className="size-8 rounded-full" />
@@ -121,8 +121,8 @@ export function HeaderSkeleton() {
 
 export function FooterSkeleton() {
   return (
-    <footer className="p-3 sm:p-0">
-      <section className="pt-16 pb-0 mb-0 sm:pb-6 sm:mb-3">
+    <footer className="px-5 sm:px-0">
+      <section className="pt-10 sm:pt-16 pb-0 mb-0 sm:pb-6 sm:mb-3">
         <div className="max-w-[560px] mx-auto">
           <div className="mb-3">
             <Skeleton className="h-5 w-48 mb-1.5" />

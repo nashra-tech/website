@@ -27,11 +27,11 @@ export function WebsiteFooter({ tenant }: WebsiteFooterProps) {
   const maxWidthClass = layout === 'cards' ? 'max-w-[640px]' : 'max-w-[560px]';
 
   return (
-    <footer className="p-3 sm:p-0">
-      <section className="pt-16 pb-0 mb-0 sm:pb-6 sm:mb-3 bg-white relative font-sans dark:bg-neutral-900">
+    <footer className="px-5 sm:px-0">
+      <section className="pt-10 sm:pt-16 pb-0 mb-0 sm:pb-6 sm:mb-3 bg-background relative font-sans">
         {/* Fixed Badge at Bottom Right */}
         {tenant.show_branding && (
-          <div className={`fixed bottom-4 z-50 ${isTenantRTL ? 'left-4' : 'right-4'}`}>
+          <div className={`fixed bottom-6 z-50 ${isTenantRTL ? 'left-4' : 'right-4'}`}>
             <PoweredByNashra
               isRtl={isTenantRTL}
               translations={{ made_with: t('common.powered_by') }}
@@ -43,10 +43,10 @@ export function WebsiteFooter({ tenant }: WebsiteFooterProps) {
         <div className={`${maxWidthClass} mx-auto`}>
           {/* Subscription Form Section */}
           <div className="mb-3" dir={tenantDirection}>
-            <p className="text-[17px] font-medium leading-[1.2] tracking-tight text-black dark:text-white">
+            <p className="text-[15px] sm:text-[17px] font-medium leading-[1.2] tracking-tight text-foreground">
               {tenant.newsletter_headline || t('newsletter.title')}
             </p>
-            <p className="text-[17px] font-medium leading-[1.2] tracking-tight text-neutral-500 dark:text-base-400">
+            <p className="text-[15px] sm:text-[17px] font-medium leading-[1.2] tracking-tight text-muted-foreground">
               {tenant.newsletter_description || t('newsletter.subtitle')}
             </p>
           </div>

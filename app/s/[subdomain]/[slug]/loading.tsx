@@ -20,7 +20,7 @@ export default function Loading() {
 
         <main className="flex-grow">
           <PostDetailHeaderSkeleton />
-          <div className="w-full max-w-[560px] mx-auto p-3 sm:p-0">
+          <div className="w-full max-w-[560px] mx-auto px-5 sm:px-0">
             <PostDetailContentSkeleton />
             <MoreArticlesSkeleton />
           </div>

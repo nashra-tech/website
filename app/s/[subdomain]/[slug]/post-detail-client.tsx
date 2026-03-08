@@ -32,6 +32,38 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
 
   usePageTracking(trackingProps);
 
+  // Collapse empty Plate.js blocks (empty paragraphs/divs with only whitespace/zero-width spaces)
+  useEffect(() => {
+    const container = contentRef.current;
+    if (!container) return;
+
+    // Target ALL direct children of the content wrapper or slate-editor
+    const editor = container.querySelector('[data-slate-editor]');
+    const parent = editor || container;
+    const children = Array.from(parent.children);
+
+    children.forEach((child) => {
+      const el = child as HTMLElement;
+      const tag = el.tagName.toLowerCase();
+
+      // Skip meaningful block elements
+      if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'figure', 'table', 'ul', 'ol', 'pre', 'blockquote', 'hr'].includes(tag)) {
+        return;
+      }
+
+      // Check if this element has any meaningful text content
+      const text = el.textContent?.replace(/[\u200B\u200C\u200D\uFEFF\u00A0\s\n\r\t]/g, '') || '';
+
+      // If block has no meaningful text and no media, collapse it
+      if (
+        text.length === 0 &&
+        !el.querySelector('img, iframe, video, figure, svg, canvas, a[href], table, h1, h2, h3, h4, h5, h6')
+      ) {
+        el.classList.add('empty-block');
+      }
+    });
+  }, [post.website_content]);
+
   // Replace YouTube/Vimeo iframes with thumbnail + play button
   useEffect(() => {
     const container = contentRef.current;
@@ -109,12 +141,12 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
   return (
     <div dir={tenantDirection} className="min-h-screen transition-colors">
       <WebsiteLayout tenant={tenant}>
-        <div className={`sm:mt-20 mt-16 w-full ${maxWidthClass} mx-auto p-3 sm:p-0`}>
-          <h1 className="text-4xl font-semibold text-foreground tracking-tight mb-1 leading-tight">
+        <div className={`mt-10 sm:mt-20 w-full ${maxWidthClass} mx-auto px-5 sm:px-0`}>
+          <h1 className="text-[26px] sm:text-4xl font-semibold text-foreground tracking-tight mb-1 leading-tight">
             {post.title}
           </h1>
           {post.subtitle && (
-            <h2 className="text-lg font-medium tracking-tight text-muted-foreground leading-tight">
+            <h2 className="text-base sm:text-lg font-medium tracking-tight text-muted-foreground leading-snug">
               {post.subtitle}
             </h2>
           )}
@@ -130,7 +162,7 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
             )}
           </div>
 
-          <article className="my-10">
+          <article className="my-8 sm:my-10">
             <div
               ref={contentRef}
               className="post-content [&_.slate-editor]:!p-0 w-full"
@@ -140,8 +172,8 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
 
           <footer>
             {morePosts.length > 0 && (
-              <div className="mt-16">
-                <h3 className="text-sm font-medium text-muted-foreground mb-4">
+              <div className="mt-10 sm:mt-16">
+                <h3 className="text-xs sm:text-sm font-medium text-muted-foreground mb-3 sm:mb-4">
                   {t('common.more_posts')}
                 </h3>
                 <div>
