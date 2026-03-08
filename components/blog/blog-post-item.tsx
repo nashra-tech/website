@@ -42,12 +42,12 @@ export function BlogPostItem({
   return (
     <Link
       href={`/${post.slug}`}
-      className={`py-3 px-2 w-full ${!isLast ? 'border-b' : ''} cursor-pointer transition-colors block`}
+      className={`group py-3 px-2 w-full ${!isLast ? 'border-b' : ''} cursor-pointer transition-colors duration-200 ease-out hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-lg block`}
       dir={tenantDirection}
     >
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-4">
         <h3
-          className={`text-base font-medium leading-relaxed transition-colors ${
+          className={`text-base font-medium leading-relaxed transition-colors duration-200 ease-out group-hover:text-foreground ${
             isRTL ? 'text-right' : 'text-left'
           } flex-1 max-w-[415px] text-muted-foreground`}
         >

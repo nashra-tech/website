@@ -54,7 +54,7 @@ export function PoweredByNashra({
             href="https://nashra.ai"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block transition-opacity hover:opacity-80"
+            className="inline-block transition-all duration-200 ease-out hover:opacity-90 hover:-translate-y-px"
         >
             {content}
         </a>

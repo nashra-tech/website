@@ -31,12 +31,12 @@ function ThemeToggleDropdown() {
     <Button
       onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
       variant="outline"
-      className="flex items-center !p-2 size-8 rounded-md hover:bg-gray-100 dark:hover:bg-base-800 transition-colors"
+      className="group flex items-center !p-2 size-8 rounded-md hover:bg-gray-100 dark:hover:bg-base-800 transition-colors duration-200 ease-out"
     >
       {resolvedTheme === 'light' ? (
-        <Icons.moon className="w-4 h-4 text-gray-600 dark:text-gray-300" />
+        <Icons.moon className="w-4 h-4 text-gray-600 dark:text-gray-300 transition-transform duration-200 ease-out group-hover:rotate-12" />
       ) : (
-        <Icons.sun className="w-4 h-4 text-gray-600 dark:text-gray-300" />
+        <Icons.sun className="w-4 h-4 text-gray-600 dark:text-gray-300 transition-transform duration-200 ease-out group-hover:rotate-12" />
       )}
     </Button>
   );
@@ -84,7 +84,7 @@ export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
         <header className="py-2 sm:py-3">
           <div className={`container mx-auto px-3 sm:px-0 ${maxWidthClass}`}>
             <div className="flex items-center justify-between">
-              <Link href={'/'}>
+              <Link href={'/'} className="transition-opacity duration-200 ease-out hover:opacity-80">
                 <div className="flex items-center gap-2 sm:gap-3">
                   <AppAvatar
                     src={tenant.logo_thumb || tenant.logo}
@@ -105,10 +105,10 @@ export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
                     <Button
                       size="sm"
                       variant={buttonVariant}
-                      className={`h-8 px-4 ${radiusClass} font-medium text-sm shadow-md`}
+                      className={`group h-8 px-4 ${radiusClass} font-medium text-sm shadow-md hover:shadow-lg transition-shadow duration-200 ease-out`}
                     >
                       {t('common.subscribe')}
-                      <ArrowRight className="w-4 h-4 rtl:rotate-180" />
+                      <ArrowRight className="w-4 h-4 rtl:rotate-180 transition-transform duration-200 ease-out group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5" />
                     </Button>
                   </DialogTrigger>
                   <DialogContent

@@ -508,3 +508,40 @@
 .emoji-picker-container .epr-category-nav button:hover {
   opacity: 0.8;
 }
+
+/* ── Smooth scrolling ────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ── Reduced motion: respect user preference ─────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Post content: link hover — subtle underline reveal ──────── */
+.post-content a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: transparent;
+  transition: text-decoration-color 200ms ease-out;
+}
+.post-content a:hover {
+  text-decoration-color: currentColor;
+}
+
+/* ── Post content: image hover — gentle lift ─────────────────── */
+.post-content img {
+  transition: transform 250ms ease-out;
+}
+.post-content img:hover {
+  transform: translateY(-1px);
+}

@@ -92,7 +92,7 @@ export function SubscribeForm({
                     type="email"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
-                    className={`${error ? 'ring-1 ring-destructive' : ''} ${isTenantRTL ? 'text-right' : 'text-left'} h-11 rounded-xl border-0 bg-transparent placeholder:text-muted-foreground dark:text-neutral-200`}
+                    className={`${error ? 'ring-1 ring-destructive' : ''} ${isTenantRTL ? 'text-right' : 'text-left'} h-11 rounded-xl border-0 bg-transparent placeholder:text-muted-foreground dark:text-neutral-200 transition-shadow duration-200 ease-out focus:ring-2 focus:ring-primary/20`}
                     placeholder={t('common.email_placeholder')}
                     required
                     dir={tenantDirection}
@@ -109,7 +109,7 @@ export function SubscribeForm({
                     }}
                     size="sm"
                     variant={subscribed ? undefined : buttonVariant}
-                    className={`absolute top-1/2 -translate-y-1/2 ${isTenantRTL ? 'left-1.5' : 'right-1.5'} h-8 px-4 ${radiusClass} font-medium text-sm ${
+                    className={`group absolute top-1/2 -translate-y-1/2 ${isTenantRTL ? 'left-1.5' : 'right-1.5'} h-8 px-4 ${radiusClass} font-medium text-sm ${
                         subscribed
                             ? 'bg-green-600 hover:bg-green-600 text-white'
                             : ''
@@ -119,19 +119,19 @@ export function SubscribeForm({
                         <Icons.spinner className="h-4 w-4 animate-spin" />
                     ) : subscribed ? (
                         <>
-                            <Icons.check className="h-4 w-4 mr-1" />
+                            <Icons.check className="h-4 w-4 mr-1 animate-in fade-in duration-200" />
                             {t('common.subscribed')}
                         </>
                     ) : (
                         <>
                             {buttonText || t('common.subscribe')}
-                            <ArrowRight className="w-4 h-4 rtl:rotate-180" />
+                            <ArrowRight className="w-4 h-4 rtl:rotate-180 transition-transform duration-200 ease-out group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5" />
                         </>
                     )}
                 </Button>
             </div>
 
-            {error && <p className="text-destructive text-sm mt-2 text-center">{error}</p>}
+            {error && <p className="text-destructive text-sm mt-2 text-center animate-in fade-in slide-in-from-top-1 duration-200">{error}</p>}
         </form>
     );
 }

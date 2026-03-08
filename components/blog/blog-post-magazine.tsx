@@ -38,7 +38,7 @@ export function BlogPostMagazine({
       {/* Featured Post */}
       <Link
         href={`/${featured.slug}`}
-        className="group mb-6 block overflow-hidden rounded-lg transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-800"
+        className="group mb-6 block overflow-hidden rounded-lg transition-colors duration-200 ease-out hover:bg-neutral-100 dark:hover:bg-neutral-800"
       >
         <div className="aspect-[16/9] w-full overflow-hidden rounded-lg bg-neutral-100 dark:bg-neutral-800">
           {featured.main_image_url ? (
@@ -47,7 +47,7 @@ export function BlogPostMagazine({
               alt={featured.title}
               width={560}
               height={315}
-              className="h-full w-full object-cover transition-transform group-hover:scale-[1.02]"
+              className="h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.02]"
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center">

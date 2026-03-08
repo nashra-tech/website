@@ -34,7 +34,7 @@ export function BlogPostItemImage({
   return (
     <Link
       href={`/${post.slug}`}
-      className={`py-3 px-3 w-full cursor-pointer transition-colors block rounded-lg hover:bg-neutral-100`}
+      className={`group py-3 px-3 w-full cursor-pointer transition-colors duration-200 ease-out block rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800`}
       dir={tenantDirection}
     >
       <div className="flex items-center gap-3">
@@ -45,7 +45,7 @@ export function BlogPostItemImage({
               alt={post.title}
               width={44}
               height={44}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">

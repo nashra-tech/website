@@ -59,7 +59,7 @@ export function WebsiteFooter({ tenant }: WebsiteFooterProps) {
           <div className="hidden sm:flex justify-between items-center">
             {tenant.footer_data.footer_text ? (
               <div
-                className="text-neutral-500 dark:text-base-400 text-xs [&_a]:underline [&_a]:text-neutral-500 dark:[&_a]:text-base-400 [&_a]:hover:text-neutral-700 dark:[&_a]:hover:text-base-200 [&_p]:m-0"
+                className="text-neutral-500 dark:text-base-400 text-xs [&_a]:underline [&_a]:text-neutral-500 dark:[&_a]:text-base-400 [&_a]:hover:text-neutral-700 dark:[&_a]:hover:text-base-200 [&_a]:transition-colors [&_a]:duration-200 [&_p]:m-0"
                 dangerouslySetInnerHTML={{ __html: tenant.footer_data.footer_text }}
               />
             ) : (
@@ -77,7 +77,7 @@ export function WebsiteFooter({ tenant }: WebsiteFooterProps) {
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="opacity-60 hover:opacity-100 transition-opacity flex-shrink-0"
+                      className="opacity-60 hover:opacity-100 hover:-translate-y-0.5 transition-all duration-200 ease-out flex-shrink-0"
                       title={link.name}
                     >
                       {Icon ? <Icon className="w-5 h-5" /> : null}
@@ -101,7 +101,7 @@ export function WebsiteFooter({ tenant }: WebsiteFooterProps) {
                         href={link.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="opacity-60 hover:opacity-100 transition-opacity flex-shrink-0"
+                        className="opacity-60 hover:opacity-100 hover:-translate-y-0.5 transition-all duration-200 ease-out flex-shrink-0"
                         title={link.name}
                       >
                         {Icon ? <Icon className="w-5 h-5" /> : null}
@@ -113,7 +113,7 @@ export function WebsiteFooter({ tenant }: WebsiteFooterProps) {
 
             {tenant.footer_data.footer_text && (
               <div
-                className="text-neutral-500 dark:text-base-400 text-xs [&_a]:underline [&_a]:text-neutral-500 dark:[&_a]:text-base-400 [&_a]:hover:text-neutral-700 dark:[&_a]:hover:text-base-200 [&_p]:m-0"
+                className="text-neutral-500 dark:text-base-400 text-xs [&_a]:underline [&_a]:text-neutral-500 dark:[&_a]:text-base-400 [&_a]:hover:text-neutral-700 dark:[&_a]:hover:text-base-200 [&_a]:transition-colors [&_a]:duration-200 [&_p]:m-0"
                 dangerouslySetInnerHTML={{ __html: tenant.footer_data.footer_text }}
               />
             )}

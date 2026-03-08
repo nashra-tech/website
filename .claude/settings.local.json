@@ -34,7 +34,14 @@
       "Bash(git pull --rebase)",
       "Bash(git stash)",
       "Bash(git stash pop)",
-      "Bash(git stash drop)"
+      "Bash(git stash drop)",
+      "Bash(git add app/s/[subdomain]/[slug]/post-detail-client.tsx translations/ar.json translations/de.json translations/en.json translations/es.json translations/fr.json translations/hi.json translations/id.json translations/ja.json translations/pt.json translations/zh.json)",
+      "WebFetch(domain:www.figma.com)",
+      "WebFetch(domain:embed.figma.com)",
+      "mcp__mcp-registry__search_mcp_registry",
+      "Bash(git add app/globals.css app/s/[subdomain]/page.tsx app/s/[subdomain]/magic/[identifier]/magic-link-client.tsx app/s/[subdomain]/magic/[identifier]/page.tsx components/blog/blog-post-item-image.tsx components/blog/blog-post-cards.tsx components/blog/blog-post-magazine.tsx components/blog/powered-by-nashra.tsx components/blog/subscribe-form.tsx components/blog/website-footer.tsx components/blog/website-layout.tsx lib/api/adapters.ts types/api.ts types/tenant.ts)",
+      "Bash(git add \"app/globals.css\" \"app/s/[subdomain]/[slug]/loading.tsx\" \"app/s/[subdomain]/[slug]/post-detail-client.tsx\" \"app/s/[subdomain]/loading.tsx\" \"components/blog/blog-skeleton.tsx\")",
+      "Bash(npx claude-code-templates@latest --skill=creative-design/ui-ux-pro-max --yes)"
     ]
   },
   "enableAllProjectMcpServers": true,

@@ -98,7 +98,7 @@ export function Pagination({
           size="sm"
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage <= 1}
-          className="px-3 py-2 bg-base-100 hover:text-gray-700 disabled:opacity-25 disabled:cursor-not-allowed"
+          className="px-3 py-2 bg-base-100 hover:text-gray-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 disabled:opacity-25 disabled:cursor-not-allowed transition-colors duration-200 ease-out"
         >
           <ChevronLeftIcon className="h-4 w-4" />
         </Button>
@@ -120,7 +120,7 @@ export function Pagination({
               variant={isCurrentPage ? 'default' : 'ghost'}
               size="sm"
               onClick={() => handlePageChange(page as number)}
-              className={`px-3 py-2 min-w-[36px] ${
+              className={`px-3 py-2 min-w-[36px] transition-colors duration-200 ease-out ${
                 isCurrentPage
                   ? 'bg-base-100 text-primary hover:bg-base-100'
                   : 'text-gray-500 hover:text-gray-700 hover:bg-base-100'
@@ -137,7 +137,7 @@ export function Pagination({
           size="sm"
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage >= totalPages}
-          className="px-3 py-2 bg-base-100 hover:text-gray-700 disabled:opacity-25 disabled:cursor-not-allowed"
+          className="px-3 py-2 bg-base-100 hover:text-gray-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 disabled:opacity-25 disabled:cursor-not-allowed transition-colors duration-200 ease-out"
         >
           <ChevronRightIcon className="h-4 w-4" />
         </Button>
