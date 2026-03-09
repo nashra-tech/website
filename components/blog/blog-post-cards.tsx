@@ -44,7 +44,7 @@ export function BlogPostCards({
                   alt={post.title}
                   width={400}
                   height={300}
-                  className="w-full h-auto transition-transform duration-300 ease-out group-hover:scale-[1.02]"
+                  className="w-full aspect-video object-cover transition-transform duration-300 ease-out group-hover:scale-[1.02]"
                   sizes="(max-width: 640px) 100vw, 50vw"
                 />
               ) : (

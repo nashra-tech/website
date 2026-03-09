@@ -270,18 +270,23 @@
   margin-bottom: 0 !important;
 }
 
-/* Plate indent-list: each list item is a div[class*="py-3 my-1"]
-   wrapping a <ul><li>…</li></ul>. Tighten these wrapper divs. */
-.post-content div[class*="py-3"]:has(> ul),
-.post-content div[class*="py-3"]:has(> ol) {
-  margin-top: 0.1rem !important;
+/* Plate indent-list: each list item is a separate
+   div[data-slate-list-style-type] wrapping its own <ul><li>…</li></ul>.
+   Tighten consecutive items so the list reads as one block. */
+.post-content div[data-slate-list-style-type] {
+  margin-top: 0.125rem !important;
   margin-bottom: 0 !important;
 }
-/* Also target by the my-1 class Plate adds to list item blocks */
+/* Also handle older Plate serializations with py-3/my-1 wrappers */
+.post-content div[class*="py-3"]:has(> ul),
+.post-content div[class*="py-3"]:has(> ol) {
+  margin-top: 0.125rem !important;
+  margin-bottom: 0 !important;
+}
 .post-content div[class*="my-1"] {
-  margin-top: 0.1rem !important;
-  margin-bottom: 0.1rem !important;
-  margin-block: 0.1rem !important;
+  margin-top: 0.125rem !important;
+  margin-bottom: 0.125rem !important;
+  margin-block: 0.125rem !important;
 }
 
 /* ── Blockquotes ──────────────────────────────────────────── */
@@ -448,28 +453,19 @@
   overflow: hidden;
 }
 
-/* ── Safety resets (prevent Tailwind Preflight from interfering) ─────── */
+/* ── Image resets ─────────────────────────────────────────── */
+/* Plate.js serializer sets a fixed pixel height on BOTH the
+   container div AND the <img> via inline style, with no width.
+   Override both so images scale naturally to content width. */
+.post-content .slate-img figure > div > div {
+  height: auto !important;
+}
 .post-content img {
   display: block;
   max-width: 100% !important;
+  width: 100%;
   height: auto !important;
-  width: auto;
-  object-fit: contain;
-}
-
-/* ── Plate.js image wrapper height override ────────────────────────── */
-/* Plate serialises images inside wrapper divs with hardcoded inline
-   height (e.g. style="height:347px"). When we reset the <img> to
-   height:auto the wrapper keeps its fixed height, creating a gap.
-   These rules collapse the wrapper so it hugs the image naturally. */
-.post-content .slate-img figure div div[style] {
-  height: auto !important;
-}
-.post-content figure [style*="height"] {
-  height: auto !important;
-}
-.post-content .slate-img .relative[style] {
-  height: auto !important;
+  object-fit: contain !important;
 }
 
 /* ── Code block syntax highlighting (backward compat for old posts) ─── */
@@ -626,6 +622,27 @@ html {
 }
 .post-content a:hover {
   text-decoration-color: currentColor;
+}
+
+/* ── Post content: Plate.js button — override link & color styles ──── */
+/* Plate.js buttons set text color via inline style (color: #fff/#000)
+   computed from getContrastColor(). But our blanket rules:
+     .post-content { color: var(--muted-foreground) !important }
+     .post-content div[class*="py-3"] span { color: ... !important }
+   override the inline color on descendant spans. Fix by forcing spans
+   inside button links to inherit from the <a> which has the correct color. */
+.post-content .slate-button a {
+  text-decoration: none !important;
+  transition: opacity 200ms ease-out, transform 200ms ease-out;
+}
+.post-content .slate-button a span {
+  color: inherit !important;
+}
+.post-content .slate-button a:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  text-decoration: none !important;
+  text-decoration-color: transparent !important;
 }
 
 /* ── Post content: image hover — gentle lift ─────────────────── */

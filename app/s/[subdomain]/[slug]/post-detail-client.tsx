@@ -9,6 +9,17 @@ import { usePageTracking } from '@/hooks/use-page-tracking';
 import { useTranslations } from '@/lib/i18n/use-translations';
 import { BlogPostItemImage } from '@/components/blog/blog-post-item-image';
 
+// Hoisted RegExp patterns (avoid re-creation on every effect run)
+const WHITESPACE_RE = /[\u200B\u200C\u200D\uFEFF\u00A0\s\n\r\t]/g;
+const YT_EMBED_RE = /youtube\.com\/embed\/([^?&#]+)/;
+const VIMEO_EMBED_RE = /player\.vimeo\.com\/video\/(\d+)/;
+
+const MEANINGFUL_TAGS = new Set([
+  'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'figure', 'table', 'ul', 'ol', 'pre', 'blockquote', 'hr',
+]);
+
+const PLAY_BUTTON_SVG = `<svg width="68" height="48" viewBox="0 0 68 48"><path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="#212121" fill-opacity="0.8"/><path d="M45 24L27 14v20" fill="#fff"/></svg>`;
+
 interface PostDetailClientProps {
   tenant: Tenant;
   post: Post;
@@ -18,11 +29,9 @@ interface PostDetailClientProps {
 export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientProps) {
   const tenantLanguage = tenant.website_language || 'en';
   const tenantDirection = tenant.website_direction || 'ltr';
-  const isRTL = tenantDirection === 'rtl';
   const { t } = useTranslations(tenantLanguage);
   const contentRef = useRef<HTMLDivElement>(null);
-  const layout = tenant.homepage_layout || 'list';
-  const maxWidthClass = layout === 'cards' ? 'max-w-[640px]' : 'max-w-[560px]';
+  const maxWidthClass = (tenant.homepage_layout || 'list') === 'cards' ? 'max-w-[640px]' : 'max-w-[560px]';
 
   const trackingProps = useMemo(() => ({
     page_type: 'blog_post' as const,
@@ -37,7 +46,6 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
     const container = contentRef.current;
     if (!container) return;
 
-    // Target ALL direct children of the content wrapper or slate-editor
     const editor = container.querySelector('[data-slate-editor]');
     const parent = editor || container;
     const children = Array.from(parent.children);
@@ -46,15 +54,10 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
       const el = child as HTMLElement;
       const tag = el.tagName.toLowerCase();
 
-      // Skip meaningful block elements
-      if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'figure', 'table', 'ul', 'ol', 'pre', 'blockquote', 'hr'].includes(tag)) {
-        return;
-      }
+      if (MEANINGFUL_TAGS.has(tag)) return;
 
-      // Check if this element has any meaningful text content
-      const text = el.textContent?.replace(/[\u200B\u200C\u200D\uFEFF\u00A0\s\n\r\t]/g, '') || '';
+      const text = el.textContent?.replace(WHITESPACE_RE, '') || '';
 
-      // If block has no meaningful text and no media, collapse it
       if (
         text.length === 0 &&
         !el.querySelector('img, iframe, video, figure, svg, canvas, a[href], table, h1, h2, h3, h4, h5, h6')
@@ -73,8 +76,8 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
     iframes.forEach((iframe) => {
       const src = iframe.src || '';
 
-      const ytMatch = src.match(/youtube\.com\/embed\/([^?&#]+)/);
-      const vimeoMatch = src.match(/player\.vimeo\.com\/video\/(\d+)/);
+      const ytMatch = src.match(YT_EMBED_RE);
+      const vimeoMatch = src.match(VIMEO_EMBED_RE);
 
       if (!ytMatch && !vimeoMatch) return;
 
@@ -90,38 +93,26 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
       link.href = originalUrl;
       link.target = '_blank';
       link.rel = 'noopener noreferrer';
-      link.style.aspectRatio = '16/9';
-      link.style.display = 'block';
-      link.style.position = 'relative';
-      link.style.width = '100%';
-      link.style.overflow = 'hidden';
-      link.style.borderRadius = '0.125rem';
+      // Batch style writes via cssText instead of individual property assignments
+      link.style.cssText = 'display:block;position:relative;width:100%;height:100%;overflow:hidden;border-radius:0.125rem';
 
       const img = document.createElement('img');
       img.src = thumbnailUrl;
       img.alt = '';
-      img.style.width = '100%';
-      img.style.height = '100%';
-      img.style.objectFit = 'cover';
+      img.style.cssText = 'width:100%;height:100%;object-fit:cover';
 
       const overlay = document.createElement('div');
-      overlay.style.position = 'absolute';
-      overlay.style.inset = '0';
-      overlay.style.display = 'flex';
-      overlay.style.alignItems = 'center';
-      overlay.style.justifyContent = 'center';
-      overlay.style.pointerEvents = 'none';
-      overlay.innerHTML = `<svg width="68" height="48" viewBox="0 0 68 48"><path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="#212121" fill-opacity="0.8"/><path d="M45 24L27 14v20" fill="#fff"/></svg>`;
+      overlay.style.cssText = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none';
+      overlay.innerHTML = PLAY_BUTTON_SVG;
 
       link.appendChild(img);
       link.appendChild(overlay);
 
-      const parent = iframe.parentElement;
-      if (parent) {
-        parent.replaceChild(link, iframe);
+      const iframeParent = iframe.parentElement;
+      if (iframeParent) {
+        iframeParent.replaceChild(link, iframe);
 
-        // Preserve figcaption in the figure after iframe replacement
-        const figure = parent.closest('figure');
+        const figure = iframeParent.closest('figure');
         if (figure) {
           const figcaption = figure.querySelector('figcaption');
           if (figcaption) {

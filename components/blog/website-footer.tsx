@@ -26,6 +26,12 @@ export function WebsiteFooter({ tenant }: WebsiteFooterProps) {
   const layout = tenant.homepage_layout || 'list';
   const maxWidthClass = layout === 'cards' ? 'max-w-[640px]' : 'max-w-[560px]';
 
+  const socialLinks = tenant.footer_data.social_links;
+  const hasSocialLinks = socialLinks && socialLinks.length > 0;
+
+  const footerTextHtml = tenant.footer_data.footer_text;
+  const footerTextClassName = "text-neutral-500 dark:text-base-400 text-xs [&_a]:underline [&_a]:text-neutral-500 dark:[&_a]:text-base-400 [&_a]:hover:text-neutral-700 dark:[&_a]:hover:text-base-200 [&_a]:transition-colors [&_a]:duration-200 [&_p]:m-0";
+
   return (
     <footer className="px-5 sm:px-0">
       <section className="pt-10 sm:pt-16 pb-0 mb-0 sm:pb-6 sm:mb-3 bg-background relative font-sans">
@@ -57,69 +63,57 @@ export function WebsiteFooter({ tenant }: WebsiteFooterProps) {
 
           {/* Desktop Layout - Footer Text and Social Links */}
           <div className="hidden sm:flex justify-between items-center">
-            {tenant.footer_data.footer_text ? (
+            {footerTextHtml ? (
               <div
-                className="text-neutral-500 dark:text-base-400 text-xs [&_a]:underline [&_a]:text-neutral-500 dark:[&_a]:text-base-400 [&_a]:hover:text-neutral-700 dark:[&_a]:hover:text-base-200 [&_a]:transition-colors [&_a]:duration-200 [&_p]:m-0"
-                dangerouslySetInnerHTML={{ __html: tenant.footer_data.footer_text }}
+                className={footerTextClassName}
+                dangerouslySetInnerHTML={{ __html: footerTextHtml }}
               />
             ) : (
               <div />
             )}
-            <div className="flex items-center gap-3">
-              {tenant.footer_data.social_links &&
-                tenant.footer_data.social_links.length > 0 &&
-                tenant.footer_data.social_links.map((link, index) => {
-                  const iconName = getSocialPlatformByName(link.name)?.icon as keyof typeof Icons;
-                  const Icon = Icons[iconName];
-                  return (
-                    <a
-                      key={index}
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="opacity-60 hover:opacity-100 hover:-translate-y-0.5 transition-all duration-200 ease-out flex-shrink-0"
-                      title={link.name}
-                    >
-                      {Icon ? <Icon className="w-5 h-5" /> : null}
-                    </a>
-                  );
-                })}
-            </div>
+            {hasSocialLinks && <SocialLinks links={socialLinks} />}
           </div>
 
           {/* Mobile Layout - Centered */}
           <div className="sm:hidden text-center px-4 py-6 space-y-4">
-            {tenant.footer_data.social_links &&
-              tenant.footer_data.social_links.length > 0 && (
-                <div className="flex justify-center items-center gap-4 flex-wrap">
-                  {tenant.footer_data.social_links.map((link, index) => {
-                    const iconName = getSocialPlatformByName(link.name)?.icon as keyof typeof Icons;
-                    const Icon = Icons[iconName];
-                    return (
-                      <a
-                        key={index}
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="opacity-60 hover:opacity-100 hover:-translate-y-0.5 transition-all duration-200 ease-out flex-shrink-0"
-                        title={link.name}
-                      >
-                        {Icon ? <Icon className="w-5 h-5" /> : null}
-                      </a>
-                    );
-                  })}
-                </div>
-              )}
+            {hasSocialLinks && (
+              <div className="flex justify-center items-center gap-4 flex-wrap">
+                <SocialLinks links={socialLinks} />
+              </div>
+            )}
 
-            {tenant.footer_data.footer_text && (
+            {footerTextHtml && (
               <div
-                className="text-neutral-500 dark:text-base-400 text-xs [&_a]:underline [&_a]:text-neutral-500 dark:[&_a]:text-base-400 [&_a]:hover:text-neutral-700 dark:[&_a]:hover:text-base-200 [&_a]:transition-colors [&_a]:duration-200 [&_p]:m-0"
-                dangerouslySetInnerHTML={{ __html: tenant.footer_data.footer_text }}
+                className={footerTextClassName}
+                dangerouslySetInnerHTML={{ __html: footerTextHtml }}
               />
             )}
           </div>
         </div>
       </section>
     </footer>
+  );
+}
+
+function SocialLinks({ links }: { links: { name: string; url: string }[] }) {
+  return (
+    <div className="flex items-center gap-3">
+      {links.map((link, index) => {
+        const iconName = getSocialPlatformByName(link.name)?.icon as keyof typeof Icons;
+        const Icon = Icons[iconName];
+        return (
+          <a
+            key={index}
+            href={link.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="opacity-60 hover:opacity-100 hover:-translate-y-0.5 transition-all duration-200 ease-out flex-shrink-0"
+            title={link.name}
+          >
+            {Icon ? <Icon className="w-5 h-5" /> : null}
+          </a>
+        );
+      })}
+    </div>
   );
 }

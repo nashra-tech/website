@@ -24,21 +24,17 @@ interface PageProps {
 export default async function PostDetailPage({ params }: PageProps) {
   const { subdomain, slug } = await params;
 
-  // Fetch tenant data
-  const tenant = await getTenantBySlug(subdomain);
+  // Fetch tenant and post in parallel (eliminates waterfall)
+  const [tenant, post] = await Promise.all([
+    getTenantBySlug(subdomain),
+    getPostBySlug(subdomain, slug),
+  ]);
 
-  if (!tenant) {
+  if (!tenant || !post) {
     notFound();
   }
 
-  // Fetch post data
-  const post = await getPostBySlug(subdomain, slug);
-
-  if (!post) {
-    notFound();
-  }
-
-  // Fetch related posts
+  // morePosts depends on post.uuid, so it must be sequential
   const morePosts = await getMorePosts(subdomain, post.uuid, 3);
 
   return (

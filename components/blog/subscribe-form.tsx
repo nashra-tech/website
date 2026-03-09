@@ -99,14 +99,7 @@ export function SubscribeForm({
                 />
                 <Button
                     type="submit"
-                    disabled={processing}
-                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                        if (subscribed) {
-                            e.preventDefault();
-                            return;
-                        }
-                        handleSubmit(e);
-                    }}
+                    disabled={processing || subscribed}
                     size="sm"
                     variant={subscribed ? undefined : buttonVariant}
                     className={`group absolute top-1/2 -translate-y-1/2 ${isTenantRTL ? 'left-1.5' : 'right-1.5'} h-8 px-4 ${radiusClass} font-medium text-sm ${

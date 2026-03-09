@@ -35,19 +35,15 @@ export default async function TenantHomePage({ params, searchParams }: PageProps
   const { page: pageParam } = await searchParams;
   const page = Number(pageParam) || 1;
 
-  // Fetch tenant data
-  const tenant = await getTenantBySlug(subdomain);
+  // Fetch tenant and posts in parallel (eliminates waterfall)
+  const [tenant, posts] = await Promise.all([
+    getTenantBySlug(subdomain),
+    getPosts(subdomain, { page, perPage: 10, published: true }),
+  ]);
 
   if (!tenant) {
     notFound();
   }
-
-  // Fetch posts for this tenant
-  const posts = await getPosts(subdomain, {
-    page,
-    perPage: 10,
-    published: true,
-  });
 
   const tenantDirection = tenant.website_direction || 'ltr';
   const tenantLanguage = tenant.website_language || 'en';
@@ -118,7 +114,6 @@ export default async function TenantHomePage({ params, searchParams }: PageProps
               <div className="px-2 py-3 sm:px-2 sm:py-3">
                 <Empty
                   title={translations.home.empty_title}
-                  description={undefined}
                   icons={[Icons.annotation, Icons.email]}
                 />
               </div>

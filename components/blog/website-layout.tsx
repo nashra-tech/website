@@ -44,17 +44,16 @@ function ThemeToggleDropdown() {
 
 export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
   const [open, setOpen] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   // Set dynamic favicon from tenant data
   useEffect(() => {
     if (!tenant.favicon) return;
 
-    // Remove all existing favicon link tags
     document
       .querySelectorAll('link[rel="icon"], link[rel="shortcut icon"]')
       .forEach((el) => el.remove());
 
-    // Create a fresh link tag
     const link = document.createElement('link');
     link.rel = 'icon';
     link.type = 'image/png';
@@ -62,7 +61,7 @@ export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
     link.href = tenant.favicon;
     document.head.appendChild(link);
   }, [tenant.favicon]);
-  const [showSuccess, setShowSuccess] = useState(false);
+
   const tenantDirection = tenant.website_direction || 'ltr';
   const tenantLanguage = tenant.website_language || 'en';
   const { t } = useTranslations(tenantLanguage);
@@ -100,7 +99,7 @@ export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
 
               <div className="flex items-center gap-2 sm:gap-3">
                 <ThemeToggleDropdown />
-                <Dialog open={open} onOpenChange={setOpen}>
+                <Dialog open={open} onOpenChange={(v) => { setOpen(v); if (!v) setShowSuccess(false); }}>
                   <DialogTrigger asChild>
                     <Button
                       size="sm"
