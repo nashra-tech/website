@@ -9,16 +9,18 @@ import { usePageTracking } from '@/hooks/use-page-tracking';
 import { useTranslations } from '@/lib/i18n/use-translations';
 import { BlogPostItemImage } from '@/components/blog/blog-post-item-image';
 
-// Hoisted RegExp patterns (avoid re-creation on every effect run)
+// Hoisted constants (avoid re-creation on every render / effect run)
 const WHITESPACE_RE = /[\u200B\u200C\u200D\uFEFF\u00A0\s\n\r\t]/g;
-const YT_EMBED_RE = /youtube\.com\/embed\/([^?&#]+)/;
-const VIMEO_EMBED_RE = /player\.vimeo\.com\/video\/(\d+)/;
+const IMG_TAG_RE = /<img(?=\s)/g;
 
 const MEANINGFUL_TAGS = new Set([
-  'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'figure', 'table', 'ul', 'ol', 'pre', 'blockquote', 'hr',
+  'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'figure', 'table',
+  'ul', 'ol', 'pre', 'blockquote', 'hr',
 ]);
 
-const PLAY_BUTTON_SVG = `<svg width="68" height="48" viewBox="0 0 68 48"><path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="#212121" fill-opacity="0.8"/><path d="M45 24L27 14v20" fill="#fff"/></svg>`;
+const MEDIA_SELECTOR =
+  'img, iframe, video, figure, svg, canvas, a[href], table, h1, h2, h3, h4, h5, h6';
+
 
 interface PostDetailClientProps {
   tenant: Tenant;
@@ -41,87 +43,41 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
 
   usePageTracking(trackingProps);
 
-  // Collapse empty Plate.js blocks (empty paragraphs/divs with only whitespace/zero-width spaces)
+  // ── Pre-process HTML (SSR-safe, no DOM dependency) ──────────────────
+  const processedContent = useMemo(() => {
+    if (!post.website_content) return '';
+    return post.website_content.replace(IMG_TAG_RE, '<img loading="lazy" decoding="async"');
+  }, [post.website_content]);
+
+  // ── Single post-render DOM pass ─────────────────────────────────────
   useEffect(() => {
     const container = contentRef.current;
     if (!container) return;
 
-    const editor = container.querySelector('[data-slate-editor]');
-    const parent = editor || container;
-    const children = Array.from(parent.children);
+    // 1. Strip Plate's inline text colours from body text ────────────
+    //    Plate serialises every span with `color: rgb(0,0,0)` (editor
+    //    default). Stripping lets CSS set theme colours via normal
+    //    cascade — no !important needed anywhere.
+    //    Button text colour is handled purely via CSS (inherit from <a>).
+    //    Highlighted text (has background-color) is preserved for
+    //    dark-mode CSS inversion.
+    for (const el of container.querySelectorAll<HTMLElement>('[style]')) {
+      if (!el.style.color) continue;
+      if (el.style.backgroundColor) continue;
+      el.style.removeProperty('color');
+    }
 
-    children.forEach((child) => {
+    // 2. Collapse empty blocks ───────────────────────────────────────
+    const root = container.querySelector('[data-slate-editor]') || container;
+    for (const child of root.children) {
       const el = child as HTMLElement;
-      const tag = el.tagName.toLowerCase();
-
-      if (MEANINGFUL_TAGS.has(tag)) return;
-
+      if (MEANINGFUL_TAGS.has(el.tagName.toLowerCase())) continue;
       const text = el.textContent?.replace(WHITESPACE_RE, '') || '';
-
-      if (
-        text.length === 0 &&
-        !el.querySelector('img, iframe, video, figure, svg, canvas, a[href], table, h1, h2, h3, h4, h5, h6')
-      ) {
+      if (text.length === 0 && !el.querySelector(MEDIA_SELECTOR)) {
         el.classList.add('empty-block');
       }
-    });
-  }, [post.website_content]);
-
-  // Replace YouTube/Vimeo iframes with thumbnail + play button
-  useEffect(() => {
-    const container = contentRef.current;
-    if (!container) return;
-
-    const iframes = container.querySelectorAll('iframe');
-    iframes.forEach((iframe) => {
-      const src = iframe.src || '';
-
-      const ytMatch = src.match(YT_EMBED_RE);
-      const vimeoMatch = src.match(VIMEO_EMBED_RE);
-
-      if (!ytMatch && !vimeoMatch) return;
-
-      const videoId = ytMatch?.[1] || vimeoMatch?.[1];
-      const originalUrl = ytMatch
-        ? `https://www.youtube.com/watch?v=${videoId}`
-        : `https://vimeo.com/${videoId}`;
-      const thumbnailUrl = ytMatch
-        ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
-        : `https://vumbnail.com/${videoId}.jpg`;
-
-      const link = document.createElement('a');
-      link.href = originalUrl;
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
-      // Batch style writes via cssText instead of individual property assignments
-      link.style.cssText = 'display:block;position:relative;width:100%;height:100%;overflow:hidden;border-radius:0.125rem';
-
-      const img = document.createElement('img');
-      img.src = thumbnailUrl;
-      img.alt = '';
-      img.style.cssText = 'width:100%;height:100%;object-fit:cover';
-
-      const overlay = document.createElement('div');
-      overlay.style.cssText = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none';
-      overlay.innerHTML = PLAY_BUTTON_SVG;
-
-      link.appendChild(img);
-      link.appendChild(overlay);
-
-      const iframeParent = iframe.parentElement;
-      if (iframeParent) {
-        iframeParent.replaceChild(link, iframe);
-
-        const figure = iframeParent.closest('figure');
-        if (figure) {
-          const figcaption = figure.querySelector('figcaption');
-          if (figcaption) {
-            figure.appendChild(figcaption);
-          }
-        }
-      }
-    });
-  }, [post.website_content]);
+    }
+  }, [processedContent]);
 
   const formattedDate = new Date(post.publish_date).toLocaleDateString(tenantLanguage, {
     year: 'numeric',
@@ -157,7 +113,7 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
             <div
               ref={contentRef}
               className="post-content [&_.slate-editor]:!p-0 w-full"
-              dangerouslySetInnerHTML={{ __html: post.website_content || '' }}
+              dangerouslySetInnerHTML={{ __html: processedContent }}
             />
           </article>
 

@@ -139,24 +139,18 @@
  */
 
 /* ── Post content: inherit foreground colour from blog theme ──────────── */
+/* Plate's inline text colours are stripped at runtime (post-detail-client.tsx)
+   so plain CSS inheritance works — no !important needed for colours. */
 .post-content {
-  color: var(--muted-foreground) !important;
+  color: var(--muted-foreground);
   font-size: 0.9375rem; /* 15px mobile */
-  line-height: 1.75 !important;
+  line-height: 1.75;
 }
 @media (min-width: 640px) {
   .post-content {
     font-size: 1rem; /* 16px desktop */
-    line-height: 1.8 !important;
+    line-height: 1.8;
   }
-}
-.post-content p,
-.post-content div[class*="py-3"],
-.post-content li,
-.post-content p span,
-.post-content div[class*="py-3"] span,
-.post-content li span {
-  color: var(--muted-foreground) !important;
 }
 .post-content h1,
 .post-content h2,
@@ -164,7 +158,7 @@
 .post-content h1 span,
 .post-content h2 span,
 .post-content h3 span {
-  color: var(--foreground) !important;
+  color: var(--foreground);
 }
 
 /* ── Vertical rhythm: breathing room between all blocks ──── */
@@ -335,7 +329,15 @@
   width: 100%;
 }
 
+/* Override Plate's fixed pixel height on iframe wrapper divs so the
+   iframe can size itself via aspect-ratio instead of being letterboxed. */
+.post-content div:has(> iframe) {
+  height: auto !important;
+  width: 100%;
+}
+
 .post-content iframe {
+  display: block;
   width: 100%;
   max-width: 100%;
   border-radius: 0.125rem;
@@ -359,31 +361,31 @@
    with light pastel values. In dark mode we keep those backgrounds and
    set a matching text colour for better readability. */
 .dark .post-content [style*="rgb(241, 241, 239)"] { /* Gray → gray-900 */
-  color: #171717 !important;
+  color: #171717;
 }
 .dark .post-content [style*="rgb(235, 229, 220)"] { /* Brown → stone-900 */
-  color: #1c1917 !important;
+  color: #1c1917;
 }
 .dark .post-content [style*="rgb(254, 235, 200)"] { /* Orange → orange-900 */
-  color: #7c2d12 !important;
+  color: #7c2d12;
 }
 .dark .post-content [style*="rgb(254, 249, 195)"] { /* Yellow → yellow-900 */
-  color: #713f12 !important;
+  color: #713f12;
 }
 .dark .post-content [style*="rgb(204, 251, 241)"] { /* Green → emerald-900 */
-  color: #064e3b !important;
+  color: #064e3b;
 }
 .dark .post-content [style*="rgb(219, 234, 254)"] { /* Blue → blue-900 */
-  color: #1e3a5f !important;
+  color: #1e3a5f;
 }
 .dark .post-content [style*="rgb(243, 232, 255)"] { /* Purple → purple-900 */
-  color: #3b0764 !important;
+  color: #3b0764;
 }
 .dark .post-content [style*="rgb(252, 231, 243)"] { /* Pink → pink-900 */
-  color: #831843 !important;
+  color: #831843;
 }
 .dark .post-content [style*="rgb(254, 226, 226)"] { /* Red → red-900 */
-  color: #7f1d1d !important;
+  color: #7f1d1d;
 }
 
 /* ── Dark mode: code block syntax highlighting ─────────────────────── */
@@ -453,19 +455,25 @@
   overflow: hidden;
 }
 
-/* ── Image resets ─────────────────────────────────────────── */
+/* ── Image blocks ────────────────────────────────────────── */
 /* Plate.js serializer sets a fixed pixel height on BOTH the
-   container div AND the <img> via inline style, with no width.
-   Override both so images scale naturally to content width. */
+   container div AND the <img> via inline style. Preserve the
+   container height (user's resize choice) and use object-fit: cover
+   to match the editor's cropping behaviour. */
 .post-content .slate-img figure > div > div {
-  height: auto !important;
+  width: 100%;
+  overflow: hidden;
 }
+.post-content .slate-img img {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+/* Standalone images outside Plate image blocks */
 .post-content img {
   display: block;
-  max-width: 100% !important;
-  width: 100%;
-  height: auto !important;
-  object-fit: contain !important;
+  max-width: 100%;
 }
 
 /* ── Code block syntax highlighting (backward compat for old posts) ─── */
@@ -624,25 +632,21 @@ html {
   text-decoration-color: currentColor;
 }
 
-/* ── Post content: Plate.js button — override link & color styles ──── */
-/* Plate.js buttons set text color via inline style (color: #fff/#000)
-   computed from getContrastColor(). But our blanket rules:
-     .post-content { color: var(--muted-foreground) !important }
-     .post-content div[class*="py-3"] span { color: ... !important }
-   override the inline color on descendant spans. Fix by forcing spans
-   inside button links to inherit from the <a> which has the correct color. */
-.post-content .slate-button a {
-  text-decoration: none !important;
+/* ── Post content: Plate.js button ─────────────────────────────────── */
+/* Button <a> has inline background-color + contrast colour from Plate's
+   static serialiser. Child <span>s also get Plate's default rgb(0,0,0)
+   which overrides the parent's colour. Force children to inherit.
+   Selector: any <a> with inline background-color (only buttons have this). */
+.post-content a[style*="background-color"] {
+  text-decoration: none;
   transition: opacity 200ms ease-out, transform 200ms ease-out;
 }
-.post-content .slate-button a span {
+.post-content a[style*="background-color"] * {
   color: inherit !important;
 }
-.post-content .slate-button a:hover {
+.post-content a[style*="background-color"]:hover {
   opacity: 0.9;
   transform: translateY(-1px);
-  text-decoration: none !important;
-  text-decoration-color: transparent !important;
 }
 
 /* ── Post content: image hover — gentle lift ─────────────────── */

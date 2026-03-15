@@ -5,10 +5,10 @@
  */
 
 import { Post } from '@/types';
-import { FileText } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { BlogPostItemImage } from './blog-post-item-image';
+import { getPostGradient } from './post-gradient';
 
 interface BlogPostMagazineProps {
   posts: Post[];
@@ -51,9 +51,10 @@ export function BlogPostMagazine({
               sizes="(max-width: 640px) 100vw, 560px"
             />
           ) : (
-            <div className="flex h-48 w-full items-center justify-center">
-              <FileText className="h-10 w-10 text-muted-foreground" />
-            </div>
+            <div
+              className="w-full aspect-video"
+              style={{ background: getPostGradient(featured.title) }}
+            />
           )}
         </div>
         <div className="px-1 py-3 pb-0 sm:p-3 sm:pb-0">

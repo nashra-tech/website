@@ -6,9 +6,9 @@
  */
 
 import { Post } from '@/types';
-import { FileText } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getPostGradient } from './post-gradient';
 
 interface BlogPostItemProps {
   post: Post;
@@ -48,9 +48,10 @@ export function BlogPostItemImage({
               className="w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]"
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center">
-              <FileText className="w-5 h-5 text-muted-foreground" />
-            </div>
+            <div
+              className="w-full h-full rounded-md"
+              style={{ background: getPostGradient(post.title) }}
+            />
           )}
         </div>
 

@@ -5,9 +5,9 @@
  */
 
 import { Post } from '@/types';
-import { FileText } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getPostGradient } from './post-gradient';
 
 interface BlogPostCardsProps {
   posts: Post[];
@@ -48,9 +48,10 @@ export function BlogPostCards({
                   sizes="(max-width: 640px) 100vw, 50vw"
                 />
               ) : (
-                <div className="flex h-32 w-full items-center justify-center">
-                  <FileText className="h-8 w-8 text-muted-foreground" />
-                </div>
+                <div
+                  className="w-full aspect-video"
+                  style={{ background: getPostGradient(post.title) }}
+                />
               )}
             </div>
             <div className="px-1 py-3 sm:p-3">
