@@ -9,9 +9,7 @@ interface HeroCtaProps {
 export function HeroCta({ tenant }: HeroCtaProps) {
   if (!tenant.cta_enabled || !tenant.cta_label || !tenant.cta_link) return null;
 
-  const cornerRadius = tenant.corner_radius || 'round';
   const buttonStyle = tenant.button_style || 'filled';
-  const radiusClass = { sharp: 'rounded-md', round: 'rounded-xl', pill: 'rounded-full' }[cornerRadius];
   const buttonVariant = buttonStyle === 'outline' ? ('outline' as const) : ('default' as const);
 
   // Ensure the link has a protocol
@@ -22,7 +20,7 @@ export function HeroCta({ tenant }: HeroCtaProps) {
       <Button
         asChild
         variant={buttonVariant}
-        className={`group h-10 px-5 ${radiusClass} font-medium text-sm shadow-md hover:shadow-lg transition-shadow duration-200 ease-out`}
+        className="group h-10 px-5 rounded-[var(--blog-radius)] font-medium text-sm shadow-md hover:shadow-lg transition-shadow duration-200 ease-out"
       >
         <a href={href} target="_blank" rel="noopener noreferrer">
           {tenant.cta_label}

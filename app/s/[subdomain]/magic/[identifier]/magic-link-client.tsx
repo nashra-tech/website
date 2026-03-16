@@ -58,10 +58,16 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
   const buttonStyle = tenant.button_style || 'filled';
   const buttonWidth = tenant.button_width || 'full_width';
 
-  const radiusClass = { sharp: 'rounded-md', round: 'rounded-xl', pill: 'rounded-full' }[cornerRadius];
-  const imageRadiusClass = { sharp: 'rounded-md', round: 'rounded-xl', pill: 'rounded-2xl' }[cornerRadius];
   const buttonVariant = buttonStyle === 'outline' ? 'outline' as const : 'default' as const;
   const buttonWidthClass = buttonWidth === 'compact' ? 'w-auto mx-auto' : 'w-full';
+
+  // CSS custom properties for consistent corner radius
+  const radiusMap = {
+    sharp: { '--blog-radius': '0.375rem', '--blog-radius-lg': '0.5rem' },
+    round: { '--blog-radius': '0.75rem', '--blog-radius-lg': '0.75rem' },
+    pill:  { '--blog-radius': '9999px',   '--blog-radius-lg': '1rem' },
+  } as const;
+  const radiusVars = radiusMap[cornerRadius] as unknown as React.CSSProperties;
 
   const validateEmail = (value: string): boolean => EMAIL_RE.test(value);
 
@@ -122,13 +128,13 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
 
   return (
     <ThemeProvider brandColor={tenant.brandColor}>
-      <div className="relative min-h-screen w-full flex items-center justify-center p-4 bg-gray-50 dark:bg-neutral-950 overflow-hidden">
+      <div className="relative min-h-screen w-full flex items-center justify-center p-4 bg-gray-50 dark:bg-neutral-950 overflow-hidden" style={radiusVars}>
         <div className="absolute inset-0 w-full h-full [mask-image:radial-gradient(600px_circle_at_center,white,transparent)]">
           <DotPattern width={24} height={24} cx={1} cy={1} cr={1} className="text-gray-200 dark:text-neutral-800" />
         </div>
 
         {/* Centered Card */}
-        <div className="relative w-full max-w-[400px] bg-white dark:bg-neutral-900 rounded-2xl shadow-sm border border-gray-100 dark:border-neutral-800 overflow-hidden z-10" dir={direction}>
+        <div className="relative w-full max-w-[400px] bg-white dark:bg-neutral-900 rounded-[var(--blog-radius-lg)] shadow-sm border border-gray-100 dark:border-neutral-800 overflow-hidden z-10" dir={direction}>
           {/* Header: Avatar & Name — horizontal layout */}
           <div className="flex items-center justify-between px-5 pt-6 pb-4" dir={direction}>
             <div className="flex items-center gap-2.5">
@@ -147,13 +153,13 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
 
           {/* Image — 4:3 aspect ratio */}
           {form.image_url && (
-            <div className="mx-5 mb-4 relative aspect-[4/3] overflow-hidden">
+            <div className="mx-5 mb-4 relative aspect-[4/3] overflow-hidden rounded-[var(--blog-radius-lg)]">
               <Image
                 src={form.image_url}
                 alt={form.title}
                 fill
                 sizes="400px"
-                className={`object-cover ${imageRadiusClass}`}
+                className="object-cover"
               />
             </div>
           )}
@@ -226,7 +232,7 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
                     type="submit"
                     variant={buttonVariant}
                     disabled={processing}
-                    className={`${buttonWidthClass} h-12 ${radiusClass} text-[15px] font-medium`}
+                    className={`${buttonWidthClass} h-12 rounded-[var(--blog-radius)] text-[15px] font-medium`}
                   >
                     {processing ? t('magic_link.subscribing') : form.button_text}
                     {!processing && <span className="ml-1">&rarr;</span>}
@@ -272,7 +278,7 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
                 variant="secondary"
                 onClick={handleExploreBlog}
                 dir={direction}
-                className={`${buttonWidthClass} h-12 ${radiusClass} text-[15px] font-medium`}
+                className={`${buttonWidthClass} h-12 rounded-[var(--blog-radius)] text-[15px] font-medium`}
               >
                 {t('magic_link.browse_posts')}
               </Button>

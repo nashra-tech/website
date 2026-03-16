@@ -34,9 +34,7 @@ export function SubscribeForm({
     const { t } = useTranslations(tenantLanguage);
 
     // Theme settings
-    const cornerRadius = tenant.corner_radius || 'round';
     const buttonStyle = tenant.button_style || 'filled';
-    const radiusClass = { sharp: 'rounded-md', round: 'rounded-xl', pill: 'rounded-full' }[cornerRadius];
     const buttonVariant = buttonStyle === 'outline' ? 'outline' as const : 'default' as const;
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -87,12 +85,12 @@ export function SubscribeForm({
 
     return (
         <form onSubmit={handleSubmit} dir={tenantDirection}>
-            <div className="relative max-w-sm rounded-xl bg-neutral-100 dark:bg-neutral-800">
+            <div className="relative max-w-sm rounded-[var(--blog-radius)] bg-neutral-100 dark:bg-neutral-800">
                 <Input
                     type="email"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
-                    className={`${error ? 'ring-1 ring-destructive' : ''} ${isTenantRTL ? 'text-right' : 'text-left'} h-11 rounded-xl border-0 bg-transparent placeholder:text-muted-foreground dark:text-neutral-200 transition-shadow duration-200 ease-out focus:ring-2 focus:ring-primary/20`}
+                    className={`${error ? 'ring-1 ring-destructive' : ''} ${isTenantRTL ? 'text-right' : 'text-left'} h-11 !rounded-[var(--blog-radius)] border-0 bg-transparent placeholder:text-muted-foreground dark:text-neutral-200 transition-shadow duration-200 ease-out focus:ring-2 focus:ring-primary/20`}
                     placeholder={t('common.email_placeholder')}
                     required
                     dir={tenantDirection}
@@ -102,7 +100,7 @@ export function SubscribeForm({
                     disabled={processing || subscribed}
                     size="sm"
                     variant={subscribed ? undefined : buttonVariant}
-                    className={`group absolute top-1/2 -translate-y-1/2 ${isTenantRTL ? 'left-1.5' : 'right-1.5'} h-8 px-4 ${radiusClass} font-medium text-sm ${
+                    className={`group absolute top-1/2 -translate-y-1/2 ${isTenantRTL ? 'left-1.5' : 'right-1.5'} h-8 px-4 rounded-[var(--blog-radius)] font-medium text-sm ${
                         subscribed
                             ? 'bg-green-600 hover:bg-green-600 text-white'
                             : ''

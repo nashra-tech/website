@@ -31,7 +31,7 @@ function ThemeToggleDropdown() {
     <Button
       onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
       variant="outline"
-      className="group flex items-center !p-2 size-8 rounded-md hover:bg-gray-100 dark:hover:bg-base-800 transition-colors duration-200 ease-out"
+      className="group flex items-center !p-2 size-8 rounded-[var(--blog-radius)] hover:bg-gray-100 dark:hover:bg-base-800 transition-colors duration-200 ease-out"
     >
       {resolvedTheme === 'light' ? (
         <Icons.moon className="w-4 h-4 text-gray-600 dark:text-gray-300 transition-transform duration-200 ease-out group-hover:rotate-12" />
@@ -69,15 +69,26 @@ export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
   // Theme settings
   const cornerRadius = tenant.corner_radius || 'round';
   const buttonStyle = tenant.button_style || 'filled';
-  const radiusClass = { sharp: 'rounded-md', round: 'rounded-xl', pill: 'rounded-full' }[cornerRadius];
   const buttonVariant = buttonStyle === 'outline' ? 'outline' as const : 'default' as const;
   const layout = tenant.homepage_layout || 'list';
   const maxWidthClass = layout === 'cards' ? 'max-w-[640px]' : 'max-w-[560px]';
+
+  // CSS custom properties for consistent corner radius across all blog components
+  // --blog-radius: interactive elements (buttons, inputs)
+  // --blog-radius-lg: containers (cards, images, dialogs)
+  const radiusMap = {
+    sharp: { '--blog-radius': '0.375rem', '--blog-radius-lg': '0.5rem' },
+    round: { '--blog-radius': '0.75rem', '--blog-radius-lg': '0.75rem' },
+    pill:  { '--blog-radius': '9999px',   '--blog-radius-lg': '1rem' },
+  } as const;
+  const radiusVars = radiusMap[cornerRadius] as unknown as React.CSSProperties;
+
   return (
     <ThemeProvider brandColor={tenant.brandColor}>
       <div
         className="min-h-[600px] flex flex-col bg-background transition-colors font-sans"
         dir={tenantDirection}
+        style={radiusVars}
       >
         {/* Header */}
         <header className="py-3 sm:py-4">
@@ -104,14 +115,14 @@ export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
                     <Button
                       size="sm"
                       variant={buttonVariant}
-                      className={`group h-8 px-4 ${radiusClass} font-medium text-sm shadow-md hover:shadow-lg transition-shadow duration-200 ease-out`}
+                      className="group h-8 px-4 rounded-[var(--blog-radius)] font-medium text-sm shadow-md hover:shadow-lg transition-shadow duration-200 ease-out"
                     >
                       {t('common.subscribe')}
                       <ArrowRight className="w-4 h-4 rtl:rotate-180 transition-transform duration-200 ease-out group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5" />
                     </Button>
                   </DialogTrigger>
                   <DialogContent
-                    className="sm:max-w-[390px] p-5 sm:p-5 gap-0 border"
+                    className="sm:max-w-[390px] p-5 sm:p-5 gap-0 border !rounded-[var(--blog-radius-lg)]"
                     showCloseButton={!showSuccess}
                     dir={tenantDirection}
                   >

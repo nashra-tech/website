@@ -34,11 +34,11 @@ export function BlogPostItemImage({
   return (
     <Link
       href={`/${post.slug}`}
-      className={`group py-3 px-2 sm:px-3 w-full cursor-pointer transition-colors duration-200 ease-out block rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800`}
+      className="group py-3 px-2 sm:px-3 w-full cursor-pointer transition-colors duration-200 ease-out block rounded-[var(--blog-radius-lg)] hover:bg-neutral-100 dark:hover:bg-neutral-800"
       dir={tenantDirection}
     >
       <div className="flex items-center gap-3">
-        <div className="w-[44px] h-[44px] rounded-md overflow-hidden flex-shrink-0 bg-neutral-100 dark:bg-neutral-800">
+        <div className="w-[44px] h-[44px] rounded-[var(--blog-radius-lg)] overflow-hidden flex-shrink-0 bg-neutral-100 dark:bg-neutral-800">
           {post.main_image_thumb_url ? (
             <Image
               src={post.main_image_thumb_url}
@@ -49,7 +49,7 @@ export function BlogPostItemImage({
             />
           ) : (
             <div
-              className="w-full h-full rounded-md"
+              className="w-full h-full rounded-[var(--blog-radius-lg)]"
               style={{ background: getPostGradient(post.title) }}
             />
           )}
