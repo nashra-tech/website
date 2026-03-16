@@ -67,28 +67,16 @@ export function WebsiteLayout({ children, tenant }: WebsiteLayoutProps) {
   const { t } = useTranslations(tenantLanguage);
 
   // Theme settings
-  const cornerRadius = tenant.corner_radius || 'round';
   const buttonStyle = tenant.button_style || 'filled';
   const buttonVariant = buttonStyle === 'outline' ? 'outline' as const : 'default' as const;
   const layout = tenant.homepage_layout || 'list';
   const maxWidthClass = layout === 'cards' ? 'max-w-[640px]' : 'max-w-[560px]';
-
-  // CSS custom properties for consistent corner radius across all blog components
-  // --blog-radius: interactive elements (buttons, inputs)
-  // --blog-radius-lg: containers (cards, images, dialogs)
-  const radiusMap = {
-    sharp: { '--blog-radius': '0.375rem', '--blog-radius-lg': '0.5rem' },
-    round: { '--blog-radius': '0.75rem', '--blog-radius-lg': '0.75rem' },
-    pill:  { '--blog-radius': '9999px',   '--blog-radius-lg': '1rem' },
-  } as const;
-  const radiusVars = radiusMap[cornerRadius] as unknown as React.CSSProperties;
 
   return (
     <ThemeProvider brandColor={tenant.brandColor}>
       <div
         className="min-h-[600px] flex flex-col bg-background transition-colors font-sans"
         dir={tenantDirection}
-        style={radiusVars}
       >
         {/* Header */}
         <header className="py-3 sm:py-4">

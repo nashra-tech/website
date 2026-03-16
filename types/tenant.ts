@@ -42,7 +42,7 @@ export interface Tenant {
   brandColor?:string;
 
   // Theme settings
-  corner_radius?: 'sharp' | 'round' | 'pill';
+  corner_radius?: 'sharp' | 'round';
   button_style?: 'filled' | 'outline';
   button_width?: 'full_width' | 'compact';
 

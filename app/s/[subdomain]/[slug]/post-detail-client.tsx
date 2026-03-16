@@ -8,6 +8,7 @@ import { Small } from '@/components/system-ui/typography';
 import { usePageTracking } from '@/hooks/use-page-tracking';
 import { useTranslations } from '@/lib/i18n/use-translations';
 import { BlogPostItemImage } from '@/components/blog/blog-post-item-image';
+import { getRadiusStyleTag } from '@/components/blog/radius-vars';
 
 // Hoisted constants (avoid re-creation on every render / effect run)
 const WHITESPACE_RE = /[\u200B\u200C\u200D\uFEFF\u00A0\s\n\r\t]/g;
@@ -87,6 +88,7 @@ export function PostDetailClient({ tenant, post, morePosts }: PostDetailClientPr
 
   return (
     <div dir={tenantDirection} className="min-h-screen transition-colors">
+      <style dangerouslySetInnerHTML={{ __html: getRadiusStyleTag(tenant.corner_radius) }} />
       <WebsiteLayout tenant={tenant}>
         <div className={`mt-10 sm:mt-20 w-full ${maxWidthClass} mx-auto px-5 sm:px-0`}>
           <h1 className="text-[26px] sm:text-4xl font-semibold text-foreground tracking-tight mb-1 leading-tight">

@@ -21,6 +21,7 @@ import { BlogPostItemImage } from '@/components/blog/blog-post-item-image';
 import { BlogPostCards } from '@/components/blog/blog-post-cards';
 import { BlogPostMagazine } from '@/components/blog/blog-post-magazine';
 import { HeroCta } from '@/components/blog/hero-cta';
+import { getRadiusStyleTag } from '@/components/blog/radius-vars';
 
 interface PageProps {
   params: Promise<{
@@ -54,6 +55,7 @@ export default async function TenantHomePage({ params, searchParams }: PageProps
   return (
     <>
       <ThemeColorScript brandColor={tenant.brandColor} />
+      <style dangerouslySetInnerHTML={{ __html: getRadiusStyleTag(tenant.corner_radius) }} />
       <div
         className="min-h-screen transition-colors flex justify-between flex-col"
         dir={tenantDirection}

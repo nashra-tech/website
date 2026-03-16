@@ -76,7 +76,7 @@ export interface ApiTenant {
   show_branding:boolean;
   brandColor:string;
   favicon: string | null;
-  corner_radius?: 'sharp' | 'round' | 'pill';
+  corner_radius?: 'sharp' | 'round';
   button_style?: 'filled' | 'outline';
   button_width?: 'full_width' | 'compact';
   homepage_layout?: 'list' | 'cards' | 'magazine';

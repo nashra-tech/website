@@ -13,6 +13,7 @@ import { Icons } from '@/components/ui/icons';
 import { subscribeMagicLink } from '@/lib/data';
 import { useTranslations } from '@/lib/i18n';
 import { ThemeProvider, useTheme } from '@/contexts/theme-context';
+import { getRadiusStyleTag } from '@/components/blog/radius-vars';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -61,13 +62,7 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
   const buttonVariant = buttonStyle === 'outline' ? 'outline' as const : 'default' as const;
   const buttonWidthClass = buttonWidth === 'compact' ? 'w-auto mx-auto' : 'w-full';
 
-  // CSS custom properties for consistent corner radius
-  const radiusMap = {
-    sharp: { '--blog-radius': '0.375rem', '--blog-radius-lg': '0.5rem' },
-    round: { '--blog-radius': '0.75rem', '--blog-radius-lg': '0.75rem' },
-    pill:  { '--blog-radius': '9999px',   '--blog-radius-lg': '1rem' },
-  } as const;
-  const radiusVars = radiusMap[cornerRadius] as unknown as React.CSSProperties;
+  const radiusStyle = getRadiusStyleTag(cornerRadius);
 
   const validateEmail = (value: string): boolean => EMAIL_RE.test(value);
 
@@ -128,7 +123,8 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
 
   return (
     <ThemeProvider brandColor={tenant.brandColor}>
-      <div className="relative min-h-screen w-full flex items-center justify-center p-4 bg-gray-50 dark:bg-neutral-950 overflow-hidden" style={radiusVars}>
+      <style dangerouslySetInnerHTML={{ __html: radiusStyle }} />
+      <div className="relative min-h-screen w-full flex items-center justify-center p-4 bg-gray-50 dark:bg-neutral-950 overflow-hidden">
         <div className="absolute inset-0 w-full h-full [mask-image:radial-gradient(600px_circle_at_center,white,transparent)]">
           <DotPattern width={24} height={24} cx={1} cy={1} cr={1} className="text-gray-200 dark:text-neutral-800" />
         </div>
