@@ -20,6 +20,7 @@ import { ThemeColorScript } from '@/components/theme/theme-color-script';
 import { BlogPostItemImage } from '@/components/blog/blog-post-item-image';
 import { BlogPostCards } from '@/components/blog/blog-post-cards';
 import { BlogPostMagazine } from '@/components/blog/blog-post-magazine';
+import { HeroCta } from '@/components/blog/hero-cta';
 
 interface PageProps {
   params: Promise<{
@@ -66,7 +67,7 @@ export default async function TenantHomePage({ params, searchParams }: PageProps
       
       <WebsiteLayout tenant={tenant}>
         <div className={`${layout === 'cards' ? 'max-w-[640px]' : 'max-w-[560px]'} mx-auto px-5 sm:px-0`}>
-          {/* Header Section - Headline + Description */}
+          {/* Header Section - Headline + Description + CTA */}
           <div className="mt-10 mb-10 sm:mt-20 sm:mb-16">
             {tenant.headline && (
               <h1 className="text-[22px] sm:text-[28px] font-bold text-foreground leading-snug max-w-[460px] mb-2 sm:mb-3 tracking-tight">{tenant.headline}</h1>
@@ -74,6 +75,7 @@ export default async function TenantHomePage({ params, searchParams }: PageProps
             {(tenant.subtitle || tenant.name) && (
               <p className="text-[14px] sm:text-base text-muted-foreground leading-relaxed max-w-[460px]">{tenant.subtitle || tenant.name || ''}</p>
             )}
+            <HeroCta tenant={tenant} />
           </div>
 
           {/* Posts */}

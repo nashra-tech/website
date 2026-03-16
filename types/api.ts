@@ -84,6 +84,9 @@ export interface ApiTenant {
   newsletter_description?: string | null;
   newsletter_button_text?: string | null;
   pinned_post_id?: number | null;
+  hero_cta_enabled?: boolean;
+  hero_cta_label?: string | null;
+  hero_cta_url?: string | null;
 }
 
 // ============================================================================

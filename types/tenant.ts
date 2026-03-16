@@ -52,6 +52,9 @@ export interface Tenant {
   newsletter_description?: string | null;
   newsletter_button_text?: string | null;
   pinned_post_id?: number | null;
+  cta_enabled?: boolean;
+  cta_label?: string | null;
+  cta_link?: string | null;
 }
 
 export interface TenantMeta {

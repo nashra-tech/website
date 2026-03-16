@@ -43,6 +43,9 @@ export function adaptTenant(apiTenant: ApiTenant): Tenant {
     newsletter_description: apiTenant.newsletter_description || null,
     newsletter_button_text: apiTenant.newsletter_button_text || null,
     pinned_post_id: apiTenant.pinned_post_id || null,
+    cta_enabled: apiTenant.hero_cta_enabled ?? false,
+    cta_label: apiTenant.hero_cta_label || null,
+    cta_link: apiTenant.hero_cta_url || null,
   };
 }
 
