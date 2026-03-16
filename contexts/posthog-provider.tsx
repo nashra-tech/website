@@ -1,29 +1,39 @@
 'use client';
 
-import posthog from 'posthog-js';
-import { PostHogProvider as PHProvider } from 'posthog-js/react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import type { PostHog } from 'posthog-js';
 
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
-  const [initialized, setInitialized] = useState(false);
+  const [client, setClient] = useState<PostHog | null>(null);
 
   useEffect(() => {
-    const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY;
-    const posthogHost = process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com';
+    const key = process.env.NEXT_PUBLIC_POSTHOG_KEY;
+    if (!key) return;
 
-    if (posthogKey) {
-      posthog.init(posthogKey, {
-        api_host: posthogHost,
+    const host = process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com';
+
+    import('posthog-js').then(({ default: posthog }) => {
+      posthog.init(key, {
+        api_host: host,
         capture_pageview: false,
         capture_pageleave: true,
       });
-      setInitialized(true);
-    }
+      setClient(posthog);
+    });
   }, []);
 
-  if (!initialized) {
+  if (!client) {
     return <>{children}</>;
   }
 
-  return <PHProvider client={posthog}>{children}</PHProvider>;
+  // Lazy-load the React provider only when PostHog is initialized
+  const PHProvider = React.lazy(() =>
+    import('posthog-js/react').then((mod) => ({ default: mod.PostHogProvider }))
+  );
+
+  return (
+    <React.Suspense fallback={children}>
+      <PHProvider client={client}>{children}</PHProvider>
+    </React.Suspense>
+  );
 }

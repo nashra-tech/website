@@ -10,13 +10,14 @@ export async function GET(
   { params }: { params: Promise<{ subdomain: string }> }
 ) {
   const { subdomain } = await params;
-  const tenant = await getTenantBySlug(subdomain);
+  const [tenant, { data: posts }] = await Promise.all([
+    getTenantBySlug(subdomain),
+    getPosts(subdomain, { page: 1, perPage: 50 }),
+  ]);
 
   if (!tenant) {
     return new NextResponse('Not found', { status: 404 });
   }
-
-  const { data: posts } = await getPosts(subdomain, { page: 1, perPage: 50 });
 
   const host = request.headers.get('host') || `${subdomain}.${rootDomain}`;
   const baseUrl = `${protocol}://${host}`;

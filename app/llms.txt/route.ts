@@ -16,13 +16,14 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  const tenant = await getTenantBySlug(slug);
+  const [tenant, { data: posts }] = await Promise.all([
+    getTenantBySlug(slug),
+    getPosts(slug, { page: 1, perPage: 50 }),
+  ]);
 
   if (!tenant) {
     return new NextResponse('Not found', { status: 404 });
   }
-
-  const { data: posts } = await getPosts(slug, { page: 1, perPage: 50 });
 
   const baseUrl = `${protocol}://${host}`;
 

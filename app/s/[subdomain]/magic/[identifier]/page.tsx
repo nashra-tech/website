@@ -22,17 +22,12 @@ interface PageProps {
 export default async function MagicLinkPage({ params }: PageProps) {
   const { subdomain, identifier } = await params;
 
-  // Fetch tenant data
-  const tenant = await getTenantBySlug(subdomain);
+  const [tenant, form] = await Promise.all([
+    getTenantBySlug(subdomain),
+    getMagicLinkFormByIdentifier(subdomain, identifier),
+  ]);
 
-  if (!tenant) {
-    notFound();
-  }
-
-  // Fetch magic link form data
-  const form = await getMagicLinkFormByIdentifier(subdomain, identifier);
-
-  if (!form) {
+  if (!tenant || !form) {
     notFound();
   }
 
@@ -53,8 +48,10 @@ export default async function MagicLinkPage({ params }: PageProps) {
 export async function generateMetadata({ params }: PageProps) {
   const { subdomain, identifier } = await params;
 
-  const tenant = await getTenantBySlug(subdomain);
-  const form = await getMagicLinkFormByIdentifier(subdomain, identifier);
+  const [tenant, form] = await Promise.all([
+    getTenantBySlug(subdomain),
+    getMagicLinkFormByIdentifier(subdomain, identifier),
+  ]);
 
   if (!tenant || !form) {
     return {

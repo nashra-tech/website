@@ -6,7 +6,7 @@
 
 'use client';
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { applyThemeColor } from '@/lib/theme-color';
 
 type Theme = 'light' | 'dark' | 'system';
@@ -41,33 +41,25 @@ export function ThemeProvider({ children, brandColor }: ThemeProviderProps) {
     }
   }, []);
 
+  // Apply theme class + brand color whenever theme or brandColor changes
   useEffect(() => {
     if (!mounted) return;
 
-    // Apply theme to document
     const root = window.document.documentElement;
     root.classList.remove('light', 'dark');
 
-    let effectiveTheme: 'light' | 'dark';
-
-    if (theme === 'system') {
-      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? 'dark'
-        : 'light';
-      effectiveTheme = systemTheme;
-    } else {
-      effectiveTheme = theme;
-    }
+    const effectiveTheme: 'light' | 'dark' =
+      theme === 'system'
+        ? window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        : theme;
 
     root.classList.add(effectiveTheme);
     setResolvedTheme(effectiveTheme);
 
-    // Apply brand color after theme is set
     if (brandColor) {
       applyThemeColor(brandColor);
     }
 
-    // Save to localStorage
     localStorage.setItem('theme', theme);
   }, [theme, mounted, brandColor]);
 
@@ -88,17 +80,15 @@ export function ThemeProvider({ children, brandColor }: ThemeProviderProps) {
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, [theme, mounted]);
 
-  // Apply brand color when it changes or on mount
-  useEffect(() => {
-    if (!mounted) return;
+  const handleSetTheme = useCallback((t: Theme) => setTheme(t), []);
 
-    if (brandColor) {
-      applyThemeColor(brandColor);
-    }
-  }, [brandColor, mounted]);
+  const value = useMemo(
+    () => ({ theme, setTheme: handleSetTheme, resolvedTheme }),
+    [theme, handleSetTheme, resolvedTheme],
+  );
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, resolvedTheme }}>
+    <ThemeContext.Provider value={value}>
       {children}
     </ThemeContext.Provider>
   );

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { Tenant } from '@/types';
 import { MagicLinkForm } from '@/types/magic-link';
 import { Button } from '@/components/ui/button';
@@ -12,6 +13,8 @@ import { Icons } from '@/components/ui/icons';
 import { subscribeMagicLink } from '@/lib/data';
 import { useTranslations } from '@/lib/i18n';
 import { ThemeProvider, useTheme } from '@/contexts/theme-context';
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
@@ -60,11 +63,7 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
   const buttonVariant = buttonStyle === 'outline' ? 'outline' as const : 'default' as const;
   const buttonWidthClass = buttonWidth === 'compact' ? 'w-auto mx-auto' : 'w-full';
 
-  // Email validation function
-  const validateEmail = (email: string): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
+  const validateEmail = (value: string): boolean => EMAIL_RE.test(value);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -148,12 +147,13 @@ export function MagicLinkClient({ form, tenant }: MagicLinkClientProps) {
 
           {/* Image — 4:3 aspect ratio */}
           {form.image_url && (
-            <div className="mx-5 mb-4">
-              <img
+            <div className="mx-5 mb-4 relative aspect-[4/3] overflow-hidden">
+              <Image
                 src={form.image_url}
                 alt={form.title}
-                className={`w-full ${imageRadiusClass} object-cover`}
-                style={{ aspectRatio: '4/3' }}
+                fill
+                sizes="400px"
+                className={`object-cover ${imageRadiusClass}`}
               />
             </div>
           )}

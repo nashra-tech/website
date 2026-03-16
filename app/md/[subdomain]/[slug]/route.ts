@@ -9,15 +9,12 @@ export async function GET(
   { params }: { params: Promise<{ subdomain: string; slug: string }> }
 ) {
   const { subdomain, slug } = await params;
-  const tenant = await getTenantBySlug(subdomain);
+  const [tenant, post] = await Promise.all([
+    getTenantBySlug(subdomain),
+    getPostBySlug(subdomain, slug),
+  ]);
 
-  if (!tenant) {
-    return new NextResponse('Not found', { status: 404 });
-  }
-
-  const post = await getPostBySlug(subdomain, slug);
-
-  if (!post) {
+  if (!tenant || !post) {
     return new NextResponse('Not found', { status: 404 });
   }
 
